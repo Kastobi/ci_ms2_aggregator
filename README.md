@@ -1,45 +1,140 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# MS2 – Data aggregator on frontend libraries
 
-Welcome USER_NAME,
+[The website]() is intended to ...
+As it is for educational purposes right now, ...
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+# Table of Contents
+1. [UX](#UX)
+2. [Features](#Features)
+3. [Technologies](#Technologies)
+4. [Testing](#Testing)
+5. [Deployment](#Deployment)
+6. [Credits](#Credits)
+ 
+## UX
 
-## Gitpod Reminders
+### Strategy & Scope
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+A selection of the major objectives and selected ways to achieve them in form of user stories and conclusions.
 
-`python3 -m http.server`
+As a…
 
-A blue button should appear to click: *Make Public*,
+#### user…
 
-Another blue button should appear to click: *Open Browser*.
+1. I want to ... , so that  → 
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+#### website-owner…
 
-A blue button should appear to click: *Make Public*,
+### Structure & Skeleton
 
-Another blue button should appear to click: *Open Browser*.
+![wireframes mobile]()
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+![wireframes bigger as mobile]()
 
-## Updates Since The Instructional Video
+### Surface
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+![color palette]()
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+---
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+## Features
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+### Existing Features
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+### Meta
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+### Feature 1
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+### Features left to Implement
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+## Technologies Used
 
---------
+The website is build in a simple way on purpose. The user should not wait for many downloaded media-files or animations. Major CDNs were included (aware of the conflict with the aforementioned statement) to include up-to-date security patches of implemented JavaScript. 
 
-Happy coding!
+The base technologies are HTML and CSS. Some JavaScript is used to achieve more efficient use of the viewport on mobiles (collapsing navigation-menu).
+
+The hand made “cards” which are used as main design element for the different lists where chosen in preference of Bootstrap cards, as the [documentation (v4.1.x)](https://getbootstrap.com/docs/4.1/components/card/#card-layout) states layout options for series of cards are not yet a responsive element.
+
+#### [HTML](https://en.wikipedia.org/wiki/HTML)
+- for the main pages
+
+#### [CSS](https://en.wikipedia.org/wiki/CSS)
+- for everything styling related
+
+#### [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+
+#### [Git](https://git-scm.com/) / [GitHub](https://github.com)
+- for version control
+- for deployment
+
+#### [gitpod](https://gitpod.io)
+- as IDE
+
+#### [code institute gitpod template](https://github.com/Code-Institute-Org/gitpod-full-template)
+- as a starter for the gitpod environment
+
+#### [code institute readme template](https://github.com/Code-Institute-Solutions/readme-template)
+- as a starter for the readme.md
+
+## Testing
+
+### Validators
+
+#### HTML Validator
+
+#### CSS Validator
+
+### Manual testing
+
+#### Chrome exclusive, deployed page
+
+### Functionality testing
+
+### User-Story verification
+
+#### recruiter
+
+#### website-owner
+
+### Slack review
+The project was posted to Slack the Code Institute community channel peer-code-review for different pairs of eyes.
+
+### Readme
+Readme was observed on GitHub. All links were clicked.
+
+## Deployment
+The relevant files for deployment of the project are
+
+The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to click on "Code" on the top of this page (top right above the file list) and on "Download zip".  
+Afterwards extract the zip (most OS include a packaging program for it, just right click on it) into the required folder (read below).
+
+### Local
+For local use, download the files and the folder, put them (or extract) into the same directory and open the **index.html** file with your browser.
+
+### Deployed / Hosted
+For deployed use, download the files and the folder, put/upload/extract them into the folder advised by your hoster (e.g. "www", but it depends - check back with your hoster / the documentation!).  
+Be cautious not to alter the file hierarchy.
+
+### with GitHub pages
+If you are logged into your GitHub Account (if not: Sign up - its free!) just click on "Fork" on the top right of this page.
+Afterwards in the "Settings" (top menu, right beyond the name of the repository) menu, go to "Options" (top menu item), and afterwards scroll down to "GitHub Pages", select "Master branch" as source and click "Save".
+To get to the deployed site afterwards, click on the link.  
+Further [documentation](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages)
+
+### this actual deployment
+The content was deployed via GitHub pages by configuring the repository according to the above walkthrough.
+
+## Credits
+
+
+### Content
+
+### Media
+
+### Acknowledgments
+
+* My mentor Brian Macharia for his support and feedback.
+
+* The Code Institute slack community for their support.
+
+* Inspiration was taken from 
