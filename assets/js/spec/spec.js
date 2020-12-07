@@ -32,9 +32,10 @@ describe("On page loading", function() {
     it("List store declared", function(done) {
         setTimeout(function() {
             expect(cdnjsFullList).not.toBeNull();
+            expect(cdnjsFullList[0].keywords).toBeDefined();
+            expect(cdnjsFullList[0].github).toBeDefined();
             done();
         }, 
             500);
-    });
-
-})
+    });    
+});
