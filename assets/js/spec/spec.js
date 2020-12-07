@@ -29,8 +29,12 @@ describe("On page loading", function() {
     it("List store defined", function() {
         expect(cdnjsFullList).toBeDefined();
     });
-    it("List store declared", async function() {
-        expect(cdnjsFullList).not.toBeNull();
+    it("List store declared", function(done) {
+        setTimeout(function() {
+            expect(cdnjsFullList).not.toBeNull();
+            done();
+        }, 
+            500);
     });
 
 })
