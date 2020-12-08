@@ -36,6 +36,16 @@ describe("On page loading", function() {
             expect(cdnjsFullList[0].github).toBeDefined();
             done();
         }, 
-            500);
-    });    
+        500);
+    });
+    it("List flattened", function(done) {
+        setTimeout(function() {
+            expect(cdnjsFlatList).toBeDefined;
+            expect(cdnjsFlatList.length === cdnjsFullList.length).toBeTrue();
+            expect(cdnjsFlatList[0].keywords).toBeDefined();
+            expect(cdnjsFlatList[0].githubProvided).toBeDefined();
+            done();
+        },
+        500);
+    });
 });

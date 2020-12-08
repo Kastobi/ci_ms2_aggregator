@@ -1,5 +1,6 @@
 // 1x API call result global, stored to prevent further API calls and let user customize output without generating further calls
 let cdnjsFullList = null;
+let cdnjsFlatList = [];
 
 document.addEventListener("DOMContentLoaded", initSite);
 
@@ -7,6 +8,7 @@ async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
     generateTable();
+    flattenFullList();
 };
 
 // cdnjs api call with keyword and github values included
@@ -16,6 +18,39 @@ async function fetchCdnjsLibrariesFullList() {
         return result.results;
     };
 
+// build list for starting table
+
+function flattenFullList() {
+    cdnjsFullList.forEach((element, index) => {
+        let newItem;
+        if (element.github === null) {
+            newItem = {
+                "index" : index,
+                "name" : element.name,
+                "keywords" : element.keywords,
+                "githubProvided": false,
+                "githubLink" : "",        
+                "githubStarsCount" : "",
+                "githubForksCount" : "",
+                "githubSubsCount" : "",
+            }
+        } else {
+            newItem = {
+                "index" : index,
+                "name" : element.name,
+                "keywords" : element.keywords,
+                "githubProvided" : true,
+                "githubLink" : `https://www.github.com/${element.github.user}/${element.github.repo}`,        
+                "githubStarsCount" : element.github.stargazers_count,
+                "githubForksCount" : element.github.forks,
+                "githubSubsCount" : element.github.subscribers_count,
+            }
+        };     
+        cdnjsFlatList.push(newItem);
+    });         
+};
+
+// table related
 function generateTable() {
     generateTableHead();
     generateTableBody();
