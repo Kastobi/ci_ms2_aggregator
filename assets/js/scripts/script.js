@@ -7,8 +7,9 @@ document.addEventListener("DOMContentLoaded", initSite);
 async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
-    generateTable();
+    
     flattenFullList();
+    generateTable();
 };
 
 // cdnjs api call with keyword and github values included
@@ -57,7 +58,7 @@ function generateTable() {
 };
 
 function generateTableHead() {
-    let keysOfList = Object.keys(cdnjsFullList[0]);
+    let keysOfList = Object.keys(cdnjsFlatList[0]);
     
     d3.select("#mainTable")
         .append("thead")
@@ -70,14 +71,14 @@ function generateTableHead() {
 };
 
 function generateTableBody() { 
-    let columns = Object.keys(cdnjsFullList[0]);
+    let columns = Object.keys(cdnjsFlatList[0]);
     
     d3.select("#mainTable")
         .append("tbody")
         
         //generate rows
         .selectAll("tr")
-        .data(cdnjsFullList)
+        .data(cdnjsFlatList)
         .enter()
         .append("tr")
 
