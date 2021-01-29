@@ -2,6 +2,11 @@
 let cdnjsFullList = null;
 let cdnjsFlatList = [];
 
+//dev purpose - todo: encapsulate vars
+// crossfilter section
+let fullDataset = null;
+let fullDatasetGroup = null;
+
 document.addEventListener("DOMContentLoaded", initSite);
 
 async function initSite() {
@@ -9,7 +14,8 @@ async function initSite() {
 
     
     flattenFullList();
-    generateTable();
+    //generateTable(); todo: evaluate/decision vs dc / crossfilter way, remember html anchors!
+    initDataVis();
 };
 
 // cdnjs api call with keyword and github values included
@@ -53,7 +59,7 @@ function flattenFullList() {
     });         
 };
 
-// table related
+// html table related
 function generateTable() {
     generateTableHead();
     generateTableBody();
@@ -94,4 +100,71 @@ function generateTableBody() {
         .enter()
         .append("td")
         .text(i => i.value);
+};
+
+function initDataVis() {
+
+    // crossfilter section
+
+    fullDataset = crossfilter(cdnjsFlatList);
+    fullDatasetGroup = fullDataset.groupAll();
+
+    const dimGithubStarsCount = fullDataset.dimension(d => d["githubStarsCount"]);
+    const dimForksCount = fullDataset.dimension(d => d["githubForksCount"]);
+    const dimSubsCount = fullDataset.dimension(d => d["githubSubsCount"]);
+
+    const dimGithubUser = fullDataset.dimension(d => d["githubUser"]);
+    const groupGithubUser = dimGithubUser.group();
+
+    const keywordsProvided = fullDataset.dimension(function(d) {return d.keywords}, true);
+    const keywordsIndex = keywordsProvided.group();
+
+    // dc section
+
+    let dcVisCounter = dc.dataCount("#dcVisCounter");
+    let dcDataTable = dc.dataTable("#dcDataTable");
+
+    //Reference: http://dc-js.github.io/dc.js/ stock.js Example counter, line 426++
+    dcVisCounter
+        .crossfilter(fullDataset)
+        .groupAll(fullDatasetGroup)
+        .html({
+            some:
+                "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
+                " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
+            all: "All records selected. Please click ?? to apply filters."
+        });
+
+    dcDataTable
+        .dimension(dimGithubStarsCount)
+        .size(100)
+        .showSections(false)
+        .columns([
+            {
+                label: "Package name",
+                format: d => d.name
+            },
+            {
+                label: "GitHub stars",
+                format: d => d.githubStarsCount
+            },
+            {
+                label: "GitHub forks",
+                format: d => d.githubForksCount
+            },
+            {
+                label: "GitHub subs",
+                format: d => d.githubSubsCount
+            },
+            {
+                label: "GitHub user",
+                format: d => d.githubUser
+            },
+            {
+                label: "GitHub link",
+                format: d => d.githubLink
+            }
+        ])
+        .order(d3.descending)
+    dc.renderAll();
 };
