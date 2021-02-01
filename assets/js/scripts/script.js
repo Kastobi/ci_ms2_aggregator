@@ -36,11 +36,11 @@ function flattenFullList() {
                 "name" : element.name,
                 "keywords" : element.keywords,
                 "githubProvided": false,
-                "githubLink" : "",        
-                "githubUser" : "",
-                "githubStarsCount" : "",
-                "githubForksCount" : "",
-                "githubSubsCount" : "",
+                "githubLink" : "not provided",
+                "githubUser" : "not provided",
+                "githubStarsCount" : 0,
+                "githubForksCount" : 0,
+                "githubSubsCount" : 0,
             }
         } else {
             newItem = {
@@ -109,7 +109,10 @@ function initDataVis() {
     fullDataset = crossfilter(cdnjsFlatList);
     fullDatasetGroup = fullDataset.groupAll();
 
+    const dimName = fullDataset.dimension(d => d["name"]);
     const dimGithubStarsCount = fullDataset.dimension(d => d["githubStarsCount"]);
+    const groupGithubStars = dimName.group().reduceSum(d => d["githubStarsCount"]);
+
     const dimForksCount = fullDataset.dimension(d => d["githubForksCount"]);
     const dimSubsCount = fullDataset.dimension(d => d["githubSubsCount"]);
 
@@ -121,10 +124,12 @@ function initDataVis() {
 
     // dc section
 
-    let dcVisCounter = dc.dataCount("#dcVisCounter");
+    let dcVisCounter = new dc.DataCount("#dcVisCounter");
+    let dcRangeGraph = new dc.BarChart("#dcRangeGraph");
     let dcDataTable = dc.dataTable("#dcDataTable");
 
-    //Reference: http://dc-js.github.io/dc.js/ stock.js Example counter, line 426++
+    // Full Copy
+    // Reference: http://dc-js.github.io/dc.js/ stock.js Example counter, line 426++
     dcVisCounter
         .crossfilter(fullDataset)
         .groupAll(fullDatasetGroup)
@@ -134,10 +139,27 @@ function initDataVis() {
                 " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
             all: "All records selected. Please click ?? to apply filters."
         });
+    // End of Copy
 
+    dcRangeGraph
+        .x(d3.scaleBand())
+        .elasticX(true)
+        .xUnits(dc.units.ordinal)
+
+        .y(d3.scaleLinear())
+        .elasticY(true)
+        .yAxisLabel("no of github stars")
+
+        .dimension(dimName)
+        .mouseZoomable(true)
+        .group(groupGithubStars)
+
+    //dcRangeScale.on("renderlet", d => d.selectAll("g.x text").attr("transform", "rotate(-90)"));
+
+    //todo: github provided test for data
     dcDataTable
         .dimension(dimGithubStarsCount)
-        .size(100)
+        .size(Infinity)
         .showSections(false)
         .columns([
             {
@@ -167,4 +189,23 @@ function initDataVis() {
         ])
         .order(d3.descending)
     dc.renderAll();
+
+    // User interaction
+
+    // Input Nr Filter
+    function filterByStars() {
+        dimGithubStarsCount.filterAll();
+
+        dimGithubStarsCount.filter(d => {
+            if (d > 100000) {
+                return d;
+            }
+        });
+        let topRange = []
+        dimGithubStarsCount.top(Infinity).forEach(d => topRange.push(d.name));
+        dcRangeGraph.elasticX(false)
+            .x(d3.scaleBand().domain(topRange));
+        dc.redrawAll();
+    }
+    d3.select("#filterByStars").on("click", filterByStars);
 };
