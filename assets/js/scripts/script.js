@@ -39,6 +39,7 @@ function flattenFullList() {
                 "githubLink" : "not provided",
                 "githubUser" : "not provided",
                 "githubStarsCount" : 0,
+                "partialByStars": "not provided",
                 "githubForksCount" : 0,
                 "githubSubsCount" : 0,
             }
@@ -51,6 +52,7 @@ function flattenFullList() {
                 "githubLink" : `https://www.github.com/${element.github.user}/${element.github.repo}`,        
                 "githubUser" : `https://www.github.com/${element.github.user}/`,
                 "githubStarsCount" : element.github.stargazers_count,
+                "partialByStars": selectPartial(element.github.stargazers_count),
                 "githubForksCount" : element.github.forks,
                 "githubSubsCount" : element.github.subscribers_count,
             }
@@ -58,6 +60,24 @@ function flattenFullList() {
         cdnjsFlatList.push(newItem);
     });         
 };
+
+function selectPartial(stars) {
+    if (stars === 0) {
+        return "zero stars"
+    } else if (stars >= 1 && stars <= 10) {
+        return "one to ten"
+    } else if (stars >= 11 && stars <= 100) {
+        return "ten to hundred"
+    } else if (stars >= 101 && stars <= 1000) {
+        return "hundred to thousand"
+    } else if (stars >= 1001 && stars <= 10000) {
+        return "thousand to ten thousand"
+    } else if (stars >= 10001 && stars <= 100000) {
+        return "ten thousand to one hundred thousand"
+    } else {
+        return "more than one hundred thousand"
+    }
+}
 
 // html table related
 function generateTable() {
@@ -109,9 +129,28 @@ function initDataVis() {
     fullDataset = crossfilter(cdnjsFlatList);
     fullDatasetGroup = fullDataset.groupAll();
 
+    // Full Copy
+    // Reference: https://dc-js.github.io/dc.js/examples/filtering-removing.html line 49++
+       function remove_empty_bins(source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return d.value !== 0;
+                })
+            }
+        }
+    }
+    // End of Copy
+
     const dimName = fullDataset.dimension(d => d["name"]);
+
     const dimGithubStarsCount = fullDataset.dimension(d => d["githubStarsCount"]);
     const groupGithubStars = dimName.group().reduceSum(d => d["githubStarsCount"]);
+    const groupNonNullStars = remove_empty_bins(groupGithubStars);
+
+    const dimPartialStars = fullDataset.dimension(d => d["partialByStars"]);
+    const groupPartialStarsWithZeros = dimPartialStars.group().reduceCount(d => d["partialByStars"]);
+    const groupPartialStars = remove_empty_bins(groupPartialStarsWithZeros);
 
     const dimForksCount = fullDataset.dimension(d => d["githubForksCount"]);
     const dimSubsCount = fullDataset.dimension(d => d["githubSubsCount"]);
@@ -125,11 +164,12 @@ function initDataVis() {
     // dc section
 
     let dcVisCounter = new dc.DataCount("#dcVisCounter");
+    const dcPartialsPie = new dc.PieChart("#partialsByStars")
     let dcRangeGraph = new dc.BarChart("#dcRangeGraph");
     let dcDataTable = dc.dataTable("#dcDataTable");
 
-    // Full Copy
-    // Reference: http://dc-js.github.io/dc.js/ stock.js Example counter, line 426++
+    // Full Copy, altered links
+    // Reference: http://dc-js.github.io/dc.js/stock.js line 426++
     dcVisCounter
         .crossfilter(fullDataset)
         .groupAll(fullDatasetGroup)
@@ -138,8 +178,17 @@ function initDataVis() {
                 "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
                 " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
             all: "All records selected. Please click ?? to apply filters."
-        });
+        }
+    );
     // End of Copy
+
+    dcPartialsPie
+        .dimension(dimPartialStars)
+        .group(groupPartialStars)
+        .radius(100)
+        .externalLabels(50)
+        .externalRadiusPadding(50)
+        .legend(new dc.HtmlLegend().container("#partialsLegend").horizontal(false).highlightSelected(true));
 
     dcRangeGraph
         .x(d3.scaleBand())
@@ -152,7 +201,7 @@ function initDataVis() {
 
         .dimension(dimName)
         .mouseZoomable(true)
-        .group(groupGithubStars)
+        .group(groupNonNullStars)
 
     //dcRangeScale.on("renderlet", d => d.selectAll("g.x text").attr("transform", "rotate(-90)"));
 
