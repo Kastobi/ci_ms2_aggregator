@@ -143,6 +143,7 @@ function initDataVis() {
     // End of Copy
 
     const dimName = fullDataset.dimension(d => d["name"]);
+    const dimNameForSearch = fullDataset.dimension(d => d["name"]);
 
     const dimGithubStarsCount = fullDataset.dimension(d => d["githubStarsCount"]);
     const groupGithubStars = dimName.group().reduceSum(d => d["githubStarsCount"]);
@@ -163,10 +164,11 @@ function initDataVis() {
 
     // dc section
 
-    let dcVisCounter = new dc.DataCount("#dcVisCounter");
+    const dcVisCounter = new dc.DataCount("#dcVisCounter");
     const dcPartialsPie = new dc.PieChart("#partialsByStars")
-    let dcRangeGraph = new dc.BarChart("#dcRangeGraph");
-    let dcDataTable = dc.dataTable("#dcDataTable");
+    const dcRangeGraph = new dc.BarChart("#dcRangeGraph");
+    const searchByName = new dc.TextFilterWidget("#searchByName")
+    const dcDataTable = dc.dataTable("#dcDataTable");
 
     // Full Copy, altered links
     // Reference: http://dc-js.github.io/dc.js/stock.js line 426++
@@ -177,7 +179,7 @@ function initDataVis() {
             some:
                 "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
                 " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
-            all: "All records selected. Please click ?? to apply filters."
+            all: "All records selected. Please click on a graph to apply filters."
         }
     );
     // End of Copy
@@ -188,7 +190,10 @@ function initDataVis() {
         .radius(100)
         .externalLabels(50)
         .externalRadiusPadding(50)
-        .legend(new dc.HtmlLegend().container("#partialsLegend").horizontal(false).highlightSelected(true));
+        .legend(new dc.HtmlLegend()
+            .container("#partialsLegend")
+            .horizontal(false)
+            .highlightSelected(true));
 
     dcRangeGraph
         .x(d3.scaleBand())
@@ -200,10 +205,14 @@ function initDataVis() {
         .yAxisLabel("no of github stars")
 
         .dimension(dimName)
-        .mouseZoomable(true)
+        //.mouseZoomable(true) todo: implement, throws error + does not zoom
         .group(groupNonNullStars)
 
     //dcRangeScale.on("renderlet", d => d.selectAll("g.x text").attr("transform", "rotate(-90)"));
+
+    searchByName
+        .dimension(dimNameForSearch)
+        .placeHolder("filter by name")
 
     //todo: github provided test for data
     dcDataTable
@@ -238,23 +247,4 @@ function initDataVis() {
         ])
         .order(d3.descending)
     dc.renderAll();
-
-    // User interaction
-
-    // Input Nr Filter
-    function filterByStars() {
-        dimGithubStarsCount.filterAll();
-
-        dimGithubStarsCount.filter(d => {
-            if (d > 100000) {
-                return d;
-            }
-        });
-        let topRange = []
-        dimGithubStarsCount.top(Infinity).forEach(d => topRange.push(d.name));
-        dcRangeGraph.elasticX(false)
-            .x(d3.scaleBand().domain(topRange));
-        dc.redrawAll();
-    }
-    d3.select("#filterByStars").on("click", filterByStars);
 };
