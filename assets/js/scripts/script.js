@@ -12,18 +12,17 @@ document.addEventListener("DOMContentLoaded", initSite);
 async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
-    
     flattenFullList();
     //generateTable(); todo: evaluate/decision vs dc / crossfilter way, remember html anchors!
     initDataVis();
-};
+}
 
 // cdnjs api call with keyword and github values included
 async function fetchCdnjsLibrariesFullList() {
-        const result = await d3.json("https://api.cdnjs.com/libraries?fields=keywords,github")
-            .catch(error => console.log(error));
-        return result.results;
-    };
+    const result = await d3.json("https://api.cdnjs.com/libraries?fields=keywords,github")
+        .catch(error => console.log(error));
+    return result.results;
+}
 
 // build list for starting table
 
@@ -32,34 +31,34 @@ function flattenFullList() {
         let newItem;
         if (element.github === null) {
             newItem = {
-                "index" : index,
-                "name" : element.name,
-                "keywords" : element.keywords,
+                "index": index,
+                "name": element.name,
+                "keywords": element.keywords,
                 "githubProvided": false,
-                "githubLink" : "not provided",
-                "githubUser" : "not provided",
-                "githubStarsCount" : 0,
+                "githubLink": "not provided",
+                "githubUser": "not provided",
+                "githubStarsCount": 0,
                 "partialByStars": "not provided",
-                "githubForksCount" : 0,
-                "githubSubsCount" : 0,
+                "githubForksCount": 0,
+                "githubSubsCount": 0,
             }
         } else {
             newItem = {
-                "index" : index,
-                "name" : element.name,
-                "keywords" : element.keywords,
-                "githubProvided" : true,
-                "githubLink" : `https://www.github.com/${element.github.user}/${element.github.repo}`,        
-                "githubUser" : `https://www.github.com/${element.github.user}/`,
-                "githubStarsCount" : element.github.stargazers_count,
+                "index": index,
+                "name": element.name,
+                "keywords": element.keywords,
+                "githubProvided": true,
+                "githubLink": `https://www.github.com/${element.github.user}/${element.github.repo}`,
+                "githubUser": `https://www.github.com/${element.github.user}/`,
+                "githubStarsCount": element.github.stargazers_count,
                 "partialByStars": selectPartial(element.github.stargazers_count),
-                "githubForksCount" : element.github.forks,
-                "githubSubsCount" : element.github.subscribers_count,
+                "githubForksCount": element.github.forks,
+                "githubSubsCount": element.github.subscribers_count,
             }
-        };     
+        }
         cdnjsFlatList.push(newItem);
-    });         
-};
+    });
+}
 
 function selectPartial(stars) {
     if (stars === 0) {
@@ -83,11 +82,11 @@ function selectPartial(stars) {
 function generateTable() {
     generateTableHead();
     generateTableBody();
-};
+}
 
 function generateTableHead() {
     let keysOfList = Object.keys(cdnjsFlatList[0]);
-    
+
     d3.select("#mainTable")
         .append("thead")
         .append("tr")
@@ -96,14 +95,14 @@ function generateTableHead() {
         .enter()
         .append("th")
         .text(i => i)
-};
+}
 
-function generateTableBody() { 
+function generateTableBody() {
     let columns = Object.keys(cdnjsFlatList[0]);
-    
+
     d3.select("#mainTable")
         .append("tbody")
-        
+
         //generate rows
         .selectAll("tr")
         .data(cdnjsFlatList)
@@ -112,15 +111,15 @@ function generateTableBody() {
 
         //generate cells
         .selectAll("td")
-        .data(function(row) {
-            return columns.map(function(column) {
+        .data(function (row) {
+            return columns.map(function (column) {
                 return {column: column, value: row[column]}
             })
         })
         .enter()
         .append("td")
         .text(i => i.value);
-};
+}
 
 function initDataVis() {
 
@@ -131,10 +130,10 @@ function initDataVis() {
 
     // Full Copy
     // Reference: https://dc-js.github.io/dc.js/examples/filtering-removing.html line 49++
-       function remove_empty_bins(source_group) {
+    function remove_empty_bins(source_group) {
         return {
-            all:function () {
-                return source_group.all().filter(function(d) {
+            all: function () {
+                return source_group.all().filter(function (d) {
                     return d.value !== 0;
                 })
             }
@@ -159,15 +158,18 @@ function initDataVis() {
     const dimGithubUser = fullDataset.dimension(d => d["githubUser"]);
     const groupGithubUser = dimGithubUser.group();
 
-    const keywordsProvided = fullDataset.dimension(function(d) {return d.keywords}, true);
+    const keywordsProvided = fullDataset.dimension(function (d) {
+        return d.keywords
+    }, true);
     const keywordsIndex = keywordsProvided.group();
 
     // dc section
 
     const dcVisCounter = new dc.DataCount("#dcVisCounter");
-    const dcPartialsPie = new dc.PieChart("#partialsByStars")
+    const dcPartialsPie = new dc.PieChart("#partialsByStars");
+    const dcPartialsRow = new dc.RowChart("#partialsByStarsRow")
     const dcRangeGraph = new dc.BarChart("#dcRangeGraph");
-    const searchByName = new dc.TextFilterWidget("#searchByName")
+    const searchByName = new dc.TextFilterWidget("#searchByName");
     const dcDataTable = dc.dataTable("#dcDataTable");
 
     // Full Copy, altered links
@@ -176,12 +178,12 @@ function initDataVis() {
         .crossfilter(fullDataset)
         .groupAll(fullDatasetGroup)
         .html({
-            some:
-                "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
-                " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
-            all: "All records selected. Please click on a graph to apply filters."
-        }
-    );
+                some:
+                    "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
+                    " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
+                all: "All records selected. Please click on a graph to apply filters."
+            }
+        );
     // End of Copy
 
     dcPartialsPie
@@ -194,6 +196,26 @@ function initDataVis() {
             .container("#partialsLegend")
             .horizontal(false)
             .highlightSelected(true));
+
+    dcPartialsRow
+        .dimension(dimPartialStars)
+        .group(groupPartialStars)
+        // ordering by hand due to missing y axis on row charts class
+        .ordering(d => {
+            if (d.key === "not provided") return 7;
+            else if (d.key === "zero stars") return 6;
+            else if (d.key === "one to ten") return 5;
+            else if (d.key === "ten to hundred") return 4;
+            else if (d.key === "hundred to thousand") return 3;
+            else if (d.key === "thousand to ten thousand") return 2;
+            else if (d.key === "ten thousand to one hundred thousand") return 1;
+            else if (d.key === "more than one hundred thousand") return 0;
+        })
+        .elasticX(true)
+        .on("renderlet", d => {
+            //todo: move to css? pick color there?
+            d.selectAll("g.row text").style("fill", "#000000");
+        });
 
     dcRangeGraph
         .x(d3.scaleBand())
@@ -208,13 +230,17 @@ function initDataVis() {
         //.mouseZoomable(true) todo: implement, throws error + does not zoom
         .group(groupNonNullStars)
 
-    //dcRangeScale.on("renderlet", d => d.selectAll("g.x text").attr("transform", "rotate(-90)"));
+    dcRangeGraph.on("renderlet",
+        d => d
+            .selectAll("g.x text")
+            .attr("transform", "rotate(-90)")
+            .style("text-anchor", "end")
+    );
 
     searchByName
         .dimension(dimNameForSearch)
         .placeHolder("filter by name")
 
-    //todo: github provided test for data
     dcDataTable
         .dimension(dimGithubStarsCount)
         .size(Infinity)
@@ -247,4 +273,4 @@ function initDataVis() {
         ])
         .order(d3.descending)
     dc.renderAll();
-};
+}
