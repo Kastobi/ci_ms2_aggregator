@@ -33,7 +33,7 @@ function flattenFullList() {
             newItem = {
                 "index": index,
                 "name": element.name,
-                "keywords": element.keywords,
+                "keywords": keywordsLowercased(element.keywords),
                 "githubProvided": false,
                 "githubLink": "not provided",
                 "githubUser": "not provided",
@@ -46,7 +46,7 @@ function flattenFullList() {
             newItem = {
                 "index": index,
                 "name": element.name,
-                "keywords": element.keywords,
+                "keywords": keywordsLowercased(element.keywords),
                 "githubProvided": true,
                 "githubLink": `https://www.github.com/${element.github.user}/${element.github.repo}`,
                 "githubUser": `https://www.github.com/${element.github.user}/`,
@@ -76,6 +76,12 @@ function selectPartial(stars) {
     } else {
         return "more than one hundred thousand"
     }
+}
+
+function keywordsLowercased(keywords) {
+    keysLower = [];
+    keywords.forEach(d => keysLower.push(d.toLowerCase()));
+    return keysLower;
 }
 
 // html table related
@@ -141,6 +147,7 @@ function initDataVis() {
     }
     // End of Copy
 
+    //double dimension to filter between different index types, dimension does not filter itself
     const dimName = fullDataset.dimension(d => d["name"]);
     const dimNameForSearch = fullDataset.dimension(d => d["name"]);
 
@@ -158,7 +165,11 @@ function initDataVis() {
     const dimGithubUser = fullDataset.dimension(d => d["githubUser"]);
     const groupGithubUser = dimGithubUser.group();
 
+    //double dimension to filter between different index types, dimension does not filter itself
     const keywordsProvided = fullDataset.dimension(function (d) {
+        return d.keywords
+    }, true);
+    const keywordsProvidedTextSearch = fullDataset.dimension(function (d) {
         return d.keywords
     }, true);
     const keywordsIndex = keywordsProvided.group();
@@ -166,8 +177,9 @@ function initDataVis() {
     // dc section
 
     const dcVisCounter = new dc.DataCount("#dcVisCounter");
-    const dcPartialsPie = new dc.PieChart("#partialsByStars");
-    const dcPartialsRow = new dc.RowChart("#partialsByStarsRow")
+    const dcPartialsRow = new dc.RowChart("#partialsByStarsRow");
+    const keywordPackageSearch = new dc.TextFilterWidget("#keywordPackageSearch");
+    const dcKeywordSelector = new dc.CboxMenu("#keywordSelector");
     const dcRangeGraph = new dc.BarChart("#dcRangeGraph");
     const searchByName = new dc.TextFilterWidget("#searchByName");
     const dcDataTable = dc.dataTable("#dcDataTable");
@@ -185,17 +197,6 @@ function initDataVis() {
             }
         );
     // End of Copy
-
-    dcPartialsPie
-        .dimension(dimPartialStars)
-        .group(groupPartialStars)
-        .radius(100)
-        .externalLabels(50)
-        .externalRadiusPadding(50)
-        .legend(new dc.HtmlLegend()
-            .container("#partialsLegend")
-            .horizontal(false)
-            .highlightSelected(true));
 
     dcPartialsRow
         .dimension(dimPartialStars)
@@ -216,6 +217,32 @@ function initDataVis() {
             //todo: move to css? pick color there?
             d.selectAll("g.row text").style("fill", "#000000");
         });
+
+    // Filter keyword Index by text input => filters on packages with keyword
+    keywordPackageSearch
+        .dimension(keywordsProvidedTextSearch)
+        .placeHolder("keyword")
+
+    // Filter keyword Index by threshold of packages with keyword
+    d3.select("#keywordSliderRange").on("change", function() {
+        updateSlider(this.value);
+    })
+     // Reference: https://dc-js.github.io/dc.js/examples/adjustable-threshold.html, line 105++
+    function updateSlider(slideValue) {
+        let sliderDiv = document.getElementById("sliderValue");
+        sliderDiv.innerHTML = slideValue;
+        dcKeywordSelector
+            .filterDisplayed(d => d.value >= slideValue)
+        dc.redrawAll();
+    }
+
+    dcKeywordSelector
+        .dimension(keywordsProvided)
+        .group(keywordsIndex)
+        .title(d => d.key)
+        .multiple(true)
+        .controlsUseVisibility(true)
+        .filterDisplayed(d => d.value > 50)
 
     dcRangeGraph
         .x(d3.scaleBand())
@@ -269,6 +296,10 @@ function initDataVis() {
             {
                 label: "GitHub link",
                 format: d => d.githubLink
+            },
+            {
+                label: "keywords provided",
+                format: d => d.keywords
             }
         ])
         .order(d3.descending)
