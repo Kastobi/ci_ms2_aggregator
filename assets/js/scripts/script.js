@@ -274,6 +274,13 @@ function initDataVis() {
         .showSections(false)
         .columns([
             {
+              label: "Compare trends",
+              format: d => {
+                return `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">
+                <label for="checkbox-${d.name}">${d.name}</label>`
+                }
+            },
+            {
                 label: "Package name",
                 format: d => d.name
             },
@@ -303,5 +310,85 @@ function initDataVis() {
             }
         ])
         .order(d3.descending)
+        .on("renderlet", function() {
+        d3.selectAll(".dc-table-column > input").on("click", function() {
+                updateCompareList(this.value);
+            })
+    })
+
     dc.renderAll();
+
+    // compare part
+
+    //todo: compareList=[];updateCompareList() on reset all?
+    let compareList = []
+    function updateCompareList(value) {
+        if (compareList.includes(value)) {
+            compareList.pop(value);
+            generateCompareDiv();
+        } else if (compareList.length >= 3) {
+            document.getElementById(`checkbox-${value}`).checked = false;
+            alert("Please remove an item first, maximum of 3 items"); //todo: alert best way?
+            generateCompareDiv();
+        } else {
+            compareList.push(value);
+            generateCompareDiv();
+        }
+
+        function generateCompareDiv() {
+            d3.select("#compareAnchor")
+                .selectAll("button")
+                .remove();
+            d3.select("#compareAnchor")
+                .selectAll("button")
+                .data(compareList)
+                .enter()
+                .append("button")
+                .text(d => d);
+
+            if (compareList.length != 0) {
+                d3.select("#compareAnchor")
+                    .append("button")
+                    .text("Show me the trends!")
+                    .on("click", function () {
+                        showTheTrends();
+                    })
+            }
+        }
+
+        //todo: append on compare anchor, maybe make a popup?
+        function showTheTrends() {
+            d3.select("#compareAnchor")
+                .select("#googleTrendsWidget")
+                .remove();
+            d3.select("#compareAnchor")
+                .append("div")
+                .attr("id", "googleTrendsWidget")
+
+            const timeToday = new Date().toISOString().split("T")[0];
+            const time5years = new Date().getFullYear() - 5 + timeToday.substring(4, 10);
+
+            let comparisonItems = {"comparisonItem": []};
+
+            compareList.forEach(d => {
+                let keyword = {
+                    "keyword": d,
+                    "geo": "",
+                    "time": time5years + " " + timeToday
+                }
+                comparisonItems.comparisonItem.push(keyword);
+            });
+
+            comparisonItems.category = 0;
+            comparisonItems.property = "";
+
+            const queryItem = {
+                "exploreQuery": "date=today%205-y&q=react,angular",
+                "guestPath": "https://trends.google.com:443/trends/embed/"
+            }
+
+            const widget = document.getElementById("googleTrendsWidget");
+            trends.embed.renderExploreWidgetTo(widget, "TIMESERIES", comparisonItems, queryItem);
+        }
+    }
 }

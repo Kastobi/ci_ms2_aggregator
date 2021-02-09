@@ -14,6 +14,7 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js" integrity="sha512-YTblpiY3CE9zQBW//UMBfvDF2rz6bS7vhhT5zwzqQ8P7Z0ikBGG8hfcRwmmg3IuLl2Rwk95NJUEs1HCQD4EDKQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.3/dc.min.js" integrity="sha512-iCZwiWxyZoSqAxQREVo3JEXairHxt52vEQiEhjKHrgeWy/S0Rw8sDR+5A+f4uAF+pEZgkjDv4Ww0WluNIologQ==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
 
 </head>
 <body>
@@ -35,11 +36,11 @@
     <div id="partialsByStarsRow">
     </div>
     <div id="keywordPackageSearch">
-        Filter packages by
+        Filter selected packages by
     </div>
     <div id="keywordSlider">
         <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-        Just display keywords used at least on <span id="sliderValue">50</span> packages.
+        Just display keywords used at least on <span id="sliderValue">50</span> packages of the selection.
     </div>
     <div id="keywordSelector">
     </div>
@@ -47,6 +48,9 @@
     </div>
     <table id="dcDataTable">
     </table>
+
+    <div id="compareAnchor">
+    </div>
 
     <table id="mainTable">
     </table>
