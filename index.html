@@ -29,25 +29,33 @@
 
 <!-- Content -->
 <section>
-    <div id="dcRangeGraph">
+    <div id="dcRangeGraph"></div>
+    <div id="dcVisCounter"></div>
+    <div id="partialsByStarsRow"></div>
+
+    <div id="containerKeywords">
+        <div id="keywordPackageSearch">
+            Filter selected packages by keyword:
+        </div>
+        <div id="keywordSlider">
+            <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
+            <!-- add label for input -->
+            Just display keywords used at least on <span id="sliderValue">50</span> packages of the selection.
+        </div>
+        <div id="keywordSelector"></div>
     </div>
-    <div id="dcVisCounter">
+
+    <div id="containerDataTable">
+        <div id="searchByName">
+            Filter the packages by package name:
+        </div>
+        <div id="pagination">
+            Showing <span id="begin"></span>-<span id="end"></span> of <span id="size"></span> <span id="totalsize"></span>
+            <input id="lastButton" class="btn" type="Button" value="Last"/>
+            <input id="nextButton" class="btn" type="button" value="Next"/>
+        </div>
+        <table id="dcDataTable"></table>
     </div>
-    <div id="partialsByStarsRow">
-    </div>
-    <div id="keywordPackageSearch">
-        Filter selected packages by
-    </div>
-    <div id="keywordSlider">
-        <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-        Just display keywords used at least on <span id="sliderValue">50</span> packages of the selection.
-    </div>
-    <div id="keywordSelector">
-    </div>
-    <div id="searchByName">
-    </div>
-    <table id="dcDataTable">
-    </table>
 
     <div id="compareAnchor">
     </div>

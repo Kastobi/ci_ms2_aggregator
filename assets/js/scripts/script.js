@@ -264,10 +264,76 @@ function initDataVis() {
             .style("text-anchor", "end")
     );
 
+    // DataTable
+
+    // Search DataTable by name
     searchByName
         .dimension(dimNameForSearch)
-        .placeHolder("filter by name")
+        .placeHolder("name")
 
+    // Pagination Data Table
+    // Reference https://dc-js.github.io/dc.js/examples/table-pagination.html line 68++
+    // copy, altered just in details
+    let dataTablePageSize = 25;
+    let dataTablePageStart = 0;
+    let dataTablePageEnd = 24;
+    let totFilteredRecs = fullDatasetGroup.value();
+
+
+    function update_offset() {
+        dataTablePageStart = dataTablePageStart >= totFilteredRecs ? Math.floor((totFilteredRecs - 1) / dataTablePageSize) * dataTablePageSize : dataTablePageStart;
+        dataTablePageStart = dataTablePageStart < 0 ? 0 : dataTablePageStart;
+
+        dcDataTable.beginSlice(dataTablePageStart);
+        dcDataTable.endSlice(dataTablePageStart + dataTablePageSize);
+    }
+
+    function display() {
+        dataTablePageEnd = dataTablePageStart + dataTablePageSize > totFilteredRecs ? totFilteredRecs : dataTablePageStart + dataTablePageSize;
+        d3.select('#begin')
+            .text(dataTablePageEnd === 0 ? dataTablePageStart : dataTablePageStart + 1);
+        d3.select('#end')
+            .text(dataTablePageEnd);
+        d3.select('#lastButton')
+            .attr('disabled', dataTablePageStart - dataTablePageSize < 0 ? 'true' : null);
+        d3.select('#nextButton')
+            .attr('disabled', dataTablePageStart + dataTablePageSize >= totFilteredRecs ? 'true' : null);
+        d3.select('#size').text(totFilteredRecs);
+        if (totFilteredRecs !== fullDataset.size()) {
+            d3.select('#totalsize').text("(filtered Total: " + fullDataset.size() + " )");
+        } else {
+            d3.select('#totalsize').text('');
+        }
+    }
+
+    function next() {
+          dataTablePageStart += dataTablePageSize;
+          update_offset();
+          dcDataTable.redraw();
+      }
+    // end of full copy
+
+    d3.select("#nextButton").on("click", function() {
+        next();
+    })
+
+    // full copy, reference as above, inserted d3 function for understanding
+    function last() {
+        dataTablePageStart -= dataTablePageSize;
+        update_offset();
+        dcDataTable.redraw();
+    }
+    // end of full copy
+
+    d3.select("#lastButton").on("click", function () {
+        last();
+    })
+
+    // compareList var initialization for google trends compare, init for checkboxes in DataTable
+    //todo: compareList=[];updateCompareList() on reset all?
+    let compareList = []
+
+    // DataTable
     dcDataTable
         .dimension(dimGithubStarsCount)
         .size(Infinity)
@@ -310,21 +376,30 @@ function initDataVis() {
             }
         ])
         .order(d3.descending)
-        .on("renderlet", function() {
-        d3.selectAll(".dc-table-column > input").on("click", function() {
+        .on("renderlet", function () {
+            d3.selectAll(".dc-table-column > input")
+                .each(function () {
+                    if (compareList.includes(this.value)) {
+                        this.checked = true;
+                    }
+            })
+            d3.selectAll(".dc-table-column > input")
+                .on("click", function () {
                 updateCompareList(this.value);
             })
-    })
+        })
+        .on("preRender", update_offset)
+        .on("preRedraw", update_offset)
+        .on("pretransition", display)
 
+    //Final dc.renderAll() -> end of dc part, renders all tables
     dc.renderAll();
 
-    // compare part
-
-    //todo: compareList=[];updateCompareList() on reset all?
-    let compareList = []
+    // Compare via Google trends part
     function updateCompareList(value) {
         if (compareList.includes(value)) {
-            compareList.pop(value);
+            let index = compareList.indexOf(value);
+            compareList.splice(index, 1);
             generateCompareDiv();
         } else if (compareList.length >= 3) {
             document.getElementById(`checkbox-${value}`).checked = false;
