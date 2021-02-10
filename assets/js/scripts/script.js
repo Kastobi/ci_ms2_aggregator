@@ -79,7 +79,7 @@ function selectPartial(stars) {
 }
 
 function keywordsLowercased(keywords) {
-    keysLower = [];
+    let keysLower = [];
     keywords.forEach(d => keysLower.push(d.toLowerCase()));
     return keysLower;
 }
@@ -134,7 +134,7 @@ function initDataVis() {
     fullDataset = crossfilter(cdnjsFlatList);
     fullDatasetGroup = fullDataset.groupAll();
 
-    // Full Copy
+    // Full Copy, removing empty bins from graphs
     // Reference: https://dc-js.github.io/dc.js/examples/filtering-removing.html line 49++
     function remove_empty_bins(source_group) {
         return {
@@ -184,19 +184,33 @@ function initDataVis() {
     const searchByName = new dc.TextFilterWidget("#searchByName");
     const dcDataTable = dc.dataTable("#dcDataTable");
 
-    // Full Copy, altered links
+    // compareList var initialization for google trends compare, init for checkboxes in DataTable
+    let compareList = [];
+
     // Reference: http://dc-js.github.io/dc.js/stock.js line 426++
     dcVisCounter
         .crossfilter(fullDataset)
         .groupAll(fullDatasetGroup)
         .html({
                 some:
-                    "<strong>%filter-count</strong> selected out <strong>%total-count</strong> records" +
-                    " | <a href=\"javascript:dc.filterAll(); dc.renderAll();\">Reset All</a>",
+                    "<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records " +
+                    "<button id='resetAllButton'>Reset All</button>",
                 all: "All records selected. Please click on a graph to apply filters."
             }
-        );
-    // End of Copy
+        )
+        .on("renderlet", function () {
+            d3.select("#resetAllButton")
+                .on("click", function () {
+                    resetAllFilters();
+                })
+        });
+
+    function resetAllFilters() {
+        dc.filterAll();
+        compareList = [];
+        updateCompareList();
+        dc.redrawAll();
+    }
 
     dcPartialsRow
         .dimension(dimPartialStars)
@@ -281,6 +295,8 @@ function initDataVis() {
 
 
     function update_offset() {
+        totFilteredRecs = fullDatasetGroup.value();
+        dataTablePageEnd = dataTablePageStart + dataTablePageSize > totFilteredRecs ? totFilteredRecs : dataTablePageStart + dataTablePageSize;
         dataTablePageStart = dataTablePageStart >= totFilteredRecs ? Math.floor((totFilteredRecs - 1) / dataTablePageSize) * dataTablePageSize : dataTablePageStart;
         dataTablePageStart = dataTablePageStart < 0 ? 0 : dataTablePageStart;
 
@@ -289,6 +305,7 @@ function initDataVis() {
     }
 
     function display() {
+        totFilteredRecs = fullDatasetGroup.value();
         dataTablePageEnd = dataTablePageStart + dataTablePageSize > totFilteredRecs ? totFilteredRecs : dataTablePageStart + dataTablePageSize;
         d3.select('#begin')
             .text(dataTablePageEnd === 0 ? dataTablePageStart : dataTablePageStart + 1);
@@ -328,10 +345,6 @@ function initDataVis() {
     d3.select("#lastButton").on("click", function () {
         last();
     })
-
-    // compareList var initialization for google trends compare, init for checkboxes in DataTable
-    //todo: compareList=[];updateCompareList() on reset all?
-    let compareList = []
 
     // DataTable
     dcDataTable
@@ -405,6 +418,8 @@ function initDataVis() {
             document.getElementById(`checkbox-${value}`).checked = false;
             alert("Please remove an item first, maximum of 3 items"); //todo: alert best way?
             generateCompareDiv();
+        } else if (value == null) {
+            generateCompareDiv();
         } else {
             compareList.push(value);
             generateCompareDiv();
@@ -419,9 +434,15 @@ function initDataVis() {
                 .data(compareList)
                 .enter()
                 .append("button")
+                .attr("value", d => d)
                 .text(d => d);
+            d3.selectAll("#compareAnchor > button")
+                .on("click", function() {
+                    updateCompareList(this.value);
+                    dcDataTable.redraw();
+                });
 
-            if (compareList.length != 0) {
+            if (compareList.length !== 0) {
                 d3.select("#compareAnchor")
                     .append("button")
                     .text("Show me the trends!")
