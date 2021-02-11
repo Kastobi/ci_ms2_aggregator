@@ -9,11 +9,12 @@ let fullDatasetGroup = null;
 
 document.addEventListener("DOMContentLoaded", initSite);
 
+window.addEventListener('resize', () => dc.renderAll());
+
 async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
     flattenFullList();
-    //generateTable(); todo: evaluate/decision vs dc / crossfilter way, remember html anchors!
     initDataVis();
 }
 
@@ -82,49 +83,6 @@ function keywordsLowercased(keywords) {
     let keysLower = [];
     keywords.forEach(d => keysLower.push(d.toLowerCase()));
     return keysLower;
-}
-
-// html table related
-function generateTable() {
-    generateTableHead();
-    generateTableBody();
-}
-
-function generateTableHead() {
-    let keysOfList = Object.keys(cdnjsFlatList[0]);
-
-    d3.select("#mainTable")
-        .append("thead")
-        .append("tr")
-        .selectAll("th")
-        .data(keysOfList)
-        .enter()
-        .append("th")
-        .text(i => i)
-}
-
-function generateTableBody() {
-    let columns = Object.keys(cdnjsFlatList[0]);
-
-    d3.select("#mainTable")
-        .append("tbody")
-
-        //generate rows
-        .selectAll("tr")
-        .data(cdnjsFlatList)
-        .enter()
-        .append("tr")
-
-        //generate cells
-        .selectAll("td")
-        .data(function (row) {
-            return columns.map(function (column) {
-                return {column: column, value: row[column]}
-            })
-        })
-        .enter()
-        .append("td")
-        .text(i => i.value);
 }
 
 function initDataVis() {
@@ -259,14 +217,21 @@ function initDataVis() {
         .filterDisplayed(d => d.value > 50)
 
     dcRangeGraph
-        .x(d3.scaleBand())
+        .x(d3.scaleOrdinal())
         .elasticX(true)
         .xUnits(dc.units.ordinal)
+        .xAxisLabel("packages (hover for name: stars)")
 
+    dcRangeGraph.xAxis()
+        .tickValues([])
+
+    dcRangeGraph
         .y(d3.scaleLinear())
         .elasticY(true)
         .yAxisLabel("no of github stars")
+        .margins().left = 70;
 
+    dcRangeGraph
         .dimension(dimName)
         //.mouseZoomable(true) todo: implement, throws error + does not zoom
         .group(groupNonNullStars)
