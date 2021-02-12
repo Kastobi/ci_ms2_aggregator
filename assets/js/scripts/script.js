@@ -138,12 +138,13 @@ function initDataVis() {
     const dcPartialsRow = new dc.RowChart("#partialsByStarsRow");
     const keywordPackageSearch = new dc.TextFilterWidget("#keywordPackageSearch");
     const dcKeywordSelector = new dc.CboxMenu("#keywordSelector");
-    const dcRangeGraph = new dc.BarChart("#dcRangeGraph");
+    const dcOverviewBarChart = new dc.BarChart("#dcOverviewBarChart");
     const searchByName = new dc.TextFilterWidget("#searchByName");
     const dcDataTable = dc.dataTable("#dcDataTable");
 
-    // compareList var initialization for google trends compare, init for checkboxes in DataTable
+    // compareList var initialization for google trends compare, init for checkboxes in DataTable and first Load
     let compareList = [];
+    firstLoadComparison();
 
     // Reference: http://dc-js.github.io/dc.js/stock.js line 426++
     dcVisCounter
@@ -165,8 +166,16 @@ function initDataVis() {
 
     function resetAllFilters() {
         dc.filterAll();
+
+        // reset compare List
         compareList = [];
         updateCompareList();
+
+        // reset slider
+        const sliderDefault = document.getElementById("keywordSliderRange").defaultValue;
+        document.getElementById("keywordSliderRange").value = sliderDefault;
+        updateSlider(sliderDefault);
+
         dc.redrawAll();
     }
 
@@ -185,6 +194,8 @@ function initDataVis() {
             else if (d.key === "more than one hundred thousand") return 0;
         })
         .elasticX(true)
+        .title( d => d.value + " packages of the selection got " + d.key + " stars")
+        .turnOnControls()
         .on("renderlet", d => {
             //todo: move to css? pick color there?
             d.selectAll("g.row text").style("fill", "#000000");
@@ -216,32 +227,27 @@ function initDataVis() {
         .controlsUseVisibility(true)
         .filterDisplayed(d => d.value > 50)
 
-    dcRangeGraph
-        .x(d3.scaleOrdinal())
+    //Overview bar chart
+
+    dcOverviewBarChart
+        .x(d3.scaleBand())
         .elasticX(true)
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("packages (hover for name: stars)")
+        .xAxisLabel("packages (hover for info, click to select)");
+    dcOverviewBarChart.xAxis()
+        .tickValues([]);
 
-    dcRangeGraph.xAxis()
-        .tickValues([])
-
-    dcRangeGraph
+    dcOverviewBarChart
         .y(d3.scaleLinear())
         .elasticY(true)
         .yAxisLabel("no of github stars")
         .margins().left = 70;
 
-    dcRangeGraph
+    dcOverviewBarChart
         .dimension(dimName)
         //.mouseZoomable(true) todo: implement, throws error + does not zoom
         .group(groupNonNullStars)
-
-    dcRangeGraph.on("renderlet",
-        d => d
-            .selectAll("g.x text")
-            .attr("transform", "rotate(-90)")
-            .style("text-anchor", "end")
-    );
+        .title(d => d.key + " got " + d.value + " stars on github");
 
     // DataTable
 
@@ -276,9 +282,9 @@ function initDataVis() {
             .text(dataTablePageEnd === 0 ? dataTablePageStart : dataTablePageStart + 1);
         d3.select('#end')
             .text(dataTablePageEnd);
-        d3.select('#lastButton')
+        d3.select('#previousPageButton')
             .attr('disabled', dataTablePageStart - dataTablePageSize < 0 ? 'true' : null);
-        d3.select('#nextButton')
+        d3.select('#nextPageButton')
             .attr('disabled', dataTablePageStart + dataTablePageSize >= totFilteredRecs ? 'true' : null);
         d3.select('#size').text(totFilteredRecs);
         if (totFilteredRecs !== fullDataset.size()) {
@@ -288,27 +294,27 @@ function initDataVis() {
         }
     }
 
-    function next() {
+    function nextPage() {
           dataTablePageStart += dataTablePageSize;
           update_offset();
           dcDataTable.redraw();
       }
     // end of full copy
 
-    d3.select("#nextButton").on("click", function() {
-        next();
+    d3.select("#nextPageButton").on("click", function() {
+        nextPage();
     })
 
     // full copy, reference as above, inserted d3 function for understanding
-    function last() {
+    function previousPage() {
         dataTablePageStart -= dataTablePageSize;
         update_offset();
         dcDataTable.redraw();
     }
     // end of full copy
 
-    d3.select("#lastButton").on("click", function () {
-        last();
+    d3.select("#previousPageButton").on("click", function () {
+        previousPage();
     })
 
     // DataTable
@@ -414,42 +420,57 @@ function initDataVis() {
                     .on("click", function () {
                         showTheTrends();
                     })
+
+                d3.select("#compareAnchor")
+                    .append("button")
+                    .text("Reset")
+                    .on("click", function() {
+                        const compareListClone = [...compareList];
+                        compareListClone.forEach(d => updateCompareList(d))
+                        dcDataTable.redraw()
+                    })
             }
         }
+    }
 
-        //todo: append on compare anchor, maybe make a popup?
-        function showTheTrends() {
-            d3.select("#compareAnchor")
-                .select("#googleTrendsWidget")
-                .remove();
-            d3.select("#compareAnchor")
-                .append("div")
-                .attr("id", "googleTrendsWidget")
+    //todo: x-frame firefox policy problem?
+    function showTheTrends() {
+        d3.select("#googleAnchor")
+            .select("#googleTrendsWidget")
+            .remove();
+        d3.select("#googleAnchor")
+            .append("div")
+            .attr("id", "googleTrendsWidget")
 
-            const timeToday = new Date().toISOString().split("T")[0];
-            const time5years = new Date().getFullYear() - 5 + timeToday.substring(4, 10);
+        const timeToday = new Date().toISOString().split("T")[0];
+        const time5years = new Date().getFullYear() - 5 + timeToday.substring(4, 10);
 
-            let comparisonItems = {"comparisonItem": []};
+        let comparisonItems = {"comparisonItem": []};
 
-            compareList.forEach(d => {
-                let keyword = {
-                    "keyword": d,
-                    "geo": "",
-                    "time": time5years + " " + timeToday
-                }
-                comparisonItems.comparisonItem.push(keyword);
-            });
-
-            comparisonItems.category = 0;
-            comparisonItems.property = "";
-
-            const queryItem = {
-                "exploreQuery": "date=today%205-y&q=react,angular",
-                "guestPath": "https://trends.google.com:443/trends/embed/"
+        compareList.forEach(d => {
+            let keyword = {
+                "keyword": d,
+                "geo": "",
+                "time": time5years + " " + timeToday
             }
+            comparisonItems.comparisonItem.push(keyword);
+        });
 
-            const widget = document.getElementById("googleTrendsWidget");
-            trends.embed.renderExploreWidgetTo(widget, "TIMESERIES", comparisonItems, queryItem);
+        comparisonItems.category = 0;
+        comparisonItems.property = "";
+
+        const queryItem = {
+            "exploreQuery": "date=today%205-y",
+            "guestPath": "https://trends.google.com:443/trends/embed/"
         }
+
+        const widget = document.getElementById("googleTrendsWidget");
+        trends.embed.renderExploreWidgetTo(widget, "TIMESERIES", comparisonItems, queryItem);
+    }
+
+    function firstLoadComparison() {
+        compareList = ["jquery", "vue", "react", "angular"];
+        showTheTrends();
+        compareList = [];
     }
 }
