@@ -433,7 +433,6 @@ function initDataVis() {
         }
     }
 
-    //todo: x-frame firefox policy problem?
     function showTheTrends() {
         d3.select("#googleAnchor")
             .select("#googleTrendsWidget")
@@ -465,7 +464,52 @@ function initDataVis() {
         }
 
         const widget = document.getElementById("googleTrendsWidget");
+
+        // does google trends render? handling
+        const widgetMutationObserver = new MutationObserver(didGoogleTrendsLoad)
+
+        function didGoogleTrendsLoad(mutationList, observer) {
+            mutationList.forEach((mutation) => {
+                setTimeout(() => {
+                    if (document.querySelector("[id^='trends-widget-']").attributes["style"] == undefined) {
+                        d3.select("#googleAnchor")
+                            .select("#googleTrendsWidget")
+                            .remove();
+                        d3.select("#googleAnchor")
+                            .append("div")
+                            .attr("class", "iFrame-Error")
+                            .text("Sorry, your browser settings does not allow the embedded trends to render.") // todo: explain
+                            .lower()
+                    }
+                }, 2000);
+            })
+        }
+        widgetMutationObserver.observe(widget, {childList: true, subtree: false});
+
+        // calls google trends embedded api
         trends.embed.renderExploreWidgetTo(widget, "TIMESERIES", comparisonItems, queryItem);
+
+        // adds link button
+        d3.select("#googleAnchor")
+            .append("button")
+            .text("Open Google Trends in new window")
+            .attr("class", "googleTrendsNewWindow")
+
+        d3.select(".googleTrendsNewWindow")
+            .raise()
+
+        d3.select(".googleTrendsNewWindow")
+            .on("click", function() {
+                if (compareList.length == 0) {
+                    alert("Please add items to your compare list first.")
+                } else {
+                    let googleTrendsReplacementURL = "https://trends.google.de/trends/explore?date=today%205-y&q=" + compareList.toString();
+                    window.open(
+                        googleTrendsReplacementURL,
+                        "_blank"
+                    );
+                }
+            })
     }
 
     function firstLoadComparison() {
