@@ -233,7 +233,7 @@ function initDataVis() {
         .x(d3.scaleBand())
         .elasticX(true)
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("packages (hover for info, click to select)");
+        .xAxisLabel("packages (alphabetical)");
     dcOverviewBarChart.xAxis()
         .tickValues([]);
 
@@ -305,7 +305,7 @@ function initDataVis() {
         nextPage();
     })
 
-    // full copy, reference as above, inserted d3 function for understanding
+    // full copy, reference as above, inserted d3 function for context on "nextPage()"
     function previousPage() {
         dataTablePageStart -= dataTablePageSize;
         update_offset();
@@ -317,7 +317,7 @@ function initDataVis() {
         previousPage();
     })
 
-    // DataTable
+    // DataTable generation
     dcDataTable
         .dimension(dimGithubStarsCount)
         .size(Infinity)
@@ -348,11 +348,11 @@ function initDataVis() {
             },
             {
                 label: "GitHub user",
-                format: d => d.githubUser
+                format: d => `<a href="${d.githubUser}" target="_blank">${d.githubUser}</a>`
             },
             {
                 label: "GitHub link",
-                format: d => d.githubLink
+                format: d => `<a href="${d.githubLink}" target="_blank">${d.githubLink}</a>`
             },
             {
                 label: "keywords provided",
@@ -360,6 +360,9 @@ function initDataVis() {
             }
         ])
         .order(d3.descending)
+
+    // add Compare List checkboxes
+    dcDataTable
         .on("renderlet", function () {
             d3.selectAll(".dc-table-column > input")
                 .each(function () {
@@ -372,6 +375,9 @@ function initDataVis() {
                 updateCompareList(this.value);
             })
         })
+
+    // add pagination
+    dcDataTable
         .on("preRender", update_offset)
         .on("preRedraw", update_offset)
         .on("pretransition", display)
@@ -471,15 +477,18 @@ function initDataVis() {
         function didGoogleTrendsLoad(mutationList, observer) {
             mutationList.forEach((mutation) => {
                 setTimeout(() => {
-                    if (document.querySelector("[id^='trends-widget-']").attributes["style"] == undefined) {
+                    if (document.querySelector("[id^='trends-widget-']").attributes["style"] === undefined) {
                         d3.select("#googleAnchor")
                             .select("#googleTrendsWidget")
                             .remove();
                         d3.select("#googleAnchor")
                             .append("div")
-                            .attr("class", "iFrame-Error")
-                            .text("Sorry, your browser settings does not allow the embedded trends to render.") // todo: explain
-                            .lower()
+                            .attr("class", "iFrameError")
+                            .text("Sorry, your browser settings does not allow the embedded trends to render. " +
+                                "It seems to depend on browser privacy settings (\"Do not Track\" or Cookies). " +
+                                "A reload resolved the issue on a device after loosening the privacy settings. " +
+                                "Alternative: Click on the button below to open the original Google Trends page in a new window.")
+                        d3.select(".iFrameError").lower()
                     }
                 }, 2000);
             })
@@ -512,6 +521,7 @@ function initDataVis() {
             })
     }
 
+    // present comparison on initial page load
     function firstLoadComparison() {
         compareList = ["jquery", "vue", "react", "angular"];
         showTheTrends();

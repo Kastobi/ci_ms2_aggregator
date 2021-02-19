@@ -7,6 +7,7 @@
     <title>Data aggregator on frontend libraries - for educational purposes</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.4/style/dc.min.css" integrity="sha512-t38Qn1jREPvzPvDLgIP2fjtOayaA1KKBuNpNj9BGgiMi+tGLOdvDB+aWLMe2BvokHg1OxRLQLE7qrlLo+A+MLA==" crossorigin="anonymous" />
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
@@ -19,53 +20,70 @@
 </head>
 <body>
 
-<!-- Nav -->
-<nav>
-</nav>
-
 <!-- Header -->
-<header>
-    <h1>Data aggregator on frontend libraries</h1>
+<header class="container">
+    <h1>Explore JavaScript frontend libraries delivered by &lt;cdnjs&gt;</h1>
     for educational purposes
 </header>
 
+<!-- Nav -->
+<nav class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+        </li>
+    </ul>
+</nav>
+
 <!-- Content -->
-<section>
-    <h2>All packages in your selection of &lt;cdnjs&gt; in alphabetical order</h2>
-    <div class="overviewContainer">
-        <div id="dcOverviewBarChart" class="dcAnchor"></div>
+
+<!-- Overview Chart -->
+<section class="container">
+    <h2>All packages in your selection</h2>
+    <div class="row overviewContainer">
+        <div id="dcOverviewBarChart" class="dcAnchor container-fluid"></div>
         <div id="dcVisCounter" class="dcAnchor"></div>
     </div>
 </section>
-<section>
-    <h2>Filters</h2>
-    <div class="filterContainer">
-        <h3>Packages grouped by github stars</h3>
-        <div id="partialsByStarsRow" class="dcAnchor"></div>
-    </div>
-    <div class="filterContainer">
-        <h3>Keywords used in the selection</h3>
-        Filters the selection by keyword and shows all packages with one of the selected keywords.
-        <div>
-            <h4>Keyword search</h4>
-            <div id="keywordPackageSearch" class="dcAnchor"></div>
+
+<!-- Filters and groups -->
+<section class="container">
+    <h2>Selectors</h2>
+    <div class="row">
+        <div class="col filterContainer">
+            <h3>Packages grouped by github stars</h3>
+            <div id="partialsByStarsRow" class="dcAnchor"></div>
         </div>
         <div>
-            <h4>Keyword range selector</h4>
-            <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-            <!-- add label for input -->
-            Just display keywords used at least on <strong><span id="sliderValue">50</span></strong> packages of the
-            selection.
-            <div id="keywordSelector" class="dcAnchor"></div>
-        </div>
-        <div id="searchByName" class="dcAnchor">
-            Filter packages by package name:
+            <h3>Keywords used in the selection</h3>
+            Filters the selection by keyword and shows all packages with one of the selected keywords.
+            <div class="filterContainer">
+                <h4>Search for specific keyword</h4>
+                Just select packages tagged with the given keywords.
+                <div id="keywordPackageSearch" class="dcAnchor"></div>
+            </div>
+            <div class="filterContainer">
+                <h4>Keyword selector</h4>
+                <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
+                <!-- add label for input -->
+                Just display keywords used at least on <strong><span id="sliderValue">50</span></strong> packages of the
+                selection.
+                <div id="keywordSelector" class="dcAnchor"></div>
+            </div>
+            <div id="searchByName" class="dcAnchor filterContainer">
+                Filter packages by package name:
+            </div>
         </div>
     </div>
 </section>
-<section>
+
+<!-- Table of selection -->
+<section class="container">
     <div id="containerDataTable">
-        <h2>Filtered Packages</h2>
+        <h2>Selected Packages</h2>
         <div id="pagination">
             Showing <span id="begin"></span>-<span id="end"></span> of <span id="size"></span> <span id="totalsize"></span>
             <button id="previousPageButton" value="Last">Previous Page</button>
@@ -74,15 +92,45 @@
         <table id="dcDataTable" class="dcAnchor"></table>
     </div>
 </section>
-<section>
+
+<!--- Google trends comparison -->
+<section class="container">
     <h2>Compare the search trends</h2>
-    Select up to 3 packages from the table for your comparison.
+    Select up to 3 packages from the table for your comparison via Google Trends.
     <div id="compareAnchor"></div>
-    <div id="googleAnchor"></div>
+    <div id="googleAnchor" class="container-fluid"></div>
 </section>
 
 <!-- Footer -->
-<footer>
+<footer class="container">
+    <div class="row">
+        <div class="col">
+            <a href="about.html#disclaimer">Disclaimer</a>
+        </div>
+        <div class="col">
+            <h5>Find me on</h5>
+            <ul class="social-link-list list-inline">
+                <li class="list-inline-item">
+                    <a href="https://github.com/apometricsTK/" target="_blank">
+                        <i class="fab fa-github-square" aria-hidden="true"></i>
+                        <span class="sr-only">Link to GitHub</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="https://www.linkedin.com/in/tobias-kast/" target="_blank">
+                        <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sr-only">Link to LinkedIn</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="https://www.xing.com/profile/Tobias_Kast5/" target="_blank">
+                        <i class="fab fa-xing-square" aria-hidden="true"></i>
+                        <span class="sr-only">Link to Xing</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </footer>
 
 <!-- Script area -->
