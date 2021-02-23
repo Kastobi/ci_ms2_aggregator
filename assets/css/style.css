@@ -1,3 +1,72 @@
+/* Body */
+
+.btn {
+    color: #fff;
+    background-color: #449a8d;
+    border-color: #449a8d;
+    margin: 2px;
+}
+
+.btn[disabled="true"] {
+    color: #449a8d;
+    background-color: #fff;
+    border-color: #449a8d;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #003b32;
+    border-color: #003b32;
+}
+
+
+/* Header */
+
+/* Nav */
+
+/* Footer */
+.social-links {
+    text-align: right;
+}
+
+.social-link-list li i {
+    color: #449a8d;
+    font-size: 1.5em;
+}
+
+.social-link-list li i:hover {
+    color: #003b32;
+}
+
+/* *** Content *** */
+
+/* General */
+section {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+.filterContainer {
+    border: 1px solid #dee2e6;
+}
+
+/* Overview bar chart */
+#dcOverviewBarChart .bar {
+    fill: #449a8d;
+}
+
+#dcOverviewBarChart .bar:hover {
+    fill: #003b32;
+    fill-opacity: 1;
+}
+
+#dcVisCounter {
+    text-align: right;
+}
+
+/* Keyword Selector */
 .dc-cbox-group {
     list-style: none;
 
@@ -8,5 +77,25 @@
 }
 
 .dc-cbox-item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
 
+.dc-cbox-item input {
+    margin-right: 3px;
+}
+
+/* Data Table */
+#pagination {
+    text-align: right;
+}
+
+/* Comparison / Google Trends widget */
+.compareItemButton:hover::before {
+    content: "Remove "
+}
+
+.googleTrendsNewWindow {
+    display: flex;
+    margin: auto;
 }

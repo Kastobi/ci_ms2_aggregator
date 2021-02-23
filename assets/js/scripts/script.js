@@ -140,6 +140,7 @@ function initDataVis() {
     const dcKeywordSelector = new dc.CboxMenu("#keywordSelector");
     const dcOverviewBarChart = new dc.BarChart("#dcOverviewBarChart");
     const searchByName = new dc.TextFilterWidget("#searchByName");
+    const searchByRepoOwner = new dc.TextFilterWidget("#searchByRepoOwner");
     const dcDataTable = dc.dataTable("#dcDataTable");
 
     // compareList var initialization for google trends compare, init for checkboxes in DataTable and first Load
@@ -154,11 +155,13 @@ function initDataVis() {
                 some:
                     "<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records " +
                     "<button id='resetAllButton'>Reset All</button>",
-                all: "All records selected. Please click on a graph to apply filters."
+                all: "All records selected. Please click on a graph to apply filters. " +
+                    "<button id='resetAllButton' disabled='true'>Reset All</button>",
             }
         )
         .on("renderlet", function () {
             d3.select("#resetAllButton")
+                .attr("class", "btn")
                 .on("click", function () {
                     resetAllFilters();
                 })
@@ -205,6 +208,7 @@ function initDataVis() {
     keywordPackageSearch
         .dimension(keywordsProvidedTextSearch)
         .placeHolder("keyword")
+    //todo: rewrite filter for multiple keywords
 
     // Filter keyword Index by threshold of packages with keyword
     d3.select("#keywordSliderRange").on("change", function() {
@@ -226,6 +230,10 @@ function initDataVis() {
         .multiple(true)
         .controlsUseVisibility(true)
         .filterDisplayed(d => d.value > 50)
+        .on("renderlet", d => {
+            d.select("input[type='reset']")
+                .attr("class", "btn")
+        });
 
     //Overview bar chart
 
@@ -251,10 +259,15 @@ function initDataVis() {
 
     // DataTable
 
-    // Search DataTable by name
+    // Search packages by name
     searchByName
         .dimension(dimNameForSearch)
         .placeHolder("name")
+
+    // Search packages by repo owner name
+    searchByRepoOwner
+        .dimension(dimGithubUser)
+        .placeHolder("user")
 
     // Pagination Data Table
     // Reference https://dc-js.github.io/dc.js/examples/table-pagination.html line 68++
@@ -324,31 +337,17 @@ function initDataVis() {
         .showSections(false)
         .columns([
             {
-              label: "Compare trends",
-              format: d => {
-                return `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">
-                <label for="checkbox-${d.name}">${d.name}</label>`
-                }
+              label: "Compare",
+              format: d => `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">`
+
             },
             {
                 label: "Package name",
-                format: d => d.name
+                format: d => `<label for="checkbox-${d.name}"><strong>${d.name}</strong></label>`
             },
             {
                 label: "GitHub stars",
                 format: d => d.githubStarsCount
-            },
-            {
-                label: "GitHub forks",
-                format: d => d.githubForksCount
-            },
-            {
-                label: "GitHub subs",
-                format: d => d.githubSubsCount
-            },
-            {
-                label: "GitHub user",
-                format: d => `<a href="${d.githubUser}" target="_blank">${d.githubUser}</a>`
             },
             {
                 label: "GitHub link",
@@ -356,7 +355,13 @@ function initDataVis() {
             },
             {
                 label: "keywords provided",
-                format: d => d.keywords
+                format: d => {
+                    let tableKeywords = [];
+                    d.keywords.forEach(keyword => {
+                        tableKeywords.push(" " + keyword)
+                    });
+                    return tableKeywords;
+                }
             }
         ])
         .order(d3.descending)
@@ -414,6 +419,7 @@ function initDataVis() {
                 .attr("value", d => d)
                 .text(d => d);
             d3.selectAll("#compareAnchor > button")
+                .attr("class", "btn compareItemButton")
                 .on("click", function() {
                     updateCompareList(this.value);
                     dcDataTable.redraw();
@@ -422,6 +428,7 @@ function initDataVis() {
             if (compareList.length !== 0) {
                 d3.select("#compareAnchor")
                     .append("button")
+                    .attr("class", "btn")
                     .text("Show me the trends!")
                     .on("click", function () {
                         showTheTrends();
@@ -429,6 +436,7 @@ function initDataVis() {
 
                 d3.select("#compareAnchor")
                     .append("button")
+                    .attr("class", "btn")
                     .text("Reset")
                     .on("click", function() {
                         const compareListClone = [...compareList];
@@ -471,7 +479,7 @@ function initDataVis() {
 
         const widget = document.getElementById("googleTrendsWidget");
 
-        // does google trends render? handling
+        // does google trends render?: handling
         const widgetMutationObserver = new MutationObserver(didGoogleTrendsLoad)
 
         function didGoogleTrendsLoad(mutationList, observer) {
@@ -481,31 +489,26 @@ function initDataVis() {
                         d3.select("#googleAnchor")
                             .select("#googleTrendsWidget")
                             .remove();
-                        d3.select("#googleAnchor")
-                            .append("div")
-                            .attr("class", "iFrameError")
-                            .text("Sorry, your browser settings does not allow the embedded trends to render. " +
-                                "It seems to depend on browser privacy settings (\"Do not Track\" or Cookies). " +
-                                "A reload resolved the issue on a device after loosening the privacy settings. " +
-                                "Alternative: Click on the button below to open the original Google Trends page in a new window.")
-                        d3.select(".iFrameError").lower()
+
+                        if (document.querySelector(".iFrameError") === null) {
+                            d3.select("#googleAnchor")
+                                .append("div")
+                                .attr("class", "iFrameError")
+                                .text("Sorry, your browser settings does not allow the embedded trends to render. " +
+                                    "It seems to depend on browser privacy settings (\"Do not Track\" or Cookies). " +
+                                    "A reload after loosening the privacy settings resolved the issue. " +
+                                    "Alternative: Click on the button below to open the original Google Trends page in a new window.")
+                            d3.select(".iFrameError").lower()
+                        }
                     }
                 }, 2000);
             })
         }
+
         widgetMutationObserver.observe(widget, {childList: true, subtree: false});
 
         // calls google trends embedded api
         trends.embed.renderExploreWidgetTo(widget, "TIMESERIES", comparisonItems, queryItem);
-
-        // adds link button
-        d3.select("#googleAnchor")
-            .append("button")
-            .text("Open Google Trends in new window")
-            .attr("class", "googleTrendsNewWindow")
-
-        d3.select(".googleTrendsNewWindow")
-            .raise()
 
         d3.select(".googleTrendsNewWindow")
             .on("click", function() {

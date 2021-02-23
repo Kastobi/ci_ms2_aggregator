@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Data aggregator on frontend libraries - for educational purposes"/>
-    <title>Data aggregator on frontend libraries - for educational purposes</title>
+    <title>Explore cdnjs</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
@@ -43,7 +43,7 @@
 <!-- Overview Chart -->
 <section class="container">
     <h2>All packages in your selection</h2>
-    <div class="row overviewContainer">
+    <div class="overviewContainer">
         <div id="dcOverviewBarChart" class="dcAnchor container-fluid"></div>
         <div id="dcVisCounter" class="dcAnchor"></div>
     </div>
@@ -53,17 +53,33 @@
 <section class="container">
     <h2>Selectors</h2>
     <div class="row">
-        <div class="col filterContainer">
+        <div class="filterContainer col">
             <h3>Packages grouped by github stars</h3>
-            <div id="partialsByStarsRow" class="dcAnchor"></div>
+            <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
         </div>
+        <div class="filterContainer col">
+            <div>
+                <h3>Search by package name</h3>
+                <div id="searchByName" class="dcAnchor">
+                    Filter packages by package name:
+                </div>
+            </div>
+            <div>
+                <h3>Search by repo owner</h3>
+                <div id="searchByRepoOwner" class="dcAnchor">
+                    Filter packages by GitHub user:
+                </div>
+            </div>
+        </div>
+
         <div>
-            <h3>Keywords used in the selection</h3>
+            <h3>Tags used in the selection</h3>
             Filters the selection by keyword and shows all packages with one of the selected keywords.
             <div class="filterContainer">
-                <h4>Search for specific keyword</h4>
-                Just select packages tagged with the given keywords.
-                <div id="keywordPackageSearch" class="dcAnchor"></div>
+                <h4>Search for a specific keyword</h4>
+                <div id="keywordPackageSearch" class="dcAnchor">
+                    Just select packages tagged with the given keyword:
+                </div>
             </div>
             <div class="filterContainer">
                 <h4>Keyword selector</h4>
@@ -73,23 +89,20 @@
                 selection.
                 <div id="keywordSelector" class="dcAnchor"></div>
             </div>
-            <div id="searchByName" class="dcAnchor filterContainer">
-                Filter packages by package name:
-            </div>
         </div>
     </div>
 </section>
 
 <!-- Table of selection -->
 <section class="container">
-    <div id="containerDataTable">
+    <div id="containerDataTable" class="table-responsive">
         <h2>Selected Packages</h2>
         <div id="pagination">
-            Showing <span id="begin"></span>-<span id="end"></span> of <span id="size"></span> <span id="totalsize"></span>
-            <button id="previousPageButton" value="Last">Previous Page</button>
-            <button id="nextPageButton" value="Next">Next Page</button>
+            Showing <strong><span id="begin"></span>-<span id="end"></span></strong> of <strong><span id="size"></span><span id="totalsize"></span></strong> packages.
+            <button class="btn" id="previousPageButton" value="Last">Previous Page</button>
+            <button class="btn" id="nextPageButton" value="Next">Next Page</button>
         </div>
-        <table id="dcDataTable" class="dcAnchor"></table>
+        <table id="dcDataTable" class="dcAnchor table table-striped table-sm"></table>
     </div>
 </section>
 
@@ -99,6 +112,7 @@
     Select up to 3 packages from the table for your comparison via Google Trends.
     <div id="compareAnchor"></div>
     <div id="googleAnchor" class="container-fluid"></div>
+    <button class="googleTrendsNewWindow btn">Open Google Trends in new window</button>
 </section>
 
 <!-- Footer -->
@@ -107,7 +121,7 @@
         <div class="col">
             <a href="about.html#disclaimer">Disclaimer</a>
         </div>
-        <div class="col">
+        <div class="col social-links">
             <h5>Find me on</h5>
             <ul class="social-link-list list-inline">
                 <li class="list-inline-item">
