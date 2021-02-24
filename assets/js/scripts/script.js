@@ -164,7 +164,7 @@ function initDataVis() {
                 .attr("class", "btn")
                 .on("click", function () {
                     resetAllFilters();
-                })
+                })//todo: clear text-filter inputs
         });
 
     function resetAllFilters() {
@@ -213,7 +213,7 @@ function initDataVis() {
     // Filter keyword Index by threshold of packages with keyword
     d3.select("#keywordSliderRange").on("change", function() {
         updateSlider(this.value);
-    })
+    }) //todo: dynamic default value
      // Reference: https://dc-js.github.io/dc.js/examples/adjustable-threshold.html, line 105++
     function updateSlider(slideValue) {
         let sliderDiv = document.getElementById("sliderValue");
@@ -337,21 +337,26 @@ function initDataVis() {
         .showSections(false)
         .columns([
             {
-              label: "Compare",
-              format: d => `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">`
-
+              label: "Select up to 3",
+              format: d => (
+                  `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">` +
+                  `<label for="checkbox-${d.name}"><strong>${d.name}</strong></label>`
+              )
             },
+            // GitHub repo link column
             {
-                label: "Package name",
-                format: d => `<label for="checkbox-${d.name}"><strong>${d.name}</strong></label>`
+                label: `<i class="fab fa-github-square" aria-hidden="true"></i>
+                    <span class="sr-only">Column for GitHub repository links</span>`,
+                format: d => (
+                    `<a href="${d.githubLink}" target="_blank">
+                    <i class="fas fa-external-link-square-alt" aria-hidden="true"></i>
+                    <span class="sr-only">Link to repository</span>
+                    </a>`
+                )
             },
             {
                 label: "GitHub stars",
                 format: d => d.githubStarsCount
-            },
-            {
-                label: "GitHub link",
-                format: d => `<a href="${d.githubLink}" target="_blank">${d.githubLink}</a>`
             },
             {
                 label: "keywords provided",
@@ -496,9 +501,9 @@ function initDataVis() {
                                 .attr("class", "iFrameError")
                                 .text("Sorry, your browser settings does not allow the embedded trends to render. " +
                                     "It seems to depend on browser privacy settings (\"Do not Track\" or Cookies). " +
-                                    "A reload after loosening the privacy settings resolved the issue. " +
-                                    "Alternative: Click on the button below to open the original Google Trends page in a new window.")
-                            d3.select(".iFrameError").lower()
+                                    "A reload after lowering the privacy settings resolved the issue. " +
+                                    "Alternative: Click on the button below to open the original Google Trends page in a new tab.")
+                            d3.select(".iFrameError").lower();
                         }
                     }
                 }, 2000);

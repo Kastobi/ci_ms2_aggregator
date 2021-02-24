@@ -40,63 +40,18 @@
 
 <!-- Content -->
 
-<!-- Overview Chart -->
+<!--- Google trends comparison -->
 <section class="container">
-    <h2>All packages in your selection</h2>
-    <div class="overviewContainer">
-        <div id="dcOverviewBarChart" class="dcAnchor container-fluid"></div>
-        <div id="dcVisCounter" class="dcAnchor"></div>
-    </div>
-</section>
-
-<!-- Filters and groups -->
-<section class="container">
-    <h2>Selectors</h2>
-    <div class="row">
-        <div class="filterContainer col">
-            <h3>Packages grouped by github stars</h3>
-            <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
-        </div>
-        <div class="filterContainer col">
-            <div>
-                <h3>Search by package name</h3>
-                <div id="searchByName" class="dcAnchor">
-                    Filter packages by package name:
-                </div>
-            </div>
-            <div>
-                <h3>Search by repo owner</h3>
-                <div id="searchByRepoOwner" class="dcAnchor">
-                    Filter packages by GitHub user:
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <h3>Tags used in the selection</h3>
-            Filters the selection by keyword and shows all packages with one of the selected keywords.
-            <div class="filterContainer">
-                <h4>Search for a specific keyword</h4>
-                <div id="keywordPackageSearch" class="dcAnchor">
-                    Just select packages tagged with the given keyword:
-                </div>
-            </div>
-            <div class="filterContainer">
-                <h4>Keyword selector</h4>
-                <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-                <!-- add label for input -->
-                Just display keywords used at least on <strong><span id="sliderValue">50</span></strong> packages of the
-                selection.
-                <div id="keywordSelector" class="dcAnchor"></div>
-            </div>
-        </div>
-    </div>
+    <h2>Compare the search trends</h2>
+    <div id="googleAnchor" class="container-fluid"></div>
 </section>
 
 <!-- Table of selection -->
 <section class="container">
+    <h2>Select packages to compare</h2>
+    <button class="googleTrendsNewWindow btn">Google Trends in new tab</button>
+    <div id="compareAnchor"></div>
     <div id="containerDataTable" class="table-responsive">
-        <h2>Selected Packages</h2>
         <div id="pagination">
             Showing <strong><span id="begin"></span>-<span id="end"></span></strong> of <strong><span id="size"></span><span id="totalsize"></span></strong> packages.
             <button class="btn" id="previousPageButton" value="Last">Previous Page</button>
@@ -106,13 +61,57 @@
     </div>
 </section>
 
-<!--- Google trends comparison -->
+<!-- Filters and groups -->
 <section class="container">
-    <h2>Compare the search trends</h2>
-    Select up to 3 packages from the table for your comparison via Google Trends.
-    <div id="compareAnchor"></div>
-    <div id="googleAnchor" class="container-fluid"></div>
-    <button class="googleTrendsNewWindow btn">Open Google Trends in new window</button>
+    <h2>Filter packages</h2>
+    <div id="dcVisCounter" class="dcAnchor"></div>
+
+    <div class="row">
+        <div class="filterContainer col">
+            <h3>Search by github stars</h3> <!-- todo: first load proper size? -->
+            <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
+        </div>
+
+        <div class="filterContainer col">
+            <div>
+                <h3>Search by package name</h3>
+                <div id="searchByName" class="dcAnchor">
+                    Filter packages by package name:
+                </div>
+            </div>
+
+            <div>
+                <h3>Search by repo owner</h3>
+                <div id="searchByRepoOwner" class="dcAnchor">
+                    Filter packages by GitHub user:
+                </div>
+            </div>
+
+            <div>
+                <h3>Search by specific keyword</h3>
+                <div id="keywordPackageSearch" class="dcAnchor">
+                    Filter packages by keyword:
+                </div>
+            </div>
+        </div>
+
+        <div class="filterContainer">
+            <h3>Search by multiple keywords</h3>
+            <div class="keywordSliderContainer">
+                <label for="keywordSliderRange" class="sr-only">Slider to filter keywords by frequency of use, to
+                    maintain relevance.</label>
+                At least <strong><span id="sliderValue">50</span></strong> packages of the selection hold the keyword.
+                <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
+            </div>
+            <div id="keywordSelector" class="dcAnchor"></div>
+        </div>
+    </div>
+
+    <!-- Overview Chart -->
+    <div>
+        <h3>Packages by number of GitHub stars</h3>
+        <div id="dcOverviewBarChart" class="dcAnchor container-fluid"></div>
+    </div>
 </section>
 
 <!-- Footer -->

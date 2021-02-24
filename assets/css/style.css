@@ -19,12 +19,15 @@
     border-color: #003b32;
 }
 
-
 /* Header */
 
 /* Nav */
 
 /* Footer */
+footer {
+    margin-top: 5px;
+}
+
 .social-links {
     text-align: right;
 }
@@ -42,14 +45,19 @@
 
 /* General */
 section {
+    margin-top: 5px;
+    padding-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    border-left: 1px solid #dee2e6;
-    border-right: 1px solid #dee2e6;
+
+    /* analog google trends widget */
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 2px 0px, rgba(0, 0, 0, 0.24) 0px 2px 2px 0px;
 }
 
 .filterContainer {
-    border: 1px solid #dee2e6;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Overview bar chart */
@@ -67,6 +75,10 @@ section {
 }
 
 /* Keyword Selector */
+.keywordSliderContainer {
+    text-align: right;
+}
+
 .dc-cbox-group {
     list-style: none;
 
@@ -90,6 +102,19 @@ section {
     text-align: right;
 }
 
+#dcDataTable i {
+    font-size: 1.5em;
+}
+
+#dcDataTable td i {
+    color: #449a8d;
+}
+
+#dcDataTable td i:hover {
+    color: #003b32;
+}
+
+
 /* Comparison / Google Trends widget */
 .compareItemButton:hover::before {
     content: "Remove "
@@ -97,5 +122,12 @@ section {
 
 .googleTrendsNewWindow {
     display: flex;
-    margin: auto;
+    float: right;
 }
+
+.iFrameError {
+    margin: 10px;
+    padding: 10px;
+    font-size: 1.5em;
+}
+
