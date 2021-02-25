@@ -22,12 +22,24 @@
 
 <!-- Nav -->
 <nav class="container">
-    <ul class="nav nav-tabs">
+    <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a href="#" class="nav-link active">Home</a>
+            <a href="#googleTrends" class="nav-link btn">Trends</a>
         </li>
         <li class="nav-item">
-            <a href="about.html" class="nav-link">About</a>
+            <a href="#DataTable" class="nav-link btn">Table</a>
+        </li>
+        <li class="nav-item">
+            <a href="#Filters" class="nav-link btn">Filters</a>
+        </li>
+        <li class="nav-item">
+            <a href="#about" class="nav-link btn">About</a>
+        </li>
+        <li class="nav-item">
+            <a href="#disclaimer" class="nav-link btn">Disclaimer</a>
+        </li>
+        <li class="nav-item">
+            <a href="#contacts" class="nav-link btn">Contacts</a>
         </li>
     </ul>
 </nav>
@@ -35,13 +47,13 @@
 <!-- Content -->
 
 <!--- Google trends comparison -->
-<section class="container">
+<section id="googleTrends" class="container">
     <h2>Compare the search trends</h2>
     <div id="googleAnchor" class="container-fluid"></div>
 </section>
 
 <!-- Table of selection -->
-<section class="container">
+<section id="DataTable" class="container">
     <h2>Select packages to compare</h2>
     <button class="googleTrendsNewWindow btn">Google Trends in new tab</button>
     <div id="compareAnchor"></div>
@@ -56,17 +68,19 @@
 </section>
 
 <!-- Filters and groups -->
-<section class="container">
+<section id="Filters" class="container">
     <h2>Filter packages</h2>
     <div id="dcVisCounter" class="dcAnchor"></div>
 
     <div class="row">
-        <div class="filterContainer col">
+        <!-- partials selector -->
+        <div class="filterContainer col-sm-6">
             <h3>Search by github stars</h3> <!-- todo: first load proper size? -->
             <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
         </div>
 
-        <div class="filterContainer col">
+        <!-- text search widgets -->
+        <div class="filterContainer col-sm-6">
             <div>
                 <h3>Search by package name</h3>
                 <div id="searchByName" class="dcAnchor">
@@ -89,15 +103,17 @@
             </div>
         </div>
 
-        <div class="filterContainer">
+        <!-- Multiple keyword selector -->
+        <div class="multipleKeywords filterContainer row">
             <h3>Search by multiple keywords</h3>
             <div class="keywordSliderContainer">
                 <label for="keywordSliderRange" class="sr-only">Slider to filter keywords by frequency of use, to
                     maintain relevance.</label>
                 At least <strong><span id="sliderValue">50</span></strong> packages of the selection hold the keyword.
                 <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-            </div>
             <div id="keywordSelector" class="dcAnchor"></div>
+            </div>
+
         </div>
     </div>
 
@@ -108,36 +124,154 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="container">
-    <div class="row">
-        <div class="col">
-            <a href="about.html#disclaimer">Disclaimer</a>
-        </div>
-        <div class="col social-links">
-            <h5>Find me on</h5>
-            <ul class="social-link-list list-inline">
-                <li class="list-inline-item">
-                    <a href="https://github.com/apometricsTK/" target="_blank">
-                        <i class="fab fa-github-square" aria-hidden="true"></i>
-                        <span class="sr-only">Link to GitHub</span>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="https://www.linkedin.com/in/tobias-kast/" target="_blank">
-                        <i class="fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sr-only">Link to LinkedIn</span>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="https://www.xing.com/profile/Tobias_Kast5/" target="_blank">
-                        <i class="fab fa-xing-square" aria-hidden="true"></i>
-                        <span class="sr-only">Link to Xing</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <!-- About -->
+<section id="about" class="container">
+    <h2>About the project</h2>
+    <h3>“What to learn after JavaScript – React, Angular or Vue?”</h3>
+    <p>
+        Analogous questions are asked over and over by frontend development students. There are many approaches to
+        answer
+        this question – but in general the popularity of the libraries should be considered. Information on the subject
+        in
+        aggregated form is rare, subjective opinions are widely spread and often controversial.
+    </p>
+
+    <h3>What is actually used by the websites</h3>
+    <p>
+        One approach is to observe the “websites out there” – with the problem of unmaintained, abandoned homepages,
+        libraries just included as dependencies of other libraries etc. Even if this approach teaches you, which
+        technologies were used in the past to build websites, you are still lacking the “state of the art” information.
+    </p>
+    <h4>References</h4>
+    <ul>
+        <li>
+            <a href="https://w3techs.com/technologies/market/javascript_library/30/" target="_blank">JavaScript libraries market position report</a>
+        </li>
+        <li>
+            <a href="https://w3techs.com/technologies/overview/javascript_library/" target="_blank">Usage statistics and market share of JavaScript Libraries for Websites</a>
+        </li>
+        <li>
+            <a href="https://blog.cloudflare.com/javascript-libraries-are-almost-never-updated/" target="_blank">JavaScript Libraries Are Almost Never Updated Once Installed, Zack Bloom, 27.01.2020</a>
+        </li>
+    </ul>
+
+    <h3>Observe GitHub explore channels (topics, trending, ...)</h3>
+    <p>
+        Another approach is to observe GitHubs information channels (on trending repositories or topics, or the
+        specific repositories in comparison) to evaluate the popularity among developers. This approach lacks filtering
+        and comparison features – time is needed for an in-depth research about every topic – and the chance for missing
+        some important library depends on circumstances.
+    </p>
+    <h4>References</h4>
+    <ul>
+        <li>
+            <a href="https://github.com/topics" target="_blank">GitHub topics</a>
+        </li>
+        <li>
+            <a href="https://github.com/trending" target="_blank">GitHub trendings</a>
+        </li>
+    </ul>
+
+    <h3>Observe workflow tools: Google Trends</h3>
+    <p>
+        A different approach focuses on the workflow of developers – use a general tool to observe their work. Google
+        trends let you compare timelines of search terms/queries – making it possible to compare terms like “jQuery”,
+        “React”, “Angular” and “Vue” – even to focus on your potential market for future employers.
+        The problem with this approach – everyone uses Google and not every term is unique (there is a “Nike React” foam
+        material for running shoes out there, vitamin "d3", ...).
+        The classification of the terms on the public interface does not allow concise filtering (Computer & Electronics
+        → Programming, Open Source? Internet & Telecom → Web Design & Development? Jobs & Education → Computer
+        Education?)…
+    </p>
+
+    <h4>References</h4>
+    <ul>
+        <li>
+            I recommend playing a little with terms and categories to evaluate the worth of your specific query for
+            yourself.
+            <a href="https://trends.google.de/trends/explore?date=today%205-y&q=jQuery,react,angular,vue" target="_blank">Google Trends</a>
+        </li>
+    </ul>
+
+    <h3>Aggregate information for fast overviews</h3>
+    <p>
+        To help learning developers, I try to aggregate some information in this project (Data from cdnjs API, the
+        GitHub information included and Google trends). Further research is needed, but a basic level of information on
+        market shares and popularity of different libraries is available and from this level of information, the learner
+        is able to delve deeper into the sources I built upon.
+    </p>
+
+    <h4>Problems to keep in mind, while using the data</h4>
+    <ul>
+        <li>cdnjs’ GitHub Data may not always be up to date.</li>
+        <li>Further investigate on the GitHub Repos - dont stop with stars, just use them for first impressions.</li>
+        <li>
+            Even if cdnjs is a big player, I do not have any information if their supply is representative and
+            comprehensive
+            for the market. As my index is purely based on their API, there may be big gaps I am not aware of.
+        </li>
+        <li>I am not able to clean or revise the base data (cdnjs API, Google Trends) with this approach.</li>
+    </ul>
+
+    <h4>References</h4>
+    <ul>
+        <li>
+            <a href="https://w3techs.com/technologies/details/cd-cdnjs" target="_blank">Market Position of cdnjs</a>
+        </li>
+    </ul>
+
+    <h3>Content for further research</h3>
+    <ul>
+        <li>
+            <a href="https://news.ycombinator.com/item?id=17257062" target="_blank">Ask HN: What do GitHub stars mean to you when evaluating a project, if anything?</a>
+        </li>
+        <li>
+            <a href="https://opensource.stackexchange.com/questions/5110/" target="_blank">"GitHub Stars" is a very useful metric. But for *what*?</a>
+        </li>
+        <li>
+            <a href="https://arxiv.org/pdf/1811.07643.pdf" target="_blank">What's in a GitHub Star? Understanding Repository Starring Practices in a Social Coding Platform, Borges et al, 2018</a>
+        </li>
+        <li>
+            <a href="https://arxiv.org/pdf/1606.04984.pdf" target="_blank">Understanding the Factors that Impact the Popularity of GitHub Repositories, Borges et al, 2016</a>
+        </li>
+    </ul>
+</section>
+
+<!-- Disclaimer -->
+<section class="container">
+    <div id="disclaimer">
+        <h2>Disclaimer</h2>
+        <p>
+            I am not associated to cdnjs (or Cloudflare), GitHub (or Microsoft) and Google (or Alphabet).
+            This project is for educational purposes only. If any offense is taken by any rights holder or any problem
+            occur, please just contact me via my GitHub account.
+        </p>
     </div>
+</section>
+
+<!-- Footer -->
+<footer id="contacts" class="container">
+    <h5>Find me on</h5>
+    <ul class="social-link-list list-inline">
+        <li class="list-inline-item">
+            <a href="https://github.com/apometricsTK/" target="_blank">
+                <i class="fab fa-github-square" aria-hidden="true"></i>
+                <span class="sr-only">Link to GitHub</span>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a href="https://www.linkedin.com/in/tobias-kast/" target="_blank">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                <span class="sr-only">Link to LinkedIn</span>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a href="https://www.xing.com/profile/Tobias_Kast5/" target="_blank">
+                <i class="fab fa-xing-square" aria-hidden="true"></i>
+                <span class="sr-only">Link to Xing</span>
+            </a>
+        </li>
+    </ul>
 </footer>
 
 <!-- Script area -->

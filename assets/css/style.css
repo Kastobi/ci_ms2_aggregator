@@ -22,14 +22,20 @@
 /* Header */
 
 /* Nav */
-
-/* Footer */
-footer {
-    margin-top: 5px;
+nav {
+    position: sticky;
+    top: 5px;
 }
 
-.social-links {
-    text-align: right;
+.nav-item {
+    opacity: 0.8;
+    z-index: 1;
+}
+
+/* Footer */
+
+#contacts {
+    text-align: center;
 }
 
 .social-link-list li i {
@@ -52,7 +58,12 @@ section {
 
     /* analog google trends widget */
     border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 2px 0px, rgba(0, 0, 0, 0.24) 0px 2px 2px 0px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 0 2px 0, rgba(0, 0, 0, 0.24) 0 2px 2px 0;
+}
+
+section.container > *:last-child {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .filterContainer {
@@ -60,60 +71,19 @@ section {
     padding-right: 15px;
 }
 
-/* Overview bar chart */
-#dcOverviewBarChart .bar {
-    fill: #449a8d;
+label {
+    margin-bottom: 0.25rem;
 }
 
-#dcOverviewBarChart .bar:hover {
-    fill: #003b32;
-    fill-opacity: 1;
+ul {
+    margin-bottom: 0.5rem;
 }
+
+
 
 #dcVisCounter {
     text-align: right;
 }
-
-/* Keyword Selector */
-.keywordSliderContainer {
-    text-align: right;
-}
-
-.dc-cbox-group {
-    list-style: none;
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
-.dc-cbox-item {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
-
-.dc-cbox-item input {
-    margin-right: 3px;
-}
-
-/* Data Table */
-#pagination {
-    text-align: right;
-}
-
-#dcDataTable i {
-    font-size: 1.5em;
-}
-
-#dcDataTable td i {
-    color: #449a8d;
-}
-
-#dcDataTable td i:hover {
-    color: #003b32;
-}
-
 
 /* Comparison / Google Trends widget */
 .compareItemButton:hover::before {
@@ -131,3 +101,89 @@ section {
     font-size: 1.5em;
 }
 
+/* Data Table */
+#pagination {
+    text-align: right;
+}
+
+#dcDataTable thead th:nth-child(2),
+#dcDataTable thead th:nth-child(3) {
+    text-align: center;
+}
+
+#dcDataTable th i {
+    font-size: 1.5em;
+}
+
+#dcDataTable td.dc-table-column._0 {
+    white-space: nowrap;
+}
+
+#dcDataTable tbody label {
+    padding-left: 5px;
+}
+
+#dcDataTable td.dc-table-column._1 {
+    text-align: center;
+}
+
+#dcDataTable td i {
+    color: #449a8d;
+}
+
+#dcDataTable td i:hover {
+    color: #003b32;
+}
+
+#dcDataTable td.dc-table-column._2 {
+    text-align: right;
+}
+
+#dcDataTable td.dc-table-column._3 {
+    white-space: nowrap;
+}
+
+/* partials Selector */
+
+/* Keyword Selector */
+.multipleKeywords {
+    margin: 0 0 5px 0;
+}
+
+.keywordSliderContainer {
+    text-align: right;
+}
+
+.dc-cbox-group {
+    list-style: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.dc-cbox-group > li:last-child {
+    flex-wrap: nowrap;
+    width: 100%;
+    text-align: center;
+}
+
+.dc-cbox-item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.dc-cbox-item input {
+    margin-right: 3px;
+}
+
+/* Overview bar chart */
+#dcOverviewBarChart .bar {
+    fill: #449a8d;
+}
+
+#dcOverviewBarChart .bar:hover {
+    fill: #003b32;
+    fill-opacity: 1;
+}

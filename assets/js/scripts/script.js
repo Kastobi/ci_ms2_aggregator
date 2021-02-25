@@ -15,6 +15,8 @@ async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
     flattenFullList();
+    //todo: move data to storage to prevent new API call every single time
+
     initDataVis();
 }
 
@@ -117,11 +119,7 @@ function initDataVis() {
     const groupPartialStarsWithZeros = dimPartialStars.group().reduceCount(d => d["partialByStars"]);
     const groupPartialStars = remove_empty_bins(groupPartialStarsWithZeros);
 
-    const dimForksCount = fullDataset.dimension(d => d["githubForksCount"]);
-    const dimSubsCount = fullDataset.dimension(d => d["githubSubsCount"]);
-
     const dimGithubUser = fullDataset.dimension(d => d["githubUser"]);
-    const groupGithubUser = dimGithubUser.group();
 
     //double dimension to filter between different index types, dimension does not filter itself
     const keywordsProvided = fullDataset.dimension(function (d) {
@@ -336,8 +334,9 @@ function initDataVis() {
         .size(Infinity)
         .showSections(false)
         .columns([
+            // compare checkbox + package name
             {
-              label: "Select up to 3",
+              label: "Select &#x2264; 3",
               format: d => (
                   `<input type="checkbox" id="checkbox-${d.name}" value="${d.name}">` +
                   `<label for="checkbox-${d.name}"><strong>${d.name}</strong></label>`
@@ -355,7 +354,7 @@ function initDataVis() {
                 )
             },
             {
-                label: "GitHub stars",
+                label: "stars",
                 format: d => d.githubStarsCount
             },
             {
