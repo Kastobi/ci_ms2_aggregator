@@ -21,7 +21,7 @@
 </header>
 
 <!-- Nav -->
-<nav class="container">
+<nav class="container analogGoogleTrends">
     <ul class="nav justify-content-center">
         <li class="nav-item">
             <a href="#googleTrends" class="nav-link btn">Trends</a>
@@ -47,13 +47,13 @@
 <!-- Content -->
 
 <!--- Google trends comparison -->
-<section id="googleTrends" class="container">
+<section id="googleTrends" class="container analogGoogleTrends">
     <h2>Compare the search trends</h2>
     <div id="googleAnchor" class="container-fluid"></div>
 </section>
 
 <!-- Table of selection -->
-<section id="DataTable" class="container">
+<section id="DataTable" class="container analogGoogleTrends">
     <h2>Select packages to compare</h2>
     <button class="googleTrendsNewWindow btn">Google Trends in new tab</button>
     <div id="compareAnchor"></div>
@@ -68,14 +68,14 @@
 </section>
 
 <!-- Filters and groups -->
-<section id="Filters" class="container">
+<section id="Filters" class="container analogGoogleTrends">
     <h2>Filter packages</h2>
     <div id="dcVisCounter" class="dcAnchor"></div>
 
     <div class="row">
         <!-- partials selector -->
         <div class="filterContainer col-sm-6">
-            <h3>Search by github stars</h3> <!-- todo: first load proper size? -->
+            <h3>Search by github stars</h3>
             <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
         </div>
 
@@ -125,7 +125,7 @@
 </section>
 
     <!-- About -->
-<section id="about" class="container">
+<section id="about" class="container analogGoogleTrends">
     <h2>About the project</h2>
     <h3>“What to learn after JavaScript – React, Angular or Vue?”</h3>
     <p>
@@ -152,6 +152,25 @@
         </li>
         <li>
             <a href="https://blog.cloudflare.com/javascript-libraries-are-almost-never-updated/" target="_blank">JavaScript Libraries Are Almost Never Updated Once Installed, Zack Bloom, 27.01.2020</a>
+        </li>
+    </ul>
+
+    <h3>Rankings in surveys</h3>
+    <p>
+        The ranking in surveys depends on many factors (Respondents background, survey wording, sample size, ...) and
+        likewise does the quality of provided information. A major drawback is the granularity of data - a survey is
+        not suitable to compare thousands of items, but can provide insights to the bigger picture.
+    </p>
+    <h4>Example surveys</h4>
+    <ul>
+        <li>
+            <a href="https://insights.stackoverflow.com/survey/2020#technology-web-frameworks" target="_blank">Stack Overflow Developer Survey 2020, Web-Frameworks</a>
+        </li>
+        <li>
+            <a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/" target="_blank">State of JavaScript 2020, Front-end Frameworks</a>
+        </li>
+        <li>
+            <a href="https://2018.stateofjs.com/front-end-frameworks/conclusion/" target="_blank">State of JavaScript 2018, Front-end-Frameworks Conclusion</a>
         </li>
     </ul>
 
@@ -238,7 +257,7 @@
 </section>
 
 <!-- Disclaimer -->
-<section class="container">
+<section class="container analogGoogleTrends">
     <div id="disclaimer">
         <h2>Disclaimer</h2>
         <p>

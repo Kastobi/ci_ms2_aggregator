@@ -172,10 +172,8 @@ function initDataVis() {
         compareList = [];
         updateCompareList();
 
-        // reset slider
-        const sliderDefault = document.getElementById("keywordSliderRange").defaultValue;
-        document.getElementById("keywordSliderRange").value = sliderDefault;
-        updateSlider(sliderDefault);
+        resetKeywordSlider();
+
 
         dc.redrawAll();
     }
@@ -194,6 +192,7 @@ function initDataVis() {
             else if (d.key === "ten thousand to one hundred thousand") return 1;
             else if (d.key === "more than one hundred thousand") return 0;
         })
+        .ordinalColors(["#00FF7B","#00EC8E","#00D9A1","#00C6B4","#00B4C6","#00A1D9","#008EEC","#007BFF"])
         .elasticX(true)
         .title( d => d.value + " packages of the selection got " + d.key + " stars")
         .turnOnControls()
@@ -210,15 +209,22 @@ function initDataVis() {
 
     // Filter keyword Index by threshold of packages with keyword
     d3.select("#keywordSliderRange").on("change", function() {
-        updateSlider(this.value);
+        updateKeywordSlider(this.value);
     }) //todo: dynamic default value
-     // Reference: https://dc-js.github.io/dc.js/examples/adjustable-threshold.html, line 105++
-    function updateSlider(slideValue) {
+
+    // Reference: https://dc-js.github.io/dc.js/examples/adjustable-threshold.html, line 105++
+    function updateKeywordSlider(slideValue) {
         let sliderDiv = document.getElementById("sliderValue");
         sliderDiv.innerHTML = slideValue;
         dcKeywordSelector
             .filterDisplayed(d => d.value >= slideValue)
         dc.redrawAll();
+    }
+
+    function resetKeywordSlider() {
+        const keywordSliderDefault = document.getElementById("keywordSliderRange").defaultValue;
+        document.getElementById("keywordSliderRange").value = keywordSliderDefault;
+        updateKeywordSlider(keywordSliderDefault);
     }
 
     dcKeywordSelector
@@ -231,6 +237,15 @@ function initDataVis() {
         .on("renderlet", d => {
             d.select("input[type='reset']")
                 .attr("class", "btn")
+                .on("click", function () {
+                resetKeywordSlider();
+                dcKeywordSelector.filterAll();
+                dc.redrawAll();
+            })
+            if (!keywordsProvided.hasCurrentFilter()) {
+                d.select("input[type='reset']")
+                    .attr("disabled", "true");
+            }
         });
 
     //Overview bar chart
@@ -247,7 +262,7 @@ function initDataVis() {
         .y(d3.scaleLinear())
         .elasticY(true)
         .yAxisLabel("no of github stars")
-        .margins().left = 70;
+        .margins( {top: 20, right: 20, left: 70, bottom: 30});
 
     dcOverviewBarChart
         .dimension(dimName)

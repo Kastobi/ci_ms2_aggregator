@@ -1,5 +1,13 @@
 /* Body */
 
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #fbfbfb;
+}
+
 .btn {
     color: #fff;
     background-color: #449a8d;
@@ -13,23 +21,29 @@
     border-color: #449a8d;
 }
 
-.btn:hover {
+.btn:not([disabled]):hover {
     color: #fff;
     background-color: #003b32;
     border-color: #003b32;
+}
+
+.analogGoogleTrends {
+    /* analog google trends widget */
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 0 2px 0, rgba(0, 0, 0, 0.24) 0 2px 2px 0;
 }
 
 /* Header */
 
 /* Nav */
 nav {
+    background-color: #fbfbfb;
+    opacity: 0.98;
     position: sticky;
-    top: 5px;
-}
-
-.nav-item {
-    opacity: 0.8;
     z-index: 1;
+    top: 0;
+
+    padding: 5px 0;
 }
 
 /* Footer */
@@ -55,10 +69,6 @@ section {
     padding-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
-
-    /* analog google trends widget */
-    border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0 0 2px 0, rgba(0, 0, 0, 0.24) 0 2px 2px 0;
 }
 
 section.container > *:last-child {
@@ -67,8 +77,20 @@ section.container > *:last-child {
 }
 
 .filterContainer {
+    margin: 0;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+svg {
+    background-color: #fff;
+    margin: 10px;
+    border: 1px solid #449a8d;
+}
+
+.dcAnchor.container-fluid {
+    width: 97%;
+    padding: 5px 0;
 }
 
 label {
@@ -78,8 +100,6 @@ label {
 ul {
     margin-bottom: 0.5rem;
 }
-
-
 
 #dcVisCounter {
     text-align: right;
