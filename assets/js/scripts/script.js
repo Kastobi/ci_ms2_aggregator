@@ -9,13 +9,12 @@ let fullDatasetGroup = null;
 
 document.addEventListener("DOMContentLoaded", initSite);
 
-window.addEventListener('resize', () => dc.renderAll());
+window.addEventListener("resize", () => dc.renderAll());
 
 async function initSite() {
     cdnjsFullList = await fetchCdnjsLibrariesFullList();
 
     flattenFullList();
-    //todo: move data to storage to prevent new API call every single time
 
     initDataVis();
 }
@@ -41,7 +40,7 @@ function flattenFullList() {
                 "githubLink": "not provided",
                 "githubUser": "not provided",
                 "githubStarsCount": 0,
-                "partialByStars": "not provided",
+                "partialByStars": "stars not provided",
                 "githubForksCount": 0,
                 "githubSubsCount": 0,
             }
@@ -67,17 +66,17 @@ function selectPartial(stars) {
     if (stars === 0) {
         return "zero stars"
     } else if (stars >= 1 && stars <= 10) {
-        return "one to ten"
+        return "1 to 10 stars"
     } else if (stars >= 11 && stars <= 100) {
-        return "ten to hundred"
+        return "10 to 100 stars"
     } else if (stars >= 101 && stars <= 1000) {
-        return "hundred to thousand"
+        return "100 to 1,000 stars"
     } else if (stars >= 1001 && stars <= 10000) {
-        return "thousand to ten thousand"
+        return "1,000 to 10,000 stars"
     } else if (stars >= 10001 && stars <= 100000) {
-        return "ten thousand to one hundred thousand"
+        return "10,000 to 100,000 stars"
     } else {
-        return "more than one hundred thousand"
+        return "more than 100,000 stars"
     }
 }
 
@@ -107,17 +106,13 @@ function initDataVis() {
     }
     // End of Copy
 
-    //double dimension to filter between different index types, dimension does not filter itself
-    const dimName = fullDataset.dimension(d => d["name"]);
-    const dimNameForSearch = fullDataset.dimension(d => d["name"]);
+    const dimNameForTextSearch = fullDataset.dimension(d => d["name"]);
 
-    const dimGithubStarsCount = fullDataset.dimension(d => d["githubStarsCount"]);
-    const groupGithubStars = dimName.group().reduceSum(d => d["githubStarsCount"]);
-    const groupNonNullStars = remove_empty_bins(groupGithubStars);
+    const dimGithubStarsForDataTable = fullDataset.dimension(d => d["githubStarsCount"]);
 
-    const dimPartialStars = fullDataset.dimension(d => d["partialByStars"]);
-    const groupPartialStarsWithZeros = dimPartialStars.group().reduceCount(d => d["partialByStars"]);
-    const groupPartialStars = remove_empty_bins(groupPartialStarsWithZeros);
+    const dimStarsRange = fullDataset.dimension(d => d["partialByStars"]);
+    const groupStarsRangeWithZeros = dimStarsRange.group().reduceCount(d => d["partialByStars"]);
+    const groupStarsRange = remove_empty_bins(groupStarsRangeWithZeros);
 
     const dimGithubUser = fullDataset.dimension(d => d["githubUser"]);
 
@@ -133,10 +128,9 @@ function initDataVis() {
     // dc section
 
     const dcVisCounter = new dc.DataCount("#dcVisCounter");
-    const dcPartialsRow = new dc.RowChart("#partialsByStarsRow");
+    const dcStarsRangeRowChart = new dc.RowChart("#StarsRangeRowChart");
     const keywordPackageSearch = new dc.TextFilterWidget("#keywordPackageSearch");
     const dcKeywordSelector = new dc.CboxMenu("#keywordSelector");
-    const dcOverviewBarChart = new dc.BarChart("#dcOverviewBarChart");
     const searchByName = new dc.TextFilterWidget("#searchByName");
     const searchByRepoOwner = new dc.TextFilterWidget("#searchByRepoOwner");
     const dcDataTable = dc.dataTable("#dcDataTable");
@@ -153,7 +147,7 @@ function initDataVis() {
                 some:
                     "<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records " +
                     "<button id='resetAllButton'>Reset All</button>",
-                all: "All records selected. Please click on a graph to apply filters. " +
+                all: "All <strong>%total-count</strong> records selected. " +
                     "<button id='resetAllButton' disabled='true'>Reset All</button>",
             }
         )
@@ -162,7 +156,7 @@ function initDataVis() {
                 .attr("class", "btn")
                 .on("click", function () {
                     resetAllFilters();
-                })//todo: clear text-filter inputs
+                })
         });
 
     function resetAllFilters() {
@@ -172,52 +166,61 @@ function initDataVis() {
         compareList = [];
         updateCompareList();
 
-        resetKeywordSlider();
+        document.querySelectorAll(".textSearchContainer input")
+            .forEach( d => d.value = "");
 
+        resetKeywordSlider();
 
         dc.redrawAll();
     }
 
-    dcPartialsRow
-        .dimension(dimPartialStars)
-        .group(groupPartialStars)
+    dcStarsRangeRowChart
+        .dimension(dimStarsRange)
+        .group(groupStarsRange)
         // ordering by hand due to missing y axis on row charts class
         .ordering(d => {
-            if (d.key === "not provided") return 7;
+            if (d.key === "stars not provided") return 7;
             else if (d.key === "zero stars") return 6;
-            else if (d.key === "one to ten") return 5;
-            else if (d.key === "ten to hundred") return 4;
-            else if (d.key === "hundred to thousand") return 3;
-            else if (d.key === "thousand to ten thousand") return 2;
-            else if (d.key === "ten thousand to one hundred thousand") return 1;
-            else if (d.key === "more than one hundred thousand") return 0;
+            else if (d.key === "1 to 10 stars") return 5;
+            else if (d.key === "10 to 100 stars") return 4;
+            else if (d.key === "100 to 1,000 stars") return 3;
+            else if (d.key === "1,000 to 10,000 stars") return 2;
+            else if (d.key === "10,000 to 100,000 stars") return 1;
+            else if (d.key === "more than 100,000 stars") return 0;
         })
         .ordinalColors(["#00FF7B","#00EC8E","#00D9A1","#00C6B4","#00B4C6","#00A1D9","#008EEC","#007BFF"])
         .elasticX(true)
-        .title( d => d.value + " packages of the selection got " + d.key + " stars")
+        .title( d => {
+            if (d.key === "stars not provided") {
+                return d.value + " packages did not provide GitHub information.";
+            } else {
+                return d.value + " packages of the selection got " + d.key;
+            }
+        })
         .turnOnControls()
-        .on("renderlet", d => {
-            //todo: move to css? pick color there?
-            d.selectAll("g.row text").style("fill", "#000000");
-        });
 
     // Filter keyword Index by text input => filters on packages with keyword
     keywordPackageSearch
         .dimension(keywordsProvidedTextSearch)
         .placeHolder("keyword")
-    //todo: rewrite filter for multiple keywords
 
     // Filter keyword Index by threshold of packages with keyword
     d3.select("#keywordSliderRange").on("change", function() {
         updateKeywordSlider(this.value);
-    }) //todo: dynamic default value
+    })
 
     // Reference: https://dc-js.github.io/dc.js/examples/adjustable-threshold.html, line 105++
     function updateKeywordSlider(slideValue) {
         let sliderDiv = document.getElementById("sliderValue");
         sliderDiv.innerHTML = slideValue;
         dcKeywordSelector
-            .filterDisplayed(d => d.value >= slideValue)
+            .filterDisplayed(d => {
+                if (dcKeywordSelector.filters().includes(d.key)) {
+                    return d.value
+                } else if (d.value >= slideValue) {
+                    return d.value
+                }
+            })
         dc.redrawAll();
     }
 
@@ -234,6 +237,7 @@ function initDataVis() {
         .multiple(true)
         .controlsUseVisibility(true)
         .filterDisplayed(d => d.value > 50)
+        .turnOnControls()
         .on("renderlet", d => {
             d.select("input[type='reset']")
                 .attr("class", "btn")
@@ -248,46 +252,24 @@ function initDataVis() {
             }
         });
 
-    //Overview bar chart
-
-    dcOverviewBarChart
-        .x(d3.scaleBand())
-        .elasticX(true)
-        .xUnits(dc.units.ordinal)
-        .xAxisLabel("packages (alphabetical)");
-    dcOverviewBarChart.xAxis()
-        .tickValues([]);
-
-    dcOverviewBarChart
-        .y(d3.scaleLinear())
-        .elasticY(true)
-        .yAxisLabel("no of github stars")
-        .margins( {top: 20, right: 20, left: 70, bottom: 30});
-
-    dcOverviewBarChart
-        .dimension(dimName)
-        //.mouseZoomable(true) todo: implement, throws error + does not zoom
-        .group(groupNonNullStars)
-        .title(d => d.key + " got " + d.value + " stars on github");
-
     // DataTable
 
     // Search packages by name
     searchByName
-        .dimension(dimNameForSearch)
-        .placeHolder("name")
+        .dimension(dimNameForTextSearch)
+        .placeHolder("name");
 
     // Search packages by repo owner name
     searchByRepoOwner
         .dimension(dimGithubUser)
-        .placeHolder("user")
+        .placeHolder("owner")
 
     // Pagination Data Table
     // Reference https://dc-js.github.io/dc.js/examples/table-pagination.html line 68++
     // copy, altered just in details
-    let dataTablePageSize = 25;
+    let dataTablePageSize = 10;
     let dataTablePageStart = 0;
-    let dataTablePageEnd = 24;
+    let dataTablePageEnd = 9;
     let totFilteredRecs = fullDatasetGroup.value();
 
 
@@ -345,7 +327,7 @@ function initDataVis() {
 
     // DataTable generation
     dcDataTable
-        .dimension(dimGithubStarsCount)
+        .dimension(dimGithubStarsForDataTable)
         .size(Infinity)
         .showSections(false)
         .columns([
@@ -417,7 +399,7 @@ function initDataVis() {
             generateCompareDiv();
         } else if (compareList.length >= 3) {
             document.getElementById(`checkbox-${value}`).checked = false;
-            alert("Please remove an item first, maximum of 3 items"); //todo: alert best way?
+            $("#comparisonModal").modal('toggle');
             generateCompareDiv();
         } else if (value == null) {
             generateCompareDiv();
@@ -427,17 +409,20 @@ function initDataVis() {
         }
 
         function generateCompareDiv() {
-            d3.select("#compareAnchor")
+            d3.select("#compareButtonsAnchor")
                 .selectAll("button")
                 .remove();
-            d3.select("#compareAnchor")
+
+            d3.select("#compareButtonsAnchor")
                 .selectAll("button")
                 .data(compareList)
                 .enter()
                 .append("button")
                 .attr("value", d => d)
+                .attr("aria-label", d => "Remove " + d + " from to compare list.")
                 .text(d => d);
-            d3.selectAll("#compareAnchor > button")
+
+            d3.selectAll("#compareButtonsAnchor > button")
                 .attr("class", "btn compareItemButton")
                 .on("click", function() {
                     updateCompareList(this.value);
@@ -445,7 +430,7 @@ function initDataVis() {
                 });
 
             if (compareList.length !== 0) {
-                d3.select("#compareAnchor")
+                d3.select("#compareButtonsAnchor")
                     .append("button")
                     .attr("class", "btn")
                     .text("Show me the trends!")
@@ -453,7 +438,7 @@ function initDataVis() {
                         showTheTrends();
                     })
 
-                d3.select("#compareAnchor")
+                d3.select("#compareButtonsAnchor")
                     .append("button")
                     .attr("class", "btn")
                     .text("Reset")
@@ -531,8 +516,8 @@ function initDataVis() {
 
         d3.select(".googleTrendsNewWindow")
             .on("click", function() {
-                if (compareList.length == 0) {
-                    alert("Please add items to your compare list first.")
+                if (compareList.length === 0) {
+                    $("#comparisonModal").modal('toggle');
                 } else {
                     let googleTrendsReplacementURL = "https://trends.google.de/trends/explore?date=today%205-y&q=" + compareList.toString();
                     window.open(
@@ -545,7 +530,7 @@ function initDataVis() {
 
     // present comparison on initial page load
     function firstLoadComparison() {
-        compareList = ["jquery", "vue", "react", "angular"];
+        compareList = ["vue", "react", "angular"];
         showTheTrends();
         compareList = [];
     }

@@ -12,6 +12,8 @@ body {
     color: #fff;
     background-color: #449a8d;
     border-color: #449a8d;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
     margin: 2px;
 }
 
@@ -34,6 +36,25 @@ body {
 }
 
 /* Header */
+h1, h2, h3, h4, h5 {
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
 
 /* Nav */
 nav {
@@ -44,6 +65,7 @@ nav {
     top: 0;
 
     padding: 5px 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 2px 2px 0;
 }
 
 /* Footer */
@@ -82,13 +104,18 @@ section.container > *:last-child {
     padding-right: 15px;
 }
 
+.filterContainer h3,
+.filterContainer h4 {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
 svg {
     background-color: #fff;
-    margin: 10px;
     border: 1px solid #449a8d;
 }
 
-.dcAnchor.container-fluid {
+.container-fluid {
     width: 97%;
     padding: 5px 0;
 }
@@ -98,6 +125,7 @@ label {
 }
 
 ul {
+    padding-inline-start: 15px;
     margin-bottom: 0.5rem;
 }
 
@@ -106,8 +134,8 @@ ul {
 }
 
 /* Comparison / Google Trends widget */
-.compareItemButton:hover::before {
-    content: "Remove "
+.compareItemButton:hover {
+    text-decoration: line-through;
 }
 
 .googleTrendsNewWindow {
@@ -119,6 +147,10 @@ ul {
     margin: 10px;
     padding: 10px;
     font-size: 1.5em;
+}
+
+#comparisonModal {
+    text-align: center;
 }
 
 /* Data Table */
@@ -163,24 +195,77 @@ ul {
     white-space: nowrap;
 }
 
+/*** Filters ***/
+
 /* partials Selector */
+#StarsRangeRowChart text {
+    fill: #000;
+}
+
+#StarsRangeRowChart .selected {
+    fill: #449a8d;
+}
+
+#StarsRangeRowChart .selected+text {
+    font-weight: bolder; /*fine tuning when font selected?*/
+}
+
+/* text based filter */
+#dcVisCounter strong {
+    margin: 0 3px;
+}
+
+#filters {
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.textSearchContainer {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px 5px;
+    width: 100%;
+}
+
+.textSearchContainer label {
+    width: 230px;
+    text-align: end;
+}
+
+.textSearchContainer input {
+    margin-left: 3px;
+    margin-right: 5px;
+    border: 1px solid #449a8d;
+    width: 150px;
+}
+
+.rangeChartContainer {
+    padding: 5px 5px;
+}
 
 /* Keyword Selector */
 .multipleKeywords {
+    text-align: center;
     margin: 0 0 5px 0;
 }
 
 .keywordSliderContainer {
-    text-align: right;
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid #449a8d;
+    background-color: #fff;
 }
 
 .dc-cbox-group {
     list-style: none;
-
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    padding-left: 0;
 }
 
 .dc-cbox-group > li:last-child {
@@ -198,12 +283,7 @@ ul {
     margin-right: 3px;
 }
 
-/* Overview bar chart */
-#dcOverviewBarChart .bar {
-    fill: #449a8d;
-}
-
-#dcOverviewBarChart .bar:hover {
-    fill: #003b32;
-    fill-opacity: 1;
+/* About */
+#about h4 {
+    text-align: left;
 }

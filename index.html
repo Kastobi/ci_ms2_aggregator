@@ -15,13 +15,12 @@
 <body>
 
 <!-- Header -->
-<header class="container">
+<header class="container-xl">
     <h1>Explore JavaScript frontend libraries delivered by &lt;cdnjs&gt;</h1>
-    for educational purposes
 </header>
 
 <!-- Nav -->
-<nav class="container analogGoogleTrends">
+<nav class="container-xl">
     <ul class="nav justify-content-center">
         <li class="nav-item">
             <a href="#googleTrends" class="nav-link btn">Trends</a>
@@ -30,7 +29,7 @@
             <a href="#DataTable" class="nav-link btn">Table</a>
         </li>
         <li class="nav-item">
-            <a href="#Filters" class="nav-link btn">Filters</a>
+            <a href="#filters" class="nav-link btn">Filters</a>
         </li>
         <li class="nav-item">
             <a href="#about" class="nav-link btn">About</a>
@@ -45,87 +44,100 @@
 </nav>
 
 <!-- Content -->
+<div class="container-xl">
 
-<!--- Google trends comparison -->
-<section id="googleTrends" class="container analogGoogleTrends">
-    <h2>Compare the search trends</h2>
-    <div id="googleAnchor" class="container-fluid"></div>
-</section>
-
-<!-- Table of selection -->
-<section id="DataTable" class="container analogGoogleTrends">
-    <h2>Select packages to compare</h2>
-    <button class="googleTrendsNewWindow btn">Google Trends in new tab</button>
-    <div id="compareAnchor"></div>
-    <div id="containerDataTable" class="table-responsive">
-        <div id="pagination">
-            Showing <strong><span id="begin"></span>-<span id="end"></span></strong> of <strong><span id="size"></span><span id="totalsize"></span></strong> packages.
-            <button class="btn" id="previousPageButton" value="Last">Previous Page</button>
-            <button class="btn" id="nextPageButton" value="Next">Next Page</button>
+    <!--- Google trends comparison modal -->
+    <div id="comparisonModal" class="modal" tabindex="-1" aria-labelledby="comparisonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="comparisonModalLabel">
+                        The comparison feature uses <strong>1 to 3</strong> items.
+                        Please select a matching number of packages via table checkboxes.
+                    </p>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+            </div>
         </div>
-        <table id="dcDataTable" class="dcAnchor table table-striped table-sm"></table>
     </div>
-</section>
-
-<!-- Filters and groups -->
-<section id="Filters" class="container analogGoogleTrends">
-    <h2>Filter packages</h2>
-    <div id="dcVisCounter" class="dcAnchor"></div>
 
     <div class="row">
-        <!-- partials selector -->
-        <div class="filterContainer col-sm-6">
-            <h3>Search by github stars</h3>
-            <div id="partialsByStarsRow" class="dcAnchor container-fluid"></div>
-        </div>
+        <!--- Google trends comparison -->
+        <section id="googleTrends" class="col-lg-12 analogGoogleTrends">
+            <h2>Compare the search trends</h2>
+            <div id="googleAnchor" class="container-fluid"></div>
+        </section>
 
-        <!-- text search widgets -->
-        <div class="filterContainer col-sm-6">
-            <div>
-                <h3>Search by package name</h3>
-                <div id="searchByName" class="dcAnchor">
-                    Filter packages by package name:
+        <!-- Table of selection -->
+        <section id="DataTable" class="col-lg-9 analogGoogleTrends">
+            <h2>Select packages to compare</h2>
+            <button class="googleTrendsNewWindow btn">Google Trends in new tab</button>
+            <div id="compareButtonsAnchor"></div>
+            <div id="containerDataTable" class="table-responsive">
+                <div id="pagination">
+                    Showing <strong><span id="begin"></span>-<span id="end"></span></strong> of
+                    <strong><span id="size"></span><span id="totalsize"></span></strong> packages.
+                    <button class="btn" id="previousPageButton" value="Last">Previous Page</button>
+                    <button class="btn" id="nextPageButton" value="Next">Next Page</button>
+                </div>
+                <table id="dcDataTable" class="dcAnchor table table-striped table-sm"></table>
+            </div>
+            <!-- Counter and reset all-->
+            <div id="dcVisCounter" class="dcAnchor"></div>
+        </section>
+
+        <!-- Filters and groups -->
+        <section id="filters" class="col-md-12 col-lg-3 analogGoogleTrends">
+            <!-- text search widgets -->
+            <h3>Filter packages by</h3>
+            <div class="row sideTableContainer">
+                <ul class="col-sm-5 col-md-4 col-lg-12 textSearchContainer">
+                    <li>
+                        <label id="searchByName" class="dcAnchor">
+                            name:
+                        </label>
+                    </li>
+                    <li>
+                        <label id="searchByRepoOwner" class="dcAnchor">
+                            owner:
+                        </label>
+                    </li>
+                    <li>
+                        <label id="keywordPackageSearch" class="dcAnchor">
+                            keyword:
+                        </label>
+                    </li>
+                </ul>
+                <!-- partials selector -->
+                <div class="col-sm-6 col-md-7 col-lg-12 rangeChartContainer">
+                    <h4>Popularity</h4>
+                    <div id="StarsRangeRowChart" class="dcAnchor container-fluid"></div>
                 </div>
             </div>
-
-            <div>
-                <h3>Search by repo owner</h3>
-                <div id="searchByRepoOwner" class="dcAnchor">
-                    Filter packages by GitHub user:
-                </div>
-            </div>
-
-            <div>
-                <h3>Search by specific keyword</h3>
-                <div id="keywordPackageSearch" class="dcAnchor">
-                    Filter packages by keyword:
-                </div>
-            </div>
-        </div>
+        </section>
 
         <!-- Multiple keyword selector -->
-        <div class="multipleKeywords filterContainer row">
-            <h3>Search by multiple keywords</h3>
+        <section class="col-lg-12 multipleKeywords filterContainer analogGoogleTrends">
+            <h3>Other keywords in dataset</h3>
             <div class="keywordSliderContainer">
-                <label for="keywordSliderRange" class="sr-only">Slider to filter keywords by frequency of use, to
-                    maintain relevance.</label>
-                At least <strong><span id="sliderValue">50</span></strong> packages of the selection hold the keyword.
-                <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
-            <div id="keywordSelector" class="dcAnchor"></div>
+                <h4>Narrow keywords down by popularity</h4>
+                <div>
+                    <input id="keywordSliderRange" type="range" value="50" min="1" max="100" step="1">
+                    <label for="keywordSliderRange" class="sr-only">
+                        Slider to filter keywords by frequency of use in selection, to maintain relevance.
+                    </label>
+                    <p>
+                        List keywords used by at least <strong><span id="sliderValue">50</span></strong> packages (and
+                        selected)
+                    </p>
+                </div>
             </div>
-
-        </div>
+            <div id="keywordSelector" class="dcAnchor"></div>
+        </section>
     </div>
-
-    <!-- Overview Chart -->
-    <div>
-        <h3>Packages by number of GitHub stars</h3>
-        <div id="dcOverviewBarChart" class="dcAnchor container-fluid"></div>
-    </div>
-</section>
-
+</div>
     <!-- About -->
-<section id="about" class="container analogGoogleTrends">
+<section id="about" class="container-xl analogGoogleTrends">
     <h2>About the project</h2>
     <h3>“What to learn after JavaScript – React, Angular or Vue?”</h3>
     <p>
@@ -257,7 +269,7 @@
 </section>
 
 <!-- Disclaimer -->
-<section class="container analogGoogleTrends">
+<section class="container-xl analogGoogleTrends">
     <div id="disclaimer">
         <h2>Disclaimer</h2>
         <p>
@@ -269,7 +281,8 @@
 </section>
 
 <!-- Footer -->
-<footer id="contacts" class="container">
+<footer id="contacts" class="container-xl">
+    Project for educational purposes
     <h5>Find me on</h5>
     <ul class="social-link-list list-inline">
         <li class="list-inline-item">
@@ -298,6 +311,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js" integrity="sha512-YTblpiY3CE9zQBW//UMBfvDF2rz6bS7vhhT5zwzqQ8P7Z0ikBGG8hfcRwmmg3IuLl2Rwk95NJUEs1HCQD4EDKQ==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.3/dc.min.js" integrity="sha512-iCZwiWxyZoSqAxQREVo3JEXairHxt52vEQiEhjKHrgeWy/S0Rw8sDR+5A+f4uAF+pEZgkjDv4Ww0WluNIologQ==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js" integrity="sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript" src="assets/js/scripts/script.js"></script>
 </body>
 </html>

@@ -91,11 +91,23 @@ with slider
 ### Overview chart
 
 ### Features left to Implement
-- alternative display of keywords, tagcloud?
-- show packages with all selected keywords // additive vs exclusive selection of keywords
-- dynamic data table pagination / let user define length of page
-- find another way to implement google trends (cross site origin error if no track / cookies blocked, reference
-https://bugzilla.mozilla.org/show_bug.cgi?id=1624914)
+- Customization of checkboxes and range-input for uniform cross-browser look.
+- Dynamic data table pagination, depending on viewport size/user input.
+- Add a widget with all active filters (for onclick removal) (Now: Find specific chart/filter or reset all)
+- Find alternative way to implement Google Trends (Now: Cross-Site-Origin Error if no-track / cookies missing/blocked;
+  Google seems to set x-frame-options: sameorigin on their embedded response, if Googles cookies are missing.
+  Reference: https://bugzilla.mozilla.org/show_bug.cgi?id=1624914)
+
+- Keyword features
+  - Build a dataset of keyword-counts and 
+    - filter via range checkboxes/chart (analog GitHub star partials) or two inputs-slider (Now: slider)
+    - set default value of keyword cloud based on selection (Now: 50 packages hardcoded)
+  - Alternative display of keywords, tagcloud by popularity (Now: alphabetical list)
+  - Show packages which contain all selected keywords (Now: packages which contain one of selected keywords)
+  - Rewrite filter on text search widget to allow multiple keywords
+
+
+    
 
 ## Technologies Used
 
