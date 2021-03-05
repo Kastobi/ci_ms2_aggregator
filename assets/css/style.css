@@ -11,7 +11,6 @@ body {
 .btn {
     color: #fff;
     background-color: #449a8d;
-    border-color: #449a8d;
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
     margin: 2px;
@@ -26,7 +25,6 @@ body {
 .btn:not([disabled]):hover {
     color: #fff;
     background-color: #003b32;
-    border-color: #003b32;
 }
 
 .analogGoogleTrends {
@@ -42,6 +40,12 @@ h1, h2, h3, h4, h5 {
 
 h1 {
     font-size: 1.8rem;
+}
+
+@media screen and (max-width: 420px) {
+    h1 {
+        font-size: 1.5rem;
+    }
 }
 
 h2 {
@@ -125,7 +129,7 @@ label {
 }
 
 ul {
-    padding-inline-start: 15px;
+    padding-left: 15px;
     margin-bottom: 0.5rem;
 }
 
@@ -183,7 +187,7 @@ ul {
     color: #449a8d;
 }
 
-#dcDataTable td i:hover {
+#dcDataTable td a i:hover {
     color: #003b32;
 }
 
