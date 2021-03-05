@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Data aggregator on frontend libraries - for educational purposes"/>
     <title>Explore cdnjs</title>
 
+    <!-- Stylesheet area -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.4/style/dc.min.css" integrity="sha512-t38Qn1jREPvzPvDLgIP2fjtOayaA1KKBuNpNj9BGgiMi+tGLOdvDB+aWLMe2BvokHg1OxRLQLE7qrlLo+A+MLA==" crossorigin="anonymous" />
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+
+    <!-- Script area -->
+    <script defer src="https://d3js.org/d3.v6.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js" integrity="sha512-YTblpiY3CE9zQBW//UMBfvDF2rz6bS7vhhT5zwzqQ8P7Z0ikBGG8hfcRwmmg3IuLl2Rwk95NJUEs1HCQD4EDKQ==" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.3/dc.min.js" integrity="sha512-iCZwiWxyZoSqAxQREVo3JEXairHxt52vEQiEhjKHrgeWy/S0Rw8sDR+5A+f4uAF+pEZgkjDv4Ww0WluNIologQ==" crossorigin="anonymous"></script>
+    <script defer src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js" integrity="sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==" crossorigin="anonymous"></script>
+
+    <script defer src="assets/js/scripts/script.js"></script>
 </head>
 <body>
 
@@ -118,7 +130,7 @@
 
         <!-- Multiple keyword selector -->
         <section class="col-lg-12 multipleKeywords filterContainer analogGoogleTrends">
-            <h3>Other keywords in dataset</h3>
+            <h3>Filter for other keywords</h3>
             <div class="keywordSliderContainer">
                 <h4>Narrow keywords down by popularity</h4>
                 <div>
@@ -128,7 +140,7 @@
                     </label>
                     <p>
                         List keywords used by at least <strong><span id="sliderValue">50</span></strong> packages (and
-                        selected)
+                        selected). If multiple keywords selected, the filtered packages contain one of the keywords.
                     </p>
                 </div>
             </div>
@@ -305,16 +317,5 @@
         </li>
     </ul>
 </footer>
-
-<!-- Script area -->
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js" integrity="sha512-YTblpiY3CE9zQBW//UMBfvDF2rz6bS7vhhT5zwzqQ8P7Z0ikBGG8hfcRwmmg3IuLl2Rwk95NJUEs1HCQD4EDKQ==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.3/dc.min.js" integrity="sha512-iCZwiWxyZoSqAxQREVo3JEXairHxt52vEQiEhjKHrgeWy/S0Rw8sDR+5A+f4uAF+pEZgkjDv4Ww0WluNIologQ==" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js" integrity="sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==" crossorigin="anonymous"></script>
-
-<script type="application/javascript" src="assets/js/scripts/script.js"></script>
 </body>
 </html>
