@@ -50,9 +50,14 @@ As a…
    
 ### Structure & Skeleton
 
-![wireframes mobile](/readmeAssets/Mobiles.jpg)
+The user
 
-![wireframes bigger as mobile](/readmeAssets/Desktop.jpg)
+
+#### Mobile wireframe
+![wireframes mobile](/readmeAssets/Mobiles.png)
+
+#### Desktop wireframe
+![wireframes bigger as mobile](/readmeAssets/Desktop.png)
 
 ### Surface
 
@@ -207,7 +212,7 @@ The user can evaluate the popularity of the different packages in relative terms
 - as IDE
 
 #### [Pycharm](https://www.jetbrains.com/pycharm/)
-- as IDE after gitpod had issues way to frequently
+- as IDE after gitpod was down way to frequently
 
 #### [code institute gitpod template](https://github.com/Code-Institute-Org/gitpod-full-template)
 - as a starter for the gitpod environment
@@ -229,6 +234,9 @@ The index.html was validated by [HTML validator](https://validator.w3.org/).
 
 #### CSS Validator
 The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/).
+
+#### JS Validator
+The script.js was validated by []().
 
 !!! BEFORE SUBMISSION
 
@@ -298,6 +306,8 @@ The content was deployed via GitHub pages by configuring the repository accordin
 * The color palettes screenshots were taken with [coolors.co](https://coolors.co/)
 
 * The favicon was generated with [favicon.ico and app icon generator](https://www.favicon-generator.org/)
+
+* The wireframes were drawn with [Balsamiq](https://balsamiq.com/)
 
 ### Acknowledgments
 * My mentor Brian Macharia for his support and feedback.
