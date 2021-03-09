@@ -1,11 +1,9 @@
+/*jshint esversion: 8 */
+/*globals d3, crossfilter, dc, trends, console*/
+
 // 1x API call result global, stored to prevent further API calls and let user customize output without generating further calls
 let cdnjsFullList = null;
 let cdnjsProcessedList = [];
-
-//dev purpose - todo: encapsulate vars
-// crossfilter section
-let fullDataset = null;
-let fullDatasetGroup = null;
 
 document.addEventListener("DOMContentLoaded", initSite);
 
@@ -111,8 +109,10 @@ function keywordsLowercased(keywords) {
  */
 function initDataVis() {
 
-    // crossfilter section, define dimensions and groups
+    let fullDataset = null;
+    let fullDatasetGroup = null;
 
+    // crossfilter section, define dimensions and groups
     fullDataset = crossfilter(cdnjsProcessedList);
     fullDatasetGroup = fullDataset.groupAll();
 
@@ -131,7 +131,6 @@ function initDataVis() {
             }
         };
     }
-
     // End of Copy
 
     // define crossfilter dimensions and groups
@@ -177,6 +176,9 @@ function initDataVis() {
         showTheTrends();
         compareList = [];
     }
+
+    // Load GoogleTrends on first load
+    firstLoadComparison();
 
     /**
      * update compare list to generate GoogleTrends chart
@@ -625,9 +627,6 @@ function initDataVis() {
                         .attr("disabled", "true");
                 }
             });
-
-        // Load GoogleTrends on first load
-        firstLoadComparison();
 
         //Final dc.renderAll() -> end of dc part, renders all tables
         dc.renderAll();

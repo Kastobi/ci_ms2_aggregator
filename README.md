@@ -3,8 +3,6 @@
 # ToDo pre Submission
 - testing
 - readme
-- favicon?
-
 
 ![opener]()
 
@@ -50,8 +48,21 @@ As a…
    
 ### Structure & Skeleton
 
-The user
+The value for the user is mainly in the embedded Google Trends chart, and the filterable data table. So both of them
+are presented at the top of the page. The control elements connecting them are anchored between them.
 
+On bigger screens, the main filter elements are placed next to the table, on mobiles they switch below the table, to
+prevent user-irritation (clear binding to the table, not the trends-chart) and maintain the table in a readable width.
+
+The feature to search all the keywords present in the dataset is combined with a filter-slider, to prevent overloading
+the tagcloud to an unusable list (the 4,000 packages in the dataset got over 6,000 unique keywords (allready normalized 
+to lowercase)), but maintain the usability of the feature.
+
+The about section was positioned beneath the main data to hook the user with the most asked question ("Angular, React or
+Vue?") and guide to critical thinking about the provided data and further research on package use.
+
+The disclaimer and contacts sections are of minor value for the user, but the disclaimer and contacts should be
+presented on the same page, as the used data and therefore positioned at the bottom of the page.
 
 #### Mobile wireframe
 ![wireframes mobile](/readmeAssets/Mobiles.png)
@@ -66,7 +77,7 @@ Without customization of inputs many browsers use blue as default color.
 To stay in the range but clearly differentiate from Googles content, I picked green for my main color and used a
 gradient to blue from Google and the browsers for my gradient.
 
-![google colors](/readmeAssets/baseColors.jpg)
+![google colors](/readmeAssets/googleColors.jpg)
 
 ![color palette](/readmeAssets/baseColors.jpg)
 
@@ -159,6 +170,9 @@ The user can evaluate the popularity of the different packages in relative terms
   slider.
 
 ### Features left to Implement
+- add a Backend to prevent loading of full dataset ressources on page load and speed up TTI
+- prevent layout shifting due to embed/chart generation
+
 - Customization of checkboxes and range-input for uniform cross-browser look.
 - Dynamic data table pagination, depending on viewport size/user input (Now: Table size 10 packages hardcoded)
 - Add a widget with all active filters (for onclick removal) (Now: Find specific chart/filter or reset all)
@@ -194,6 +208,9 @@ The user can evaluate the popularity of the different packages in relative terms
 ##### [FontAwesome](https://fontawesome.com/)
 - for link symbols
 
+##### [Google Font *Lato*](https://fonts.google.com/specimen/Lato)
+- for Lato for a clean readable impression
+
 #### [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 
 ##### [jQuery](https://jquery.com/)
@@ -227,20 +244,31 @@ The user can evaluate the popularity of the different packages in relative terms
 
 ### Validators
 
-#### HTML Validator
-The index.html was validated by [HTML validator](https://validator.w3.org/).
+Validators were used by copy and pasting the code into validators.
+- Strg+A
+- Strg+C
+- Strg+V
 
-!!! BEFORE SUBMISSION
+Validation was used on regular basis while developing and before submission.
+
+#### HTML Validator
+The index.html was validated by [HTML validator](https://validator.w3.org/) and passed without errors.
 
 #### CSS Validator
-The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/).
+The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/) and passed without errors.
 
 #### JS Validator
-The script.js was validated by []().
+The script.js was validated by [JSHint](https://jshint.com/).
 
-!!! BEFORE SUBMISSION
+As it returned warnings the following options were set;
+- esversion: 8 (to use "async function"; coverage per caniuse.com: 92,69%, assumption: front-end devs will use 
+  up-to-date browsers)
+- globals: d3, crossfilter, dc, trends, console (first ones imported via index.hrml script tags, console just error log)
+
+No errors remained.
 
 ### Manual testing
+
 
 #### Chrome exclusive, deployed page
 
