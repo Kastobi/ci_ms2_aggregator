@@ -109,6 +109,9 @@ function keywordsLowercased(keywords) {
  */
 function initDataVis() {
 
+    // removes deprecated d3feature from dc / prevents console warning
+    dc.config.defaultColors(d3.schemeDark2);
+
     let fullDataset = null;
     let fullDatasetGroup = null;
 
