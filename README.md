@@ -50,9 +50,9 @@ As a…
    
 ### Structure & Skeleton
 
-![wireframes mobile]()
+![wireframes mobile](/readmeAssets/Mobiles.png)
 
-![wireframes bigger as mobile]()
+![wireframes bigger as mobile](/readmeAssets/Desktop.png)
 
 ### Surface
 
@@ -296,6 +296,8 @@ The content was deployed via GitHub pages by configuring the repository accordin
 * The first readme screenshot was taken with [ami.reponsive](http://ami.responsivedesign.is/)
 
 * The color palettes screenshots were taken with [coolors.co](https://coolors.co/)
+
+* The favicon was generated with [favicon.ico and app icon generator](https://www.favicon-generator.org/)
 
 ### Acknowledgments
 * My mentor Brian Macharia for his support and feedback.
