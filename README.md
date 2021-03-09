@@ -265,14 +265,130 @@ As it returned warnings the following options were set;
   up-to-date browsers)
 - globals: d3, crossfilter, dc, trends, console (first ones imported via index.hrml script tags, console just error log)
 
-No errors remained.
+No warnings remained.
 
 ### Manual testing
 
+A console warning derived from a removed d3 color scheme, supported by dc for backward compatibility, was removed by 
+selecting another default color scheme (script.js line 113).
+![console warning](/readmeAssets/consoleWarning.jpg)
 
+#### Test cases
+
+1. Responsiveness
+    - Procedure    
+        1. Open Homepage
+        2. Left click on the page and open Dev Tools (Strg + Alt + i)
+        3. Toggle device toolbar
+        4. Resize with from wide to narrow
+    - Expected
+        - Layout aligns according to wireframes
+        - Charts redraw after resizing
+        - No Scroll bars (Exception: table, as defined in wireframe) on page elements
+        - No breaking of the layout
+    
+2. Usability and Functionality
+    1. Nav
+        - Procedure
+            1. Scroll the page down, beginning top, observe
+            2. For every nav button: click, observe
+        - Expected
+            - Navbar sticks to top and enables user to move to distinct location on page.
+            - Every button moves the user to the according section of the page.
+    2. Filters
+        1. Filtering 
+            - Procedure        
+                1. Apply a filter from every filtering element
+                    1. the text filters (name, owner, keyword); enter a string
+                    2. popularity row chart; click on a row
+                    3. multiple keyword range; select some checkboxes
+                2. Audit expected filter behaviour
+                    1. Modify text input
+                    2. Click on the same row
+                    3. Click on "reset" button of multiple keyword selector
+                3. Audit expected behaviour
+                4. Click on "Reset All"
+                    1. Audit expected behaviour
+            - Expected behaviour
+                - Filter behaviour
+                    - Text filters
+                        - The filtered table column contains only elements, with the lowercased input chars in given
+                        order, without other chars in between. Before and after the sequence, other chars are allowed.
+                            - name: filters first table column (package name)
+                            - owner: filters second table column, hover over link symbol to compare string between the 
+                            last two slashes, appearing in bottom left of the browser
+                            - keyword: filters last table column (keywords provided)
+                        - Adding/Removing chars to inputs modifies filters accordingly
+                    - Popularity filter
+                        - The stars column of the table contains only elements, described by the label of the row.
+                            - Exception: "stars not provided": 0 is allowed
+                        - The clicked row is highlighted
+                        - Another click on selected row removes highlight and filter
+                    - Multiple keywords range
+                        - The last table column (keywords provided) contains at least *one* of the keywords selected by
+                        the checkboxes.
+                        - If no checkbox is checked, "reset" button is disabled.
+                        - Click on "reset" button removes this filter. All other filters still apply.
+                    - Every adding / removing filter updates the connected elements, especially the table and the 
+                    counter next to the "Reset All" button.
+                - "Reset All" behaviour
+                    - All filters are dropped, full dataset is displayed by the elements.
+                    - "Reset All" button is disabled
+        2. Subfiltering multiple keywords
+            - Procedure
+                1. Moving the slider "narrow down by popularity" to the far right, observe.
+                2. Moving the slider to the far left, observe.
+            - Expected Behaviour
+                - right: fewer keywords displayed, sentence below slider contains bold "100".
+                - left: more keywords displayed, sentence below slider contains bold "1".
+    3. Google Trends Comparison
+        1. Selection        
+            - Procedure
+                1. Click on up to 3 checkboxes in the table, observe
+                2. Hover over appearing button, observe 
+                3. Click on one of the buttons, observe
+                4. Try to check 4 checkboxes, observe
+            - Expected behaviour
+                1. Buttons with package name appear
+                2. Text is crossed out
+                3. The checkbox of the package named is unchecked, button disappears.
+                4. A modal appears, informing you to check 1-3 boxes, just 3 boxes are checked.
+        2. Comparing
+            - Procedure
+                1. With up to 3 boxes checked, click on "Show me the trends!"
+                2. With up to 3 boxes checked, click on "Google Trends in new tab"
+                3. With 0 boxes checked, click on "Google Trends in new tab"
+            - Expected behaviour
+                1. The trends chart updates accordingly
+                2. A Google Trends tab opens, preloaded with checked search-terms.
+                3. A modal appears, informing you to check 1-3 boxes.
+    4. Data table
+        - Procedure
+            - "Next Page" and "Previous Page" buttons click
+            - The GitHub link symbol of a button click
+        - Expected behaviour
+            - The table pages turn accordingly, data updates in the table and next to the buttons
+            - The correct GitHub page opens in a new tab
+
+    5. About Section
+        - Procedure
+            - Click every link
+        - Expected behaviour
+            - The link clicked opens in anew tab
+    6. Contacts footer
+        - Procedure
+            - Click the contacts symbols
+        - Expected behaviour
+            - The authors contact pages opens a in new tab
+    7. General
+        - Procedure
+            - All buttons were hovered
+        - Expected behaviour
+            - If not disabled, the color changes
+    
 #### Chrome exclusive, deployed page
 
-### Functionality testing
+### Automated testing
 
 ### User-Story verification
 
