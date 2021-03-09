@@ -50,9 +50,9 @@ As a…
    
 ### Structure & Skeleton
 
-![wireframes mobile](/readmeAssets/Mobiles.png)
+![wireframes mobile](/readmeAssets/Mobiles.jpg)
 
-![wireframes bigger as mobile](/readmeAssets/Desktop.png)
+![wireframes bigger as mobile](/readmeAssets/Desktop.jpg)
 
 ### Surface
 
