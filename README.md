@@ -12,7 +12,7 @@
 # Table of Contents
 1. [UX](#UX)
 2. [Features](#Features)
-3. [Technologies](#Technologies Used)
+3. [Technologies](#Technologies)
 4. [Testing](#Testing)
 5. [Deployment](#Deployment)
 6. [Credits](#Credits)
@@ -194,7 +194,7 @@ The user can evaluate the popularity of the different packages in relative terms
   - Rewrite filter on text search widget to allow multiple keywords
   - Highlight keywords matching the keyword text filter
     
-## Technologies Used
+## Technologies
 
 #### [HTML](https://en.wikipedia.org/wiki/HTML)
 - for the main pages
@@ -220,6 +220,9 @@ The user can evaluate the popularity of the different packages in relative terms
 - [D3](https://d3js.org/)
 - [crossfilter](http://crossfilter.github.io/crossfilter/)
 - [dc.js](https://dc-js.github.io/dc.js/)
+
+##### [Jasmine](https://jasmine.github.io/)
+- for tests on load process
 
 #### [Git](https://git-scm.com/) / [GitHub](https://github.com)
 - for version control
@@ -389,6 +392,11 @@ selecting another default color scheme (script.js line 113).
 #### Chrome exclusive, deployed page
 
 ### Automated testing
+
+[The testing site](https://apometricstk.github.io/ci_ms2_aggregator/specrunner.html) includes basic tests on correct
+import of font, stylesheets, libraries and the loading and processing of the data.
+
+![Jasmine specrunner](/readmeAssets/jasmineBasics.jpg)
 
 ### User-Story verification
 
