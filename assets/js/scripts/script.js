@@ -1,5 +1,5 @@
 /*jshint esversion: 8 */
-/*globals d3, crossfilter, dc, trends, console*/
+/*globals d3, crossfilter, dc, trends, console, $*/
 
 // 1x API call result global, stored to prevent further API calls and let user customize output without generating further calls
 let cdnjsFullList = null;

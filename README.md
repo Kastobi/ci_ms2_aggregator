@@ -26,23 +26,24 @@ A selection of the major objectives and selected ways to achieve them in form of
 As a…
 
 #### front-end development student...
-1. I want to learn the best technology to foster my career. I have difficulties to decide which is the most relevant 
-   technology, because I lack the experience to evaluate the quality of software libraries. 
-   -> Depended on Experience of others
+
+I want to learn the best technology to foster my career. I have difficulties to decide which is the most relevant 
+technology, because I lack the experience to evaluate the quality of software libraries. 
+-> Basic Assumption: Depending on the experience of others
    
-2. I want to use the experience of many professionals (not just one subjective opinion) to create a shortlist of 
+1. I want to use the experience of many professionals (not just one subjective opinion) to create a shortlist of 
    libraries to research. 
    -> GitHub Stars as metric
 
-3. I want to get a feeling about the different trends of the libraries on my shortlist, because I don't want to 
+2. I want to get a feeling about the different trends of the libraries on my shortlist, because I don't want to 
    accidentally select the technology, which will be obsolete before I get relevant experience with it. 
    -> Google Trends timeline
    
-4. I don't want to miss the library which is a perfect fit for my needs, because I did my research only on the superstar 
+3. I don't want to miss the library which is a perfect fit for my needs, because I did my research only on the superstar 
    of the bunch. 
    -> Selection and comparison by tags/keywords
 
-5. I have to do research on my shortlist, to find my best fit. The evaluation of the relevance in my region is possible 
+4. I have to do research on my shortlist, to find my best fit. The evaluation of the relevance in my region is possible 
    with Google Trends, the technical research is best done on the repositories. 
    -> Include Links to both
    
@@ -55,11 +56,11 @@ On bigger screens, the main filter elements are placed next to the table, on mob
 prevent user-irritation (clear binding to the table, not the trends-chart) and maintain the table in a readable width.
 
 The feature to search all the keywords present in the dataset is combined with a filter-slider, to prevent overloading
-the tagcloud to an unusable list (the 4,000 packages in the dataset got over 6,000 unique keywords (allready normalized 
+the tagcloud to an unusable list (the 4,000 packages in the dataset got over 6,000 unique keywords (already normalized 
 to lowercase)), but maintain the usability of the feature.
 
-The about section was positioned beneath the main data to hook the user with the most asked question ("Angular, React or
-Vue?") and guide to critical thinking about the provided data and further research on package use.
+The about-section was positioned beneath the main data to hook the user with the most asked question ("Angular, React or
+Vue?"), afterwards guiding to critical thinking about the provided data and further research on package use.
 
 The disclaimer and contacts sections are of minor value for the user, but the disclaimer and contacts should be
 presented on the same page, as the used data and therefore positioned at the bottom of the page.
@@ -99,7 +100,7 @@ gradient to blue from Google and the browsers for my gradient.
 
 - The contact links enable the users to get in touch with the author.
 
-- The charts with the exception of the Google chart (embedded, no public API available) interact with each other
+- The charts except of the Google chart (embedded, no public API available) interact with each other
   (selecting a filter applies the filter to the shared dataset).
 
 ### Google Trends chart
@@ -118,7 +119,7 @@ The user can evaluate the popularity of the different packages in relative terms
 ### Package table
 
 - On the first load of the page the most popular packages (based on GitHub stars provided by cdnjs) are listed with a
-  link to their project page, their actual GitHub stars and the keywords used to tag the packages.
+  link to their project page, their actual GitHub stars and the keywords, used to tag the packages.
   
 - A pagination is used to maintain the overview for users and prevent a list of thousands on small screens. Two buttons
   let the user turn the pages.
@@ -156,7 +157,7 @@ The user can evaluate the popularity of the different packages in relative terms
     - stars not provided
 
 - The segments were chosen this way to fulfill the different criteria of users. 
-    - compare unicorns like Facebooks React to Googles Angular
+    - compare unicorns like Facebook's React to Google's Angular
     - compare niche packages like plugins for specialised use-cases
     
 ### Multiple keyword selector
@@ -170,16 +171,16 @@ The user can evaluate the popularity of the different packages in relative terms
   slider.
 
 ### Features left to Implement
-- add a Backend to prevent loading of full dataset ressources on page load and speed up TTI
+- add a Backend to prevent loading of full dataset resources on page load and speed up TTI
 - prevent layout shifting due to embed/chart generation
 
 - Customization of checkboxes and range-input for uniform cross-browser look.
 - Dynamic data table pagination, depending on viewport size/user input (Now: Table size 10 packages hardcoded)
-- Add a widget with all active filters (for onclick removal) (Now: Find specific chart/filter or reset all)
+- Add a widget with all active filters (for onclick removal) (Now: Find the specific chart/filter or reset all)
 
 - Google Trends
     - Find alternative way to implement Google Trends (Now: Cross-Site-Origin Error if no-track / cookies missing/
-      blocked;
+      blocked);
       Google seems to set x-frame-options: sameorigin on their embedded response, if Googles cookies are missing.
       [Reference](https://bugzilla.mozilla.org/show_bug.cgi?id=1624914)
     - Reverse engineer their whole embed API to make all parameters accessible for users (high risk to break, if 
@@ -203,7 +204,7 @@ The user can evaluate the popularity of the different packages in relative terms
 - for everything styling related
 
 ##### [Bootstrap](https://getbootstrap.com/)
-- for responsive layout and modal
+- for the responsive layout and modal
 
 ##### [FontAwesome](https://fontawesome.com/)
 - for link symbols
@@ -232,7 +233,7 @@ The user can evaluate the popularity of the different packages in relative terms
 - as IDE
 
 #### [Pycharm](https://www.jetbrains.com/pycharm/)
-- as IDE after gitpod was down way to frequently
+- as IDE, after gitpod was unavailable to frequently
 
 #### [code institute gitpod template](https://github.com/Code-Institute-Org/gitpod-full-template)
 - as a starter for the gitpod environment
@@ -247,7 +248,7 @@ The user can evaluate the popularity of the different packages in relative terms
 
 ### Validators
 
-Validators were used by copy and pasting the code into validators.
+Validators were used by "copy and pasting" the code into validators.
 - Strg+A
 - Strg+C
 - Strg+V
@@ -255,21 +256,44 @@ Validators were used by copy and pasting the code into validators.
 Validation was used on regular basis while developing and before submission.
 
 #### HTML Validator
+
+##### index.html
+
 The index.html was validated by [HTML validator](https://validator.w3.org/) and passed without errors.
+
+##### specrunner.html
+
+The specrunner.html was validated by [HTML validator](https://validator.w3.org/) and returned a warning.
+The criticised "type="application/javascript"" was removed and afterwards it passed without errors.
 
 #### CSS Validator
 The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/) and passed without errors.
 
 #### JS Validator
+
+##### script.js
+
 The script.js was validated by [JSHint](https://jshint.com/).
 
-As it returned warnings the following options were set;
+As it returned warnings, the following options were set;
 - esversion: 8 (to use "async function"; coverage per caniuse.com: 92,69%, assumption: front-end devs will use 
   up-to-date browsers)
-- globals: d3, crossfilter, dc, trends, console (first ones imported via index.hrml script tags, console just error log)
+- globals: d3, crossfilter, dc, trends, $, console (first ones imported via index.html script tags, console just error log)
 
 No warnings remained.
 
+##### spec.js
+
+The spec.js was validated by [JSHint](https://jshint.com/).
+
+As it returned warnings, the following options were set;
+
+- esversion: 8 (see script.js)
+- globals like in script js, added Jasmine specifics (describe, it, expect) and cdnjsFullList, cdnjsProcessedList (
+  declared in script.js)
+
+No warnings remained.
+  
 ### Manual testing
 
 A console warning derived from a removed d3 color scheme, supported by dc for backward compatibility, was removed by 
@@ -287,7 +311,7 @@ selecting another default color scheme (script.js line 113).
     - Expected
         - Layout aligns according to wireframes
         - Charts redraw after resizing
-        - No Scroll bars (Exception: table, as defined in wireframe) on page elements
+        - No Scroll bars (Exception: table, as defined in the wireframe) on page elements
         - No breaking of the layout
     
 2. Usability and Functionality
@@ -321,9 +345,9 @@ selecting another default color scheme (script.js line 113).
                             - owner: filters second table column, hover over link symbol to compare string between the 
                             last two slashes, appearing in bottom left of the browser
                             - keyword: filters last table column (keywords provided)
-                        - Adding/Removing chars to inputs modifies filters accordingly
+                        - Adding/Removing chars to the inputs modifies filters accordingly
                     - Popularity filter
-                        - The stars column of the table contains only elements, described by the label of the row.
+                        - The stars' column of the table contains only elements, described by the label of the row.
                             - Exception: "stars not provided": 0 is allowed
                         - The clicked row is highlighted
                         - Another click on selected row removes highlight and filter
@@ -382,7 +406,7 @@ selecting another default color scheme (script.js line 113).
         - Procedure
             - Click the contacts symbols
         - Expected behaviour
-            - The authors contact pages opens a in new tab
+            - The authors contact pages opens an in new tab
     7. General
         - Procedure
             - All buttons were hovered
@@ -401,6 +425,26 @@ import of font, stylesheets, libraries and the loading and processing of the dat
 ### User-Story verification
 
 #### front-end development student
+   
+1. I want to use the experience of many professionals (not just one subjective opinion) to create a shortlist of 
+   libraries to research. 
+   -> GitHub Stars as metric
+    ![GitHub stars as metric](/readmeAssets/userStory1.jpg)
+
+2. I want to get a feeling about the different trends of the libraries on my shortlist, because I don't want to 
+   accidentally select the technology, which will be obsolete before I get relevant experience with it. 
+   -> Google Trends timeline
+   ![Google Trends timeline](/readmeAssets/userStory2.jpg)
+   
+3. I don't want to miss the library which is a perfect fit for my needs, because I did my research only on the superstar 
+   of the bunch. 
+   -> Selection and comparison by tags/keywords
+   ![Select and compare by tags/keywords](/readmeAssets/userStory3.jpg)
+
+4. I have to do research on my shortlist, to find my best fit. The evaluation of the relevance in my region is possible 
+   with Google Trends, the technical research is best done on the repositories. 
+   -> Include Links to both, no further input needed.
+   ![Deeper research by included links](/readmeAssets/userStory4.jpg)
 
 ### Slack review
 The project was posted to Slack the Code Institute community channel peer-code-review for different pairs of eyes.
@@ -411,19 +455,25 @@ Readme was observed on GitHub. All links were clicked.
 ## Deployment
 The relevant files for deployment of the project are
 
-The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to click on "Code" on the top of this page (top right above the file list) and on "Download zip".  
-Afterwards extract the zip (most OS include a packaging program for it, just right click on it) into the required folder (read below).
+The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to 
+click on "Code" on the top of this page (top right above the file list) and on "Download zip".  
+Afterwards extract the zip (most operating systems include a packaging program for it, just right click on it) into the 
+required folder (read below).
 
 ### Local
-For local use, download the files and the folder, put them (or extract) into the same directory and open the **index.html** file with your browser.
+For local use, download the files and the folder, put them (or extract) into the same directory and open the 
+**index.html** file with your browser.
 
 ### Deployed / Hosted
-For deployed use, download the files and the folder, put/upload/extract them into the folder advised by your hoster (e.g. "www", but it depends - check back with your hoster / the documentation!).  
+For deployed use, download the files and the folder, put/upload/extract them into the folder advised by your hoster 
+(e.g. "www", but it depends on the individual vendor - check back with your hoster / the documentation!).  
 Be cautious not to alter the file hierarchy.
 
 ### with GitHub pages
-If you are logged into your GitHub Account (if not: Sign up - its free!) just click on "Fork" on the top right of this page.
-Afterwards in the "Settings" (top menu, right beyond the name of the repository) menu, go to "Options" (top menu item), and afterwards scroll down to "GitHub Pages", select "Master branch" as source and click "Save".
+If you are logged into your GitHub Account (if not: Sign up - it's free!) just click on "Fork" on the top right of this 
+page.
+Afterwards in the "Settings" (top menu, right beyond the name of the repository) menu, go to "Options" (top menu item), 
+and afterwards scroll down to "GitHub Pages", select "Master branch" as source and click "Save".
 To get to the deployed site afterwards, click on the link.  
 Further [documentation](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages)
 
@@ -442,7 +492,7 @@ The content was deployed via GitHub pages by configuring the repository accordin
 - [Google](https://trends.google.com/)
 
 #### Components
-- Browser compability verification with [caniuse](https://caniuse.com/)
+- Browser compatibility verification with [caniuse](https://caniuse.com/)
 
 - [Bootstrap](https://getbootstrap.com/) components
     - Layout system / grid
@@ -453,7 +503,7 @@ The content was deployed via GitHub pages by configuring the repository accordin
 ### Media
 * The Font Awesome symbols were made by [Font Awesome](https://fontawesome.com/).
 
-* The first readme screenshot was taken with [ami.reponsive](http://ami.responsivedesign.is/)
+* The first readme screenshot was taken with [ami.responsive](http://ami.responsivedesign.is/)
 
 * The color palettes screenshots were taken with [coolors.co](https://coolors.co/)
 

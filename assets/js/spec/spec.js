@@ -1,7 +1,10 @@
+/*jshint esversion: 8 */
+/*globals describe, it, expect, d3, crossfilter, dc, trends, bootstrap, cdnjsFullList, cdnjsProcessedList*/
+
 describe("Initialisation", function() {
 
     it("Google font 'Lato' loaded", function() {
-        const fonts = []
+        const fonts = [];
         document.fonts.forEach(font => fonts.push(font.family));
         const latoPresent = fonts.includes("Lato");
 
