@@ -345,10 +345,14 @@ The deployed version of the page was tested.
 selecting another default color scheme (script.js line 113).
 ![console warning](/readmeAssets/consoleWarning.jpg)
 
-- Depending on browser configuration, Google Trends embedded frame is not rendered. To inform the user, a custom error
-message is generated. As the browser cannot interfere with elements inside an iframe, the app uses a defined style 
-attribute (provided by the embedded frame, if present) as indicator for the working feature.
-![Style is undefined](/readmeAssets/cookieWarning.jpg)
+- Depending on browser configuration, Google Trends embedded frame is not rendered. Google seems to set x-frame-options: 
+  sameorigin on their embedded response, if Googles cookies are missing.
+  - ![console warning](/readmeAssets/xFrameError.jpg)
+  - [Reference](https://bugzilla.mozilla.org/show_bug.cgi?id=1624914)
+  - To inform the user, a custom error message is generated. As the browser cannot interfere with elements inside an 
+    iframe, the app uses a defined style attribute (provided by the embedded frame, if present) as indicator for the 
+    working feature.
+  - ![Style is undefined](/readmeAssets/cookieWarning.jpg)
   
 - All htmls were examined on different widths and responsive behavior was observed.
   - 280px, 320px (as representation for mobiles)
