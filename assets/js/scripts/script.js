@@ -323,7 +323,8 @@ function initDataVis() {
                     let googleTrendsReplacementURL = "https://trends.google.de/trends/explore?date=today%205-y&q=" + compareList.toString();
                     window.open(
                         googleTrendsReplacementURL,
-                        "_blank"
+                        "_blank",
+                        "noreferrer"
                     );
                 }
             });
@@ -450,7 +451,7 @@ function initDataVis() {
                             return (`<i class="far fa-question-circle" aria-hidden="true"></i>
                                  <span class="sr-only">Link to repository not provided</span>`);
                         } else {
-                            return (`<a href="${d.githubLink}" target="_blank">
+                            return (`<a href="${d.githubLink}" target="_blank" rel="noreferrer">
                                  <i class="fas fa-external-link-square-alt" aria-hidden="true"></i>
                                  <span class="sr-only">Link to repository</span>
                                  </a>`);
@@ -578,7 +579,8 @@ function initDataVis() {
                     return d.value + " packages of the selection got " + d.key;
                 }
             })
-            .turnOnControls();
+            .turnOnControls()
+            .keyboardAccessible(true);
 
         /**
          * Multiple keyword selector

@@ -290,6 +290,46 @@ As it returned warnings, the following options were set;
   declared in script.js)
 
 No warnings remained.
+
+#### Lighthouse
+
+The Chrome [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool was used to generate reports.
+
+![Lighthouse desktop](/readmeAssets/LighthouseDesktop.jpg)
+
+![Lighthouse mobile](/readmeAssets/LighthouseMobile.jpg)
+
+##### Performance
+
+The Performance issue is due to:
+1. The big dataset to load for basic functionality
+    - API call (about 200 kB)
+    - building crossfilter dimensions
+A possible way to improve the behaviour could be a custom backend, serving just the data needed - but this is beyond the
+scope of this project.
+
+![Main task](/readmeAssets/mainTask.jpg)  
+
+2. the call to Google Trends
+    - with disabled disk cache: over 1.2 MB of 1.9 MB transferred
+    - only embedded version available
+    - undocumented API
+I don't know a way of circumventing or improve this issue.
+
+![Google Trends network](/readmeAssets/googleTrendsNetwork.jpg)
+
+##### Accessibility
+
+The Accessibility score of 97 was improved to 98, by changing the heading level of the social links (h5 to h3).
+The missing 2 points depend on color contrast on links and buttons.
+
+Tests with a comparison of bold, color: black, original and text-stroke (2px black), resulted in the decision to stay 
+with the original style for best legibility.
+![Lighthouse mobile](/readmeAssets/btnColors.jpg)
+
+##### Best Practices
+
+The Best Practices score of 93 was improved to 100, by adding "rel="noreferrer"" to outgoing links.
   
 ### Manual testing
 
@@ -412,6 +452,13 @@ selecting another default color scheme (script.js line 113).
     
 #### Chrome exclusive, deployed page
 
+### Accessibility testing
+
+The index.html was tabbed through.
+- Popularity row chart was not tabable; .keyboardAccessible(true) added to fix.
+
+
+
 ### Automated testing
 
 [The testing site](https://apometricstk.github.io/ci_ms2_aggregator/specrunner.html) includes basic tests on correct
@@ -466,7 +513,7 @@ For deployed use, download the files and the folder, put/upload/extract them int
 (e.g. "www", but it depends on the individual vendor - check back with your hoster / the documentation!).  
 Be cautious not to alter the file hierarchy.
 
-### with GitHub pages
+#### with GitHub pages
 If you are logged into your GitHub Account (if not: Sign up - it's free!) just click on "Fork" on the top right of this 
 page.
 Afterwards in the "Settings" (top menu, right beyond the name of the repository) menu, go to "Options" (top menu item), 
@@ -474,7 +521,7 @@ and afterwards scroll down to "GitHub Pages", select "Master branch" as source a
 To get to the deployed site afterwards, click on the link.  
 Further [documentation](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages)
 
-### this actual deployment
+#### this actual deployment
 The content was deployed via GitHub pages by configuring the repository according to the above walkthrough.
 
 ## Credits
