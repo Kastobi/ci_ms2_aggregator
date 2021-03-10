@@ -367,6 +367,8 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
     - 1199px, 1200px
   - 3000px (as representation for high resolution displays - 4k, 5k)
     
+- Google Trends in new tab button changed from google.de... to google.com.
+
 #### Chrome exclusive, deployed page
 
 ##### Test cases
