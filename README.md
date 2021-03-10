@@ -255,15 +255,19 @@ Validation was used on regular basis while developing and before submission.
 
 ##### index.html
 
-The index.html was validated by [HTML validator](https://validator.w3.org/) and passed without errors.
+The index.html was validated by [HTML validator](https://validator.w3.org/) and passed without issues.
 
 ##### specrunner.html
 
 The specrunner.html was validated by [HTML validator](https://validator.w3.org/) and returned a warning.
 The criticised "type="application/javascript"" was removed and afterwards it passed without errors.
 
+##### 404.html
+
+The 404.html was validated by [HTML validator](https://validator.w3.org/) and passed without issues.
+
 #### CSS Validator
-The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/) and passed without errors.
+The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/) and passed without issues.
 
 #### JS Validator
 
@@ -356,9 +360,11 @@ selecting another default color scheme (script.js line 113).
         - Procedure
             1. Scroll the page down, beginning top, observe
             2. For every nav button: click, observe
+            3. Modify url (for example: "https://apometricstk.github.io/ci_ms2_aggregator/inex.html")
         - Expected
-            - Navbar sticks to top and enables user to move to distinct location on page.
-            - Every button moves the user to the according section of the page.
+            1. Navbar sticks to top and enables user to move to distinct location on page.
+            2. Every button moves the user to the according section of the page.
+            3. User gets redirected to custom 404.html, where a link is available to return to index.html.
     2. Filters
         1. Filtering 
             - Procedure        

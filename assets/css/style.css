@@ -296,3 +296,18 @@ ul {
 #about h4 {
     text-align: left;
 }
+
+/* 404 */
+.notFound {
+    text-align: center;
+    position: relative;
+    height: 75vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.notFound .btn {
+    width: fit-content;
+    align-self: center;
+}
