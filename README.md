@@ -267,6 +267,7 @@ The criticised "type="application/javascript"" was removed and afterwards it pas
 The 404.html was validated by [HTML validator](https://validator.w3.org/) and passed without issues.
 
 #### CSS Validator
+
 The styles.css was validated by [jigsaw validator](https://jigsaw.w3.org/css-validator/) and passed without issues.
 
 #### JS Validator
@@ -337,11 +338,30 @@ The Best Practices score of 93 was improved to 100, by adding "rel="noreferrer""
   
 ### Manual testing
 
-A console warning derived from a removed d3 color scheme, supported by dc for backward compatibility, was removed by 
+The Browsers Chrome(v89.0.4389.82) and Firefox (v86.0) were used for testing.
+The deployed version of the page was tested.
+
+- A console warning derived from a removed d3 color scheme, supported by dc for backward compatibility, was removed by 
 selecting another default color scheme (script.js line 113).
 ![console warning](/readmeAssets/consoleWarning.jpg)
 
-#### Test cases
+- Depending on browser configuration, Google Trends embedded frame is not rendered. To inform the user, a custom error
+message is generated. As the browser cannot interfere with elements inside an iframe, the app uses a defined style 
+attribute (provided by the embedded frame, if present) as indicator for the working feature.
+![Style is undefined](/readmeAssets/cookieWarning.jpg)
+  
+- All htmls were examined on different widths and responsive behavior was observed.
+  - 280px, 320px (as representation for mobiles)
+  - Bootstrap breakpoint 
+    - 575px, 576px
+    - 767px, 768px
+    - 991px, 992px
+    - 1199px, 1200px
+  - 3000px (as representation for high resolution displays - 4k, 5k)
+    
+#### Chrome exclusive, deployed page
+
+##### Test cases
 
 1. Responsiveness
     - Procedure    
@@ -455,15 +475,11 @@ selecting another default color scheme (script.js line 113).
             - All buttons were hovered
         - Expected behaviour
             - If not disabled, the color changes
-    
-#### Chrome exclusive, deployed page
 
 ### Accessibility testing
 
 The index.html was tabbed through.
 - Popularity row chart was not tabable; .keyboardAccessible(true) added to fix.
-
-
 
 ### Automated testing
 
@@ -505,12 +521,12 @@ Readme was observed on GitHub. All links were clicked.
 ## Deployment
 
 The relevant files for deployment of the project are
-    - index.html
-    - 404.html (for custom 404 error page, optional)
-    - specrunner.html (for automated tests on loading, optional)
-    - assets/css folder
-    - assets/images folder (for favicon, optional, but will return console error if omitted)
-    - assets/js folder
+- index.html
+- 404.html (for custom 404 error page, optional)
+- specrunner.html (for automated tests on loading, optional)
+- assets/css folder
+- assets/images folder (for favicon, optional, but will return console error if omitted)
+- assets/js folder
 
 The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to 
 click on "Code" on the top of this page (top right above the file list) and on "Download zip".  
