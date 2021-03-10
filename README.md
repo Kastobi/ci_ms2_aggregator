@@ -345,6 +345,10 @@ The deployed version of the page was tested.
 selecting another default color scheme (script.js line 113).
 ![console warning](/readmeAssets/consoleWarning.jpg)
 
+- On verbose logging level Chrome reports a violation due to non passive event listener to a scroll blocking "mousewheel"
+event. Probably a problem with d3 / dc js brush implementation. It was noticed, but not handled.
+  - [Reference](https://www.chromestatus.com/feature/5745543795965952)
+
 - Depending on browser configuration, Google Trends embedded frame is not rendered. Google seems to set x-frame-options: 
   sameorigin on their embedded response, if Googles cookies are missing.
   - ![console warning](/readmeAssets/xFrameError.jpg)
