@@ -1,10 +1,6 @@
 # MS2 – Data aggregator on frontend libraries
 
-# ToDo pre Submission
-- testing
-- readme
-
-![opener]()
+![opener](/readmeAssets/amIresponsive.jpg)
 
 [The website](https://apometricstk.github.io/ci_ms2_aggregator/) is intended to help front-end development students to 
   compare the popularity (depicted by GitHub stars and Google Trends) of different JavaScript packages  and keywords.
@@ -278,7 +274,8 @@ The script.js was validated by [JSHint](https://jshint.com/).
 As it returned warnings, the following options were set;
 - esversion: 8 (to use "async function"; coverage per caniuse.com: 92,69%, assumption: front-end devs will use 
   up-to-date browsers)
-- globals: d3, crossfilter, dc, trends, $, console (first ones imported via index.html script tags, console just error log)
+- globals: d3, crossfilter, dc, trends, $, console (first ones imported via index.html script tags, console just error 
+  log)
 
 No warnings remained.
 
