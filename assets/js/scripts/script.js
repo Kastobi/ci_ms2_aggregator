@@ -320,7 +320,7 @@ function initDataVis() {
                 if (compareList.length === 0) {
                     $("#comparisonModal").modal('toggle');
                 } else {
-                    let googleTrendsReplacementURL = "https://trends.google.de/trends/explore?date=today%205-y&q=" + compareList.toString();
+                    let googleTrendsReplacementURL = "https://trends.google.com/trends/explore?date=today%205-y&q=" + compareList.toString();
                     window.open(
                         googleTrendsReplacementURL,
                         "_blank",
