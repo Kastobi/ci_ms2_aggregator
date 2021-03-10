@@ -503,7 +503,14 @@ The project was posted to Slack the Code Institute community channel peer-code-r
 Readme was observed on GitHub. All links were clicked.
 
 ## Deployment
+
 The relevant files for deployment of the project are
+    - index.html
+    - 404.html (for custom 404 error page, optional)
+    - specrunner.html (for automated tests on loading, optional)
+    - assets/css folder
+    - assets/images folder (for favicon, optional, but will return console error if omitted)
+    - assets/js folder
 
 The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to 
 click on "Code" on the top of this page (top right above the file list) and on "Download zip".  
@@ -515,7 +522,7 @@ For local use, download the files and the folder, put them (or extract) into the
 **index.html** file with your browser.
 
 ### Deployed / Hosted
-For deployed use, download the files and the folder, put/upload/extract them into the folder advised by your hoster 
+For deployed use, download the files and folders, put/upload/extract them into the folder advised by your hoster 
 (e.g. "www", but it depends on the individual vendor - check back with your hoster / the documentation!).  
 Be cautious not to alter the file hierarchy.
 
