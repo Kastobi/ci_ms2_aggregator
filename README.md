@@ -191,7 +191,21 @@ The user can evaluate the popularity of the different packages in relative terms
   - Rewrite filter on text search widget to allow multiple keywords
   - Highlight keywords matching the keyword text filter
     
+- Write automated tests
+    
 ## Technologies
+
+#### [<cdnjs> API](https://cdnjs.com/)
+- for the dataset
+- [Documentation](https://cdnjs.com/api)
+
+#### [Google Trends](https://trends.google.com/)
+- for the embedded trends chart
+- No documentation available via [Google APIs Explorer](https://developers.google.com/apis-explorer) and search on
+  [Google developers](https://developers.google.com/)
+- A post (dated 2014) on an abandoned blog (last post 2016) provides some insights, but uses at least an outdated entry-
+point. [Hacking the Google Trends API, Techslides](http://techslides.com/hacking-the-google-trends-api)
+
 
 #### [HTML](https://en.wikipedia.org/wiki/HTML)
 - for the main pages
@@ -596,5 +610,8 @@ The content was deployed via GitHub pages by configuring the repository accordin
 
 ### Acknowledgments
 * My mentor Brian Macharia for his support and feedback.
+
+* My [team from Code Institute hackathon March 2021](https://hackathon.codeinstitute.net/teams/39/) for feedback and
+support.
 
 * The Code Institute slack community for their support.
