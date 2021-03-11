@@ -7,9 +7,25 @@
 
 # Table of Contents
 1. [UX](#UX)
+   1. [Strategy & Scope](#Strategy-&-Scope)
+   2. [Structure & Skeleton](#Structure-&-Skeleton)
+   3. [Surface](#Surface) 
 2. [Features](#Features)
+   1. [Existing Features](#Existing-Features)
+      1. [Meta](#Meta)
+      2. [Google Trends chart](#Google-Trends-chart)
+      3. [Package table](#Package-table)
+      4. [Data Counter](#Data-Counter)
+      5. [Text Search](#Text-Search)
+      6. [Range row chart](#Range-row-chart)
+      7. [Multiple keyword selector](#Multiple-keyword-selector)
+   2. [Features left to Implement](#Features-left-to-Implement)
 3. [Technologies](#Technologies)
 4. [Testing](#Testing)
+   1. [Validators](#Validators)
+   2. [Manual testing](#Manual-testing)
+      - [Test cases](#Test-cases)
+   3. [Automated testing](#Automated-testing)
 5. [Deployment](#Deployment)
 6. [Credits](#Credits)
  
@@ -86,7 +102,7 @@ gradient to blue from Google and the browsers for my gradient.
 
 ### Existing Features
 
-### Meta
+#### Meta
 
 - The navigation bar allows to scroll to the relevant part of the website all time.
 
@@ -99,7 +115,7 @@ gradient to blue from Google and the browsers for my gradient.
 - The charts except of the Google chart (embedded, no public API available) interact with each other
   (selecting a filter applies the filter to the shared dataset).
 
-### Google Trends chart
+#### Google Trends chart
 
 - On the first load of the page the actual comparison which led to the project idea is generated to promote the feature.
 
@@ -112,7 +128,7 @@ on users' selection.
 - The chart shows the trends of the worldwide search terms (the package names selected by the user) of the past 5 years.
 The user can evaluate the popularity of the different packages in relative terms based on it.
 
-### Package table
+#### Package table
 
 - On the first load of the page the most popular packages (based on GitHub stars provided by cdnjs) are listed with a
   link to their project page, their actual GitHub stars and the keywords, used to tag the packages.
@@ -129,15 +145,15 @@ The user can evaluate the popularity of the different packages in relative terms
 - If the user tries to select more than the intended 3 packages, a modal informs the user to just select up to 3 
   packages.
   
-### Data Counter
+#### Data Counter
 
 - The data counter below the chart displays the total records, the sample size and contains a button to reset filters.
 
-### Text Search
+#### Text Search
 
 - A set of freetext inputs enables users to search by the package name, the owner and a specific keyword by text entry.
 
-### Range row chart
+#### Range row chart
 
 - A row chart differentiates the selection by popularity based on GitHub stars. A click on a row filters on the selected
   range (multiple ranges selectable).
@@ -156,7 +172,7 @@ The user can evaluate the popularity of the different packages in relative terms
     - compare unicorns like Facebook's React to Google's Angular
     - compare niche packages like plugins for specialised use-cases
     
-### Multiple keyword selector
+#### Multiple keyword selector
 
 - The multiple keyword selector lists all keywords used to tag packages in the selection, normalized to lowercase.
 
@@ -172,6 +188,7 @@ The user can evaluate the popularity of the different packages in relative terms
 
 - Customization of checkboxes and range-input for uniform cross-browser look.
 - Dynamic data table pagination, depending on viewport size/user input (Now: Table size 10 packages hardcoded)
+  - always show selected packages
 - Add a widget with all active filters (for onclick removal) (Now: Find the specific chart/filter or reset all)
 
 - Google Trends
@@ -383,6 +400,9 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
     
 - Google Trends in new tab button changed from google.de... to google.com.
 
+- The index.html was tabbed through.
+  - Popularity row chart was not tabable; .keyboardAccessible(true) added to fix.
+
 #### Chrome exclusive, deployed page
 
 ##### Test cases
@@ -500,11 +520,6 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
         - Expected behaviour
             - If not disabled, the color changes
 
-### Accessibility testing
-
-The index.html was tabbed through.
-- Popularity row chart was not tabable; .keyboardAccessible(true) added to fix.
-
 ### Automated testing
 
 [The testing site](https://apometricstk.github.io/ci_ms2_aggregator/specrunner.html) includes basic tests on correct
@@ -537,7 +552,8 @@ import of font, stylesheets, libraries and the loading and processing of the dat
    ![Deeper research by included links](/readmeAssets/userStory4.jpg)
 
 ### Slack review
-The project was posted to Slack the Code Institute community channel peer-code-review for different pairs of eyes.
+The project was posted to the Code Institute community Slack channel peer-code-review and to the Hackathon group-chat
+for different pairs of eyes.
 
 ### Readme
 Readme was observed on GitHub. All links were clicked.
