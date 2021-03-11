@@ -212,7 +212,7 @@ The user can evaluate the popularity of the different packages in relative terms
     
 ## Technologies
 
-#### [<cdnjs> API](https://cdnjs.com/)
+#### [cdnjs API](https://cdnjs.com/)
 - for the dataset
 - [Documentation](https://cdnjs.com/api)
 
