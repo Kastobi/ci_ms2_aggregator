@@ -183,14 +183,13 @@ The user can evaluate the popularity of the different packages in relative terms
   slider.
 
 ### Features left to Implement
-- add a Backend to prevent loading of full dataset resources on page load and speed up TTI
-- prevent layout shifting due to embed/chart generation
-
+- Add a Backend to prevent loading of full dataset resources on page load and speed up TTI
+- Prevent layout shifting due to embed/chart generation
 - Customization of checkboxes and range-input for uniform cross-browser look.
 - Dynamic data table pagination, depending on viewport size/user input (Now: Table size 10 packages hardcoded)
-  - always show selected packages
+  - Always show selected packages
 - Add a widget with all active filters (for onclick removal) (Now: Find the specific chart/filter or reset all)
-
+- Customize hover-charts tooltips
 - Google Trends
     - Find alternative way to implement Google Trends (Now: Cross-Site-Origin Error if no-track / cookies missing/
       blocked);
@@ -375,6 +374,16 @@ The deployed version of the page was tested.
 - A console warning derived from a removed d3 color scheme, supported by dc for backward compatibility, was removed by 
 selecting another default color scheme (script.js line 113).
 ![console warning](/readmeAssets/consoleWarning.jpg)
+
+- A console warning derived from the DataCount widget. Contrary to error message the crossfilter method was already used.
+  - ![console warning](/readmeAssets/dataCountWarning.jpg)
+  - ![console warning](/readmeAssets/dataCountSource.jpg)
+  - the dc.filterAll() call triggers warning
+    - ![console warning](/readmeAssets/dataCountFilterAll.jpg)
+    - the logger information traces down to applyFilters() in base-mixin.js (line 987), using this.dimension(); this is 
+      not easily changed by the author and was dismissed as out of scope of the project.
+      - No Issue filed, due to intentional rewrite for clarity [Reference](https://github.com/dc-js/dc.js/issues/1499)
+      
 
 - On verbose logging level Chrome reports a violation due to non passive event listener to a scroll blocking "mousewheel"
 event. Probably a problem with d3 / dc js brush implementation. It was noticed, but not handled.

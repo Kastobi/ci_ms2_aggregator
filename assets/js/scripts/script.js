@@ -507,9 +507,11 @@ function initDataVis() {
             .html({
                     some:
                         "<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records " +
-                        "<button id='resetAllButton'>Reset All</button>",
+                        "<a id='resetAllButton' tabindex='0' role='button' data-toggle='popover' data-trigger='focus' " +
+                        "title='Nothing to reset' data-content='Apply a filter or select packages'>Reset All</a>",
                     all: "All <strong>%total-count</strong> records selected. " +
-                        "<button id='resetAllButton' disabled='true'>Reset All</button>",
+                        "<a id='resetAllButton' tabindex='0' role='button' data-toggle='popover' data-trigger='focus' " +
+                        "title='Nothing to reset' data-content='Apply a filter or select packages'>Reset All</a>",
                 }
             )
             .on("renderlet", function () {
@@ -520,22 +522,28 @@ function initDataVis() {
                     });
             });
 
+
+
         /**
          * For ResetAll Button
          * Reset filters and compare list
          */
         function resetAllFilters() {
-            dc.filterAll();
+            if ((compareList.length !== 0) || ((fullDataset.size()) !== (fullDataset.allFiltered().length))) {
+                dc.filterAll();
 
-            compareList = [];
-            updateCompareList();
+                compareList = [];
+                updateCompareList();
 
-            document.querySelectorAll(".textSearchContainer input")
-                .forEach(d => d.value = "");
+                document.querySelectorAll(".textSearchContainer input")
+                    .forEach(d => d.value = "");
 
-            resetKeywordSlider();
+                resetKeywordSlider();
 
-            dc.redrawAll();
+                dc.redrawAll();
+            } else {
+                $("#resetAllButton").popover()
+            }
         }
 
         /**
