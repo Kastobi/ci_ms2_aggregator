@@ -5,7 +5,7 @@
 [The website](https://apometricstk.github.io/ci_ms2_aggregator/) is intended to help front-end development students to 
   compare the popularity (depicted by GitHub stars and Google Trends) of different JavaScript packages  and keywords.
 
-# Table of Contents
+## Table of Contents
 1. [UX](#UX)
    1. [Strategy & Scope](#Strategy-&-Scope)
    2. [Structure & Skeleton](#Structure-&-Skeleton)
@@ -29,6 +29,8 @@
 5. [Deployment](#Deployment)
 6. [Credits](#Credits)
  
+---
+
 ## UX
 
 ### Strategy & Scope
@@ -97,6 +99,8 @@ gradient to blue from Google and the browsers for my gradient.
 ![gradient colors](/readmeAssets/gradientColors.jpg)
 
 ---
+
+[Back to top](#Table-of-Contents)
 
 ## Features
 
@@ -208,6 +212,10 @@ The user can evaluate the popularity of the different packages in relative terms
   - Highlight keywords matching the keyword text filter
     
 - Write automated tests
+
+---
+
+[Back to top](#Table-of-Contents)
     
 ## Technologies
 
@@ -269,6 +277,10 @@ point. [Hacking the Google Trends API, Techslides](http://techslides.com/hacking
 
 #### [coolors](https://www.coolors.co)
 - for the color scheme
+
+---
+
+[Back to top](#Table-of-Contents)
 
 ## Testing
 
@@ -385,8 +397,8 @@ selecting another default color scheme (script.js line 113).
       - No Issue filed, due to intentional rewrite for clarity [Reference](https://github.com/dc-js/dc.js/issues/1499)
       
 
-- On verbose logging level Chrome reports a violation due to non passive event listener to a scroll blocking "mousewheel"
-event. Probably a problem with d3 / dc js brush implementation. It was noticed, but not handled.
+- On verbose logging level Chrome reports a violation due to non-passive event listener to a scroll blocking 
+  "mousewheel" event. Probably a problem with d3 / dc js brush implementation. It was noticed, but not handled.
   - [Reference](https://www.chromestatus.com/feature/5745543795965952)
 
 - Depending on browser configuration, Google Trends embedded frame is not rendered. Google seems to set x-frame-options: 
@@ -423,10 +435,15 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
         3. Toggle device toolbar
         4. Resize with from wide to narrow
     - Expected
-        - Layout aligns according to wireframes
-        - Charts redraw after resizing
-        - No Scroll bars (Exception: table, as defined in the wireframe) on page elements
-        - No breaking of the layout
+        1. Layout aligns according to wireframes
+        2. Charts redraw after resizing
+        3. No Scroll bars (Exception: table, as defined in the wireframe) on page elements
+        4. No breaking of the layout
+    - Outcome
+        1. Pass
+        2. Pass
+        3. Pass
+        4. Pass
     
 2. Usability and Functionality
     1. Nav
@@ -438,6 +455,11 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
             1. Navbar sticks to top and enables user to move to distinct location on page.
             2. Every button moves the user to the according section of the page.
             3. User gets redirected to custom 404.html, where a link is available to return to index.html.
+        - Outcome
+            1. Pass
+            2. Pass
+            3. Pass
+    
     2. Filters
         1. Filtering 
             - Procedure        
@@ -477,6 +499,8 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
                 - "Reset All" behaviour
                     - All filters are dropped, full dataset is displayed by the elements.
                     - "Reset All" button is disabled
+            - Outcome
+                - Pass
         2. Subfiltering multiple keywords
             - Procedure
                 1. Moving the slider "narrow down by popularity" to the far right, observe.
@@ -484,6 +508,9 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
             - Expected Behaviour
                 - right: fewer keywords displayed, sentence below slider contains bold "100".
                 - left: more keywords displayed, sentence below slider contains bold "1".
+            - Outcome
+                - Pass
+    
     3. Google Trends Comparison
         1. Selection        
             - Procedure
@@ -496,6 +523,11 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
                 2. Text is crossed out
                 3. The checkbox of the package named is unchecked, button disappears.
                 4. A modal appears, informing you to check 1-3 boxes, just 3 boxes are checked.
+            - Outcome
+                1. Pass
+                2. Pass
+                3. Pass
+                4. Pass
         2. Comparing
             - Procedure
                 1. With up to 3 boxes checked, click on "Show me the trends!"
@@ -505,6 +537,11 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
                 1. The trends chart updates accordingly
                 2. A Google Trends tab opens, preloaded with checked search-terms.
                 3. A modal appears, informing you to check 1-3 boxes.
+            - Outcome
+                1. Pass
+                2. Pass
+                3. Pass
+            
     4. Data table
         - Procedure
             - "Next Page" and "Previous Page" buttons click
@@ -512,22 +549,32 @@ event. Probably a problem with d3 / dc js brush implementation. It was noticed, 
         - Expected behaviour
             - The table pages turn accordingly, data updates in the table and next to the buttons
             - The correct GitHub page opens in a new tab
+        - Outcome
+            - Pass
 
-    5. About Section
-        - Procedure
-            - Click every link
-        - Expected behaviour
-            - The link clicked opens in anew tab
+   5. About Section
+       - Procedure
+           - Click every link
+       - Expected behaviour
+           - The link clicked opens in anew tab
+       - Outcome
+           - Pass
+       
     6. Contacts footer
         - Procedure
             - Click the contacts symbols
         - Expected behaviour
             - The authors contact pages opens an in new tab
+       - Outcome
+            - Pass
+
     7. General
         - Procedure
             - All buttons were hovered
         - Expected behaviour
             - If not disabled, the color changes
+        - Outcome
+            - Pass
 
 ### Automated testing
 
@@ -567,6 +614,10 @@ for different pairs of eyes.
 ### Readme
 Readme was observed on GitHub. All links were clicked.
 
+---
+
+[Back to top](#Table-of-Contents)
+
 ## Deployment
 
 The relevant files for deployment of the project are
@@ -574,7 +625,7 @@ The relevant files for deployment of the project are
 - 404.html (for custom 404 error page, optional)
 - specrunner.html (for automated tests on loading, optional)
 - assets/css folder
-- assets/images folder (for favicon, optional, but will return console error if omitted)
+- assets/images folder (for the favicon, optional, but will return console error if omitted)
 - assets/js folder
 
 The easiest way (but not the tiniest in terms of filesize - the download includes the development gitpod files) is to 
@@ -599,8 +650,18 @@ and afterwards scroll down to "GitHub Pages", select "Master branch" as source a
 To get to the deployed site afterwards, click on the link.  
 Further [documentation](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages)
 
+#### with other git instances
+Clone this repository according to the documentation of your editor/git-gui 
+(CLI: "git clone https://github.com/apometricsTK/ci_ms2_aggregator.git").
+
+
 #### this actual deployment
-The content was deployed via GitHub pages by configuring the repository according to the above walkthrough.
+The content was deployed via GitHub pages by configuring the repository according to the above walkthrough. Updates
+pushed to the GitHub repository will be automatically included a few minutes afterwards.
+
+---
+
+[Back to top](#Table-of-Contents)
 
 ## Credits
 
@@ -621,6 +682,8 @@ The content was deployed via GitHub pages by configuring the repository accordin
     - Navbar
     - Button
     - Modal
+    - Card
+    - Accordion
 
 ### Media
 * The Font Awesome symbols were made by [Font Awesome](https://fontawesome.com/).
@@ -640,3 +703,5 @@ The content was deployed via GitHub pages by configuring the repository accordin
 support.
 
 * The Code Institute slack community for their support.
+
+[Back to top](#Table-of-Contents)
