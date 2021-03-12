@@ -616,6 +616,17 @@ for different pairs of eyes.
 ### Readme
 Readme was observed on GitHub. All links were clicked.
 
+A cross-browser issue was found
+  - Firefox didn't embed a specific image of an error message, even if the links were correct. Restart of the browser,
+  clearing cache and reloading the page didn't solve the issue.
+
+![Firefox missing error](/readmeAssets/readmeErrorFirefox.jpg)
+
+  - Chrome embeds same image
+
+![Chrome error](/readmeAssets/readmeErrorChrome.jpg)
+
+
 ---
 
 [Back to top](#Table-of-Contents)
