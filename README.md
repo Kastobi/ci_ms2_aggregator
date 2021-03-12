@@ -410,7 +410,7 @@ selecting another default color scheme (script.js line 113).
   - To inform the user, a custom error message is generated. As the browser cannot interfere with elements inside an 
     iframe, the app uses a defined style attribute (provided by the embedded frame, if present) as indicator for the 
     working feature.
-  - ![iFrame error message](/readmeAssets/cookieWarning.jpg)
+  - ![iFrame error message](/readmeAssets/customErrorMessage.jpg)
   
 - All htmls were examined on different widths and responsive behavior was observed.
   - 280px, 320px (as representation for mobiles)
@@ -617,15 +617,19 @@ for different pairs of eyes.
 Readme was observed on GitHub. All links were clicked.
 
 A cross-browser issue was found
-  - Firefox didn't embed a specific image of an error message, even if the links were correct. Restart of the browser,
-  clearing cache and reloading the page didn't solve the issue.
+  - Windows 10 Firefox didn't embed a specific image of an error message, even if the links were correct. Clearing cache, 
+    reloading the page and restart of the browser didn't solve the issue.
 
 ![Firefox missing error](/readmeAssets/readmeErrorFirefox.jpg)
 
-  - Chrome embeds same image
+  - Windows 10 Chrome embeds same image
 
 ![Chrome error](/readmeAssets/readmeErrorChrome.jpg)
 
+  - Manjaro Firefox & Chromium embeds, other Machine Windows 10 Firefox, Edge and Chrome embeds.
+
+  - Error was classified as browser-installation specific and afterwards tracked down to an Ad-blocker. Renaming of the 
+    File solved the issue.
 
 ---
 
