@@ -352,16 +352,17 @@ The Performance issue is due to:
 1. The big dataset to load for basic functionality
     - API call (about 200 kB)
     - building crossfilter dimensions
-A possible way to improve the behaviour could be a custom backend, serving just the data needed - but this is beyond the
-scope of this project.
+      - A possible way to improve the behaviour could be a custom backend, serving just the data needed or , but this is 
+        beyond the scope of this project.
 
 ![Main task](/readmeAssets/mainTask.jpg)  
 
 2. the call to Google Trends
-    - with disabled disk cache: over 1.2 MB of 1.9 MB transferred
+    - with disabled disk cache: More than 1.2 MB of 1.9 MB transferred
     - only embedded version available
     - undocumented API
-I don't know a way of circumventing or improve this issue.
+    
+I don't know how to circumvent or improve this issue.
 
 ![Google Trends network](/readmeAssets/googleTrendsNetwork.jpg)
 
@@ -372,6 +373,7 @@ The missing 2 points depend on color contrast on links and buttons.
 
 Tests with a comparison of bold, color: black, original and text-stroke (2px black), resulted in the decision to stay 
 with the original style for best legibility.
+
 ![Lighthouse mobile](/readmeAssets/btnColors.jpg)
 
 ##### Best Practices
@@ -408,7 +410,7 @@ selecting another default color scheme (script.js line 113).
   - To inform the user, a custom error message is generated. As the browser cannot interfere with elements inside an 
     iframe, the app uses a defined style attribute (provided by the embedded frame, if present) as indicator for the 
     working feature.
-  - ![Style is undefined](/readmeAssets/cookieWarning.jpg)
+  - ![iFrame error message](/readmeAssets/cookieWarning.jpg)
   
 - All htmls were examined on different widths and responsive behavior was observed.
   - 280px, 320px (as representation for mobiles)
