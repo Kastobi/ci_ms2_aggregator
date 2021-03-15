@@ -200,7 +200,9 @@ The user can evaluate the popularity of the different packages in relative terms
       Google seems to set x-frame-options: sameorigin on their embedded response, if Googles cookies are missing.
       [Reference](https://bugzilla.mozilla.org/show_bug.cgi?id=1624914)
     - Reverse engineer their whole embed API to make all parameters accessible for users (high risk to break, if 
-      API change) 
+      API change)
+    - Research about categories, should there be one preselected, which one (exclude things like Nike React etc)
+      - cat=31 coding? - https://trends.google.com/trends/explore?cat=31&geo=US&q=Vue
 
 - Keyword features
   - Build a dataset of keyword-counts and 
